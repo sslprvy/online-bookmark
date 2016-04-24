@@ -1,0 +1,24 @@
+{
+  "name": "online-bookmark",
+  "version": "1.0.0",
+  "description": "Storing your page bookmarks online",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csabbee/online-bookmark.git"
+  },
+  "keywords": [
+    "Bookmark",
+    "url",
+    "storing"
+  ],
+  "author": "Csaba Vályi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/csabbee/online-bookmark/issues"
+  },
+  "homepage": "https://github.com/csabbee/online-bookmark#readme"
+}
