@@ -9,7 +9,7 @@ gulp.task('default', ['build', 'watch']);
 gulp.task('build', function() {
     return gulp.src('src/**/*.js')
         .pipe(babel({
-            preset: ['react', 'es2015']
+            presets: ['react', 'es2015']
         }))
         .pipe(concat('online-bookmark.js'))
         .pipe(gulp.dest('build'))
