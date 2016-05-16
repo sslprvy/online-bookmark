@@ -1,6 +1,8 @@
+import { render } from 'react-dom'
 import { OnlineBookmark } from './online-bookmark.js';
 
-ReactDOM.render(
+
+render(
     <OnlineBookmark/>,
     document.getElementById('content')
 );
