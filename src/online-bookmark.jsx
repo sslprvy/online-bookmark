@@ -1,3 +1,4 @@
+'use strict';
 import React from 'react';
 import { render } from 'react-dom';
 // FIXME mocked data: remove it when no longer needed
