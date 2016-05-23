@@ -6,11 +6,12 @@ export class BookmarkElement extends React.Component {
         var { url, title, tags, comment } = this.props.bookmark;
 
         return (
-            <li class="bookmark-element">
-                <div class="bookmark-element-title">{ title }</div>
-                <a class="bookmark-element-url" href={ url }>{ url }</a>
-                <div class="bookmark-element-tags">{ tags.toString() }</div>
-                <div class="bookmark-element-comment">{ comment }</div>
+            <li className="bookmark-element">
+                <span className="ion-arrow-right-c"></span>
+                <div className="bookmark-element-title">{ title }</div>
+                <a className="bookmark-element-url" href={ url } target="_blank">{ url }</a>
+                <div className="bookmark-element-tags">{ tags.toString() }</div>
+                <div className="bookmark-element-comment">{ comment }</div>
             </li>
         );
     }

@@ -9,7 +9,7 @@ import { BookmarkList } from './bookmark-list.jsx';
 export class OnlineBookmark extends React.Component {
     render() {
         return (
-            <div>
+            <div className="flex-main-container">
                 <BookmarkList bookmarks={ this.props.data }/>
             </div>
         );

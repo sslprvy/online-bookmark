@@ -13,7 +13,7 @@ export class BookmarkList extends React.Component {
         });
 
         return (
-            <ul class="bookmark-list">
+            <ul className="bookmark-list">
                 { bookmarkElementNodes }
             </ul>
         );
