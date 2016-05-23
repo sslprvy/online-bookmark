@@ -4,61 +4,71 @@
       "title": "Angular2 tutorial",
       "url": "https://egghead.io/lessons/angular-2-say-hello-world-to-angular-2",
       "tags": ["angular2", "tutorial", "egghead"],
-      "comment": ""
+      "comment": "",
+      "id": 1
     },
     {
       "title": "The Lodge | CSS-Tricks",
       "url": "https://css-tricks.com/lodge/",
       "tags": ["css", "webdesign", "tutorials", "tutorial", "sass"],
-      "comment": ""
+      "comment": "",
+      "id": 2
     },
     {
       "title": "Custom Validators in Angular2",
       "url": "http://blog.thoughtram.io/angular/2016/03/14/custom-validators-in-angular-2.html?utm_campaign=NG-Newsletter&utm_medium=email&utm_source=NG-Newsletter_140",
       "tags": ["angular2", "validators", "custom validators"],
-      "comment": ""
+      "comment": "",
+      "id": 3
     },
     {
       "title": "Test Angular2 now or how to set up Angular2 unit tests | Dima Kuzmich",
       "url": "https://dimakuzmich.wordpress.com/2015/08/21/test-angular2-now-or-how-to-set-up-angular2-unit-tests/",
       "tags": ["angular2", "unit test", "setup", "karma"],
-      "comment": ""
+      "comment": "",
+      "id": 4
     },
     {
       "title": "Focusrite Scarlett Studio | Hit Space",
       "url": "http://hitspace.hu/focusrite-scarlett-studio.html#product-tabs",
       "tags": ["studio", "setm studio"],
-      "comment": ""
+      "comment": "",
+      "id": 5
     },
     {
       "title": "Testing Angular 2 with Karma and Jasmine - Two Fucking Developers",
       "url": "http://twofuckingdevelopers.com/2016/01/testing-angular-2-with-karma-and-jasmine/",
       "tags": ["angular2", "testing", "karma", "jasmine"],
-      "comment": ""
+      "comment": "",
+      "id": 6
     },
     {
       "title": "Testing Angular 2 apps - Part 1: The beginning - LiveChat Developers",
       "url": "https://developers.livechatinc.com/blog/testing-angular-2-apps-part-1-beginning/",
       "tags": ["angular2", "testing", "unit test"],
-      "comment": ""
+      "comment": "",
+      "id": 7
     },
     {
       "title": "Vaj házilag - Alkotó Részecskék",
       "url": "http://alkotoreszecskek.blog.hu/2016/03/06/vaj_hazilag",
       "tags": ["főzés", "sós", "cooking", "salty"],
-      "comment": ""
+      "comment": "",
+      "id": 8
     },
     {
       "title": "Ionic 2 show native toast message",
       "url": "https://www.thepolyglotdeveloper.com/2016/01/show-native-toast-notifications-in-an-ionic-2-mobile-app/",
       "tags": ["Ionic 2", "cordova", "toast"],
-      "comment": ""
+      "comment": "",
+      "id": 9
     },
     {
       "title": "Ionic 2 | How to Work With Cordova Plugins",
       "url": "http://www.gajotres.net/ionic-2-how-to-use-cordova-plugins/",
       "tags": ["Ionic 2", "tutorial"],
-      "comment": ""
+      "comment": "",
+      "id": 10
     }
   ]
 }
