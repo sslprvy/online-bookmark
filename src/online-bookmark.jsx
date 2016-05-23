@@ -10,7 +10,6 @@ export class OnlineBookmark extends React.Component {
     render() {
         return (
             <div>
-                <h1>HOWDY</h1>
                 <BookmarkList bookmarks={ this.props.data }/>
             </div>
         );
