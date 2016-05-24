@@ -1,0 +1,22 @@
+@import "sass-constants/colors";
+@import "sass-constants/variables";
+
+@import "bookmark-element";
+
+a {
+  color: $url-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+.main-container {
+  margin: auto;
+  width: 70%;
+}

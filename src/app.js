@@ -1,6 +1,5 @@
-import { OnlineBookmark } from './online-bookmark.js';
+// SASS entry point
+require('./online-bookmark.scss');
 
-ReactDOM.render(
-    <OnlineBookmark/>,
-    document.getElementById('content')
-);
+
+require('./online-bookmark.jsx');
