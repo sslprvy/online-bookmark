@@ -4,10 +4,22 @@ import React from 'react';
 import _ from 'lodash';
 
 export class BookmarkTag extends React.Component {
+    constructor() {
+        super();
+        this.initMethods();
+    }
+
+    initMethods() {
+        this.handleClick = (tag) => {
+            console.log(tag);
+        };
+    }
+
     render() {
         var tagNodes = _.map(this.props.tags, (tag, index) => {
             return (
-                <div className="bookmark-element-tag" key={hashCode2(`bookmark-element-tag-${tag}-${index}`)}>
+                <div className="bookmark-element-tag" key={hashCode2(`bookmark-element-tag-${tag}-${index}`)}
+                     onClick={this.handleClick.bind(tag)}>
                     { tag }
                 </div>
             )
