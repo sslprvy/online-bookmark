@@ -6,12 +6,17 @@ import { EventHub } from './event-handling/event-hub';
 export class BookmarkElement extends React.Component {
     constructor() {
         super();
+        this.initMethods();
+
         this.eventHub = EventHub.getInstance();
         this.eventHub.subscribe('clicked', this.handleClick);
     }
 
-    handleClick(...parameters) {
-        console.log('clicked', parameters);
+    initMethods() {
+        this.handleClick = (...parameters) => {
+            console.log('clicked', parameters);
+            this.eventHub.unSubscribe('clicked', this.handleClick);
+        };
     }
 
     render() {
