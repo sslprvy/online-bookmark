@@ -1,8 +1,19 @@
 'use strict';
 import React from 'react';
 import { BookmarkTag } from './bookmark-tag.jsx'
+import { EventHub } from './event-handling/event-hub';
 
 export class BookmarkElement extends React.Component {
+    constructor() {
+        super();
+        this.eventHub = EventHub.getInstance();
+        this.eventHub.subscribe('clicked', this.handleClick);
+    }
+
+    handleClick(...parameters) {
+        console.log('clicked', parameters);
+    }
+
     render() {
         var { url, title, tags, comment } = this.props.bookmark;
 

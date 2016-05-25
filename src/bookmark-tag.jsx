@@ -3,15 +3,18 @@
 import React from 'react';
 import _ from 'lodash';
 
+import { EventHub } from './event-handling/event-hub';
+
 export class BookmarkTag extends React.Component {
     constructor() {
         super();
         this.initMethods();
+        this.eventHub = EventHub.getInstance();
     }
 
     initMethods() {
         this.handleClick = (tag) => {
-            console.log(tag);
+            this.eventHub.notify('clicked', 2, 4, 'word');
         };
     }
 
