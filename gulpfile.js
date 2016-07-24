@@ -11,6 +11,8 @@ const babelify = require('babelify');
 const livereload = require('gulp-livereload');
 const connectLivereload = require('connect-livereload');
 const serveStatic = require('serve-static');
+const rev = require('gulp-rev');
+const inject = require('gulp-inject');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -24,19 +26,28 @@ var scriptsCount = 0;
 const SERVER_PORT = 9000;
 const LIVERELOAD_PORT = 35729;
 
+const CONFIG = {
+    tempFolder: 'tmp',
+    destFolder: 'web/js'
+};
+
 // Gulp tasks
 // ----------------------------------------------------------------------------
-gulp.task('scripts', function() {
+gulp.task('scripts', function(callback) {
     bundleApp(false);
+    callback();
 });
 
-gulp.task('deploy', function(){
+gulp.task('deploy', function(callback){
     bundleApp(true);
+    callback();
 });
 
 gulp.task('watch', function() {
     livereload.listen();
-    gulp.watch(['./app/*.jsx'], ['scripts']);
+    gulp.watch(['app/*.jsx'], ['scripts']);
+    gulp.watch([`${CONFIG.tempFolder}/*.js`], ['revision']);
+    gulp.watch(['web/js/*.js'], ['index']);
 });
 
 gulp.task('connect', function () {
@@ -52,6 +63,21 @@ gulp.task('connect', function () {
         .on('listening', function () {
             console.log('Started connect web server on http://localhost:9000');
         });
+});
+
+gulp.task('revision', function() {
+    return gulp.src(['tmp/*.js'], { read: false })
+        .pipe(rev())
+        .pipe(gulp.dest(CONFIG.destFolder));
+});
+
+gulp.task('index', function() {
+    var target = gulp.src('./index.html');
+
+    var source = gulp.src(['./web/js/vendor*.js'], { read: false });
+
+    return target.pipe(inject(source))
+        .pipe(gulp.dest('./'));
 });
 
 // When running 'gulp' on the terminal this task will fire.
@@ -82,7 +108,7 @@ function bundleApp(isProduction) {
             .bundle()
             .on('error', gutil.log)
             .pipe(source('vendors.js'))
-            .pipe(gulp.dest('./web/js/'));
+            .pipe(gulp.dest(CONFIG.tempFolder));
     }
     if (!isProduction){
         // make the dependencies external so they dont get bundled by the
@@ -99,6 +125,6 @@ function bundleApp(isProduction) {
         .bundle()
         .on('error',gutil.log)
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest('./web/js/'))
+        .pipe(gulp.dest(CONFIG.tempFolder))
         .pipe(livereload());
 }
