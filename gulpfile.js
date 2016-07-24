@@ -29,7 +29,8 @@ const LIVERELOAD_PORT = 35729;
 
 const CONFIG = {
     tempFolder: 'tmp',
-    destFolder: 'web/js/'
+    destFolder: 'web/js/',
+    appEntryPoint: './app/app.jsx'
 };
 
 // Gulp tasks
@@ -48,7 +49,11 @@ gulp.task('watch', function() {
     livereload.listen();
     gulp.watch(['app/*.jsx'], ['scripts']);
     gulp.watch([`${CONFIG.tempFolder}/bundle.js`], ['clean', 'revision']);
-    gulp.watch([`${CONFIG.destFolder}bundle*.js`], ['index']);
+    gulp.watch([`${CONFIG.destFolder}*.js`], function(event) {
+        if (event.type === 'renamed') {
+            gulp.start('index');
+        }
+    });
 });
 
 gulp.task('clean', function() {
@@ -73,7 +78,7 @@ gulp.task('connect', function () {
 gulp.task('revision', function() {
     return gulp.src([`${CONFIG.tempFolder}/*.js`])
         .pipe(rev())
-        .pipe(gulp.dest('web/js/'));
+        .pipe(gulp.dest(`${CONFIG.destFolder}`));
 });
 
 gulp.task('index', function() {
@@ -97,7 +102,7 @@ function bundleApp(isProduction) {
     // Browserify will bundle all our js files together in to one and will let
     // us use modules in the front end.
     const appBundler = browserify({
-        entries: './app/app.jsx',
+        entries: CONFIG.appEntryPoint,
         debug: true
     });
 
