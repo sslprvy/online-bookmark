@@ -13,6 +13,7 @@ const connectLivereload = require('connect-livereload');
 const serveStatic = require('serve-static');
 const rev = require('gulp-rev');
 const inject = require('gulp-inject');
+const del = require('del');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -28,7 +29,7 @@ const LIVERELOAD_PORT = 35729;
 
 const CONFIG = {
     tempFolder: 'tmp',
-    destFolder: 'web/js'
+    destFolder: 'web/js/'
 };
 
 // Gulp tasks
@@ -46,8 +47,12 @@ gulp.task('deploy', function(callback){
 gulp.task('watch', function() {
     livereload.listen();
     gulp.watch(['app/*.jsx'], ['scripts']);
-    gulp.watch([`${CONFIG.tempFolder}/*.js`], ['revision']);
-    gulp.watch(['web/js/*.js'], ['index']);
+    gulp.watch([`${CONFIG.tempFolder}/bundle.js`], ['clean', 'revision']);
+    gulp.watch([`${CONFIG.destFolder}bundle*.js`], ['index']);
+});
+
+gulp.task('clean', function() {
+    return del([`${CONFIG.destFolder}*.js`]);
 });
 
 gulp.task('connect', function () {
@@ -66,15 +71,15 @@ gulp.task('connect', function () {
 });
 
 gulp.task('revision', function() {
-    return gulp.src(['tmp/*.js'], { read: false })
+    return gulp.src([`${CONFIG.tempFolder}/*.js`])
         .pipe(rev())
-        .pipe(gulp.dest(CONFIG.destFolder));
+        .pipe(gulp.dest('web/js/'));
 });
 
 gulp.task('index', function() {
     var target = gulp.src('./index.html');
 
-    var source = gulp.src(['./web/js/vendor*.js'], { read: false });
+    var source = gulp.src([`${CONFIG.destFolder}vendor*.js`, `${CONFIG.destFolder}*.js`], { read: false });
 
     return target.pipe(inject(source))
         .pipe(gulp.dest('./'));
@@ -83,7 +88,7 @@ gulp.task('index', function() {
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', ['scripts','watch', 'connect']);
+gulp.task('default', ['clean', 'scripts', 'watch', 'connect']);
 
 // Private Functions
 // ----------------------------------------------------------------------------
@@ -123,7 +128,7 @@ function bundleApp(isProduction) {
     // transform ES6 and JSX to ES5 with babelify
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
-        .on('error',gutil.log)
+        .on('error', gutil.log)
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(CONFIG.tempFolder))
         .pipe(livereload());
