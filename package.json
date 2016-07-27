@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/webpack-dev-server --progress --color --port=9000",
-    "gulp": "./node_modules/.bin/gulp --color"
+    "start": "./node_modules/.bin/gulp --color"
   },
   "repository": {
     "type": "git",
