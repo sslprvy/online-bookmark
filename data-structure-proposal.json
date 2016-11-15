@@ -1,0 +1,54 @@
+{
+	"mockUsername": {
+		"isUeser": true,
+		"isMutable": true,
+		"data": [
+			{
+				"title": "Example",
+				"url": "www.example.com",
+				"tags": [
+					"quickFilterTag",
+					"anotherQuickFilterTag"
+				]
+			},
+			{
+				"title": "AnotherExample",
+				"url": "www.anotherexample.com",
+				"tags": [
+					"anotherQuickFilterTag"
+				]
+			}
+		]
+	},
+	"someLongHashComesHere": {
+		"isUser": false,
+		"isMutable": true,
+		"owner": "mockUsername",
+		"title": "My Mutable List",
+		"url": "/mutablelist",
+		"links": [
+			{
+				"title": "Example",
+				"url": "www.example.com",
+				"tags": [
+					"quickFilterTag",
+					"anotherQuickFilterTag"
+				]
+			},
+			{
+				"title": "AnotherExample",
+				"url": "www.anotherexample.com",
+				"tags": [
+					"anotherQuickFilterTag"
+				]
+			},
+			{
+				"title": "ThirdExample",
+				"url": "www.thirdexample.com",
+				"tags": [
+					"quickFilterTag"
+				]
+			}
+		]
+	}
+}
