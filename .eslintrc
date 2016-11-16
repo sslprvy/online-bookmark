@@ -27,6 +27,7 @@
 		// nodejs and commonjs
 		// stylistic issues
 		"camelcase": 1,
-		"eol-last": 1
+		"eol-last": 1,
+		"indent": ["error", 4]
 	}
 }
