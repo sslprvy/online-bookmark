@@ -26,6 +26,7 @@
 		// variables
 		// nodejs and commonjs
 		// stylistic issues
-		"camelcase": 1
+		"camelcase": 1,
+		"eol-last": 1
 	}
 }
