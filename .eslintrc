@@ -1,3 +1,16 @@
 {
-
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"impliedStrict": true,
+			"jsx": true
+		}
+	},
+	"rules": {}
 }
