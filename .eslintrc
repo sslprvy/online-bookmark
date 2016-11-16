@@ -13,12 +13,19 @@
 		}
 	},
 	"rules": {
+		// possible errors
 		"no-console": 1,
 		"no-debugger": 1,
 		"no-empty": 1,
 		"no-extra-parens": 1,
 		"no-extra-semi": 1,
 		"no-invalid-regexp": 2,
-		"use-isnan": 2
+		"use-isnan": 2,
+		// best practices
+		// strict mode
+		// variables
+		// nodejs and commonjs
+		// stylistic issues
+		"camelcase": 1
 	}
 }
