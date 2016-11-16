@@ -38,7 +38,7 @@ gulp.task('scripts', function (callback) {
     callback();
 });
 
-gulp.task('deploy', function (callback){
+gulp.task('deploy', function (callback) {
     bundleApp(true);
     callback();
 });
@@ -46,7 +46,7 @@ gulp.task('deploy', function (callback){
 gulp.task('watch', function () {
     gulp.watch(['app/*.jsx'], ['scripts']);
     gulp.watch([`${CONFIG.tempFolder}/bundle.js`], ['clean', 'revision']);
-    gulp.watch([`${CONFIG.destFolder}*.js`], function(event) {
+    gulp.watch([`${CONFIG.destFolder}*.js`], function (event) {
         if (event.type === 'renamed') {
             gulp.start('index');
         }
@@ -77,7 +77,7 @@ gulp.task('revision', function () {
         .pipe(gulp.dest(`${CONFIG.destFolder}`));
 });
 
-gulp.task('index', function() {
+gulp.task('index', function () {
     var target = gulp.src('./index.html');
 
     var source = gulp.src([`${CONFIG.destFolder}vendor*.js`, `${CONFIG.destFolder}*.js`], { read: false });
@@ -120,7 +120,7 @@ function bundleApp(isProduction) {
         // make the dependencies external so they dont get bundled by the
         // app bundler. Dependencies are already bundled in vendor.js for
         // development environments.
-        dependencies.forEach(function(dep){
+        dependencies.forEach(function (dep) {
             appBundler.external(dep);
         })
     }
