@@ -17,6 +17,7 @@
 		"no-debugger": 1,
 		"no-empty": 1,
 		"no-extra-parens": 1,
-		"no-extra-semi": 1
+		"no-extra-semi": 1,
+		"no-invalid-regexp": 2
 	}
 }
