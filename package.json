@@ -30,6 +30,7 @@
     "browserify": "^13.0.1",
     "connect": "^3.5.0",
     "del": "^2.2.1",
+    "eslint": "^3.10.2",
     "gulp": "^3.9.1",
     "gulp-inject": "^4.1.0",
     "gulp-rev": "^7.1.0",
