@@ -7,5 +7,5 @@ Trying to fill the void of a certain page that is gone bad...
     npm install
     npm start
 
-This will compile and bundle the files and start the dev server which you can reach on the following address: 
-**http://localhost:9000/**
+[BrowserSync](https://www.browsersync.io/) will do the rest;)
+But if you closed the tab by mistake, you can reach the app with this url: [localhost:3000](http://localhost:3000)
