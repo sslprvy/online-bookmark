@@ -1,29 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-// Please, see the data-structure-proposal.json file
-// for further information
-var mockData = {
-    isUeser: true,
-    isMutable: true,
-    data: [
-        {
-            title: "Example",
-            url: "www.example.com",
-            tags: [
-                "quickFilterTag",
-                "anotherQuickFilterTag"
-            ]
-        },
-        {
-            title: "AnotherExample",
-            url: "www.anotherexample.com",
-            tags: [
-                "anotherQuickFilterTag"
-            ]
-        }
-    ]
-};
+import mockJson from '../data-structure-proposal.json';
 
 class List extends React.Component {
     render() {
@@ -55,4 +33,4 @@ export default class Main extends React.Component {
     }
 }
 
-ReactDom.render(<Main userData={mockData} />, document.getElementById('app-content'));
+ReactDom.render(<Main userData={mockJson.mockUsername} />, document.getElementById('app-content'));
