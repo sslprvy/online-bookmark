@@ -28,11 +28,12 @@ var mockData = {
 class List extends React.Component {
     render() {
         var urlObjects = this.props.objects.map(function (urlObject) {
-            var tagObjects = urlObject.tags.map(function (tag) {
-                return (<span className="display-list-element-tag">{tag}</span>)
+            var tagObjects = urlObject.tags.map(function (tag, index) {
+                var key = `${urlObject.title}-tag-${index}`;
+                return (<span className="display-list-element-tag" key={key}>{tag}</span>)
             });
             return (
-                <li className="display-list-element">
+                <li className="display-list-element" key={urlObject.title}>
                     <div>
                         <span className="display-list-element-title">{urlObject.title}</span><br/>
                         <span className="display-list-element-url">{urlObject.url}</span><br/>
