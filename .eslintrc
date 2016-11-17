@@ -1,0 +1,39 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"impliedStrict": true,
+			"jsx": true
+		}
+	},
+	"plugins": [
+		"react"
+	],
+	"rules": {
+		// possible errors
+		"no-console": 1,
+		"no-debugger": 1,
+		"no-empty": 1,
+		"no-extra-parens": 1,
+		"no-extra-semi": 1,
+		"no-invalid-regexp": 2,
+		"use-isnan": 2,
+		// best practices
+		// strict mode
+		// variables
+		// nodejs and commonjs
+		// stylistic issues
+		"camelcase": 1,
+		"eol-last": 1,
+		"indent": ["error", 4],
+		"semi": 1
+		// ecma script 6
+		// plugin related
+	}
+}
