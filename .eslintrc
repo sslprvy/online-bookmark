@@ -12,6 +12,9 @@
 			"jsx": true
 		}
 	},
+	"plugins": [
+		"react"
+	],
 	"rules": {
 		// possible errors
 		"no-console": 1,
@@ -31,5 +34,6 @@
 		"indent": ["error", 4],
 		"semi": 1
 		// ecma script 6
+		// plugin related
 	}
 }
