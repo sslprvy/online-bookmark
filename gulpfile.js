@@ -122,7 +122,7 @@ function bundleApp(isProduction) {
         // development environments.
         dependencies.forEach(function (dep) {
             appBundler.external(dep);
-        })
+        });
     }
 
     appBundler
