@@ -10,7 +10,7 @@ export default class App extends React.Component {
         super();
     }
     render() {
-        return (<div><List objects={this.props.userData.data} /></div>)
+        return <div><List objects={this.props.userData.data} /></div>;
     }
 }
 
