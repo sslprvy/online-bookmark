@@ -4,6 +4,7 @@
  */
 
 const gulp = require('gulp');
+const eslint = require('gulp-eslint');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const gutil = require('gulp-util');
