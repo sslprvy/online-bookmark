@@ -5,7 +5,7 @@ import { List } from './list.jsx';
 
 import mockJson from '../data-structure-proposal.json';
 
-export default class Main extends React.Component {
+export default class App extends React.Component {
     constructor() {
         super();
     }
@@ -14,4 +14,4 @@ export default class Main extends React.Component {
     }
 }
 
-ReactDom.render(<Main userData={mockJson.mockUsername} />, document.getElementById('app-content'));
+ReactDom.render(<App userData={mockJson.mockUsername} />, document.getElementById('app-content'));
