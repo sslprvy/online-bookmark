@@ -1,7 +1,7 @@
 const notify = require('gulp-notify');
 
 module.exports = {
-
+    onError: onError
 };
 
 function onError(err) {
