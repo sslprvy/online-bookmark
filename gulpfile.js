@@ -126,7 +126,7 @@ gulp.task('sass', () => {
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', sequence(['clean-js', 'clean-css'], ['sass', 'scripts', 'watch', 'connect'], 'index'));
+gulp.task('default', sequence(['clean-js', 'clean-css'], ['sass', 'scripts', 'watch'], 'index', 'connect'));
 
 // Private Functions
 // ----------------------------------------------------------------------------
