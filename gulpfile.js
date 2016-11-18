@@ -13,7 +13,7 @@ const rev = require('gulp-rev');
 const inject = require('gulp-inject');
 const del = require('del');
 const browserSync = require('browser-sync').create();
-const gulpSequence = require('gulp-sequence');
+const sequence = require('gulp-sequence');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
 const merge = require('merge-stream');
@@ -26,8 +26,6 @@ const dependencies = [
     'react',
     'react-dom'
 ];
-// keep a count of the times a task refires
-var scriptsCount = 0;
 
 const SERVER_PORT = 9000;
 const LIVERELOAD_PORT = 35729;
@@ -39,6 +37,10 @@ const CONFIG = {
     appEntryPoint: './app/app.jsx',
     destFolder: 'web'
 };
+
+// keep a count of the times a task refires
+var scriptsCount = 0;
+
 
 // Gulp tasks
 // ----------------------------------------------------------------------------
@@ -110,10 +112,9 @@ gulp.task('revision', function () {
 
 gulp.task('index', function () {
     var target = gulp.src('./index.html');
-
     var source = gulp.src([`${CONFIG.jsDestFolder}vendor*.js`, `${CONFIG.jsDestFolder}*.js`, `${CONFIG.cssDestFolder}*.css`], { read: false });
-
-    return target.pipe(inject(source))
+    return target
+        .pipe(inject(source))
         .pipe(gulp.dest('./'));
 });
 
@@ -128,12 +129,15 @@ gulp.task('sass', () => {
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', gulpSequence('clean', ['sass', 'scripts', 'watch', 'connect']));
+gulp.task('default', sequence('clean', ['sass', 'scripts', 'watch', 'connect']));
+
 
 // Private Functions
 // ----------------------------------------------------------------------------
+
 function bundleApp(isProduction) {
     scriptsCount++;
+
     // Browserify will bundle all our js files together in to one and will let
     // us use modules in the front end.
     const appBundler = browserify({
@@ -144,7 +148,7 @@ function bundleApp(isProduction) {
     // If it's not for production, a separate vendors.js file will be created
     // the first time gulp is run so that we don't have to rebundle things like
     // react everytime there's a change in the js file
-    if (!isProduction && scriptsCount === 1){
+    if (!isProduction && scriptsCount === 1) {
         // create vendors.js for dev environment.
         browserify({
             require: dependencies,
@@ -155,7 +159,7 @@ function bundleApp(isProduction) {
             .pipe(source('vendors.js'))
             .pipe(gulp.dest(CONFIG.tempFolder));
     }
-    if (!isProduction){
+    if (!isProduction) {
         // make the dependencies external so they dont get bundled by the
         // app bundler. Dependencies are already bundled in vendor.js for
         // development environments.
@@ -165,7 +169,7 @@ function bundleApp(isProduction) {
     }
 
     appBundler
-    // transform ES6 and JSX to ES5 with babelify
+        // transform ES6 and JSX to ES5 with babelify
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
         .on('error', gutil.log)
