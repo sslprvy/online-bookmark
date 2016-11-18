@@ -13,6 +13,11 @@ const rev = require('gulp-rev');
 const inject = require('gulp-inject');
 const del = require('del');
 const browserSync = require('browser-sync').create();
+const gulpSequence = require('gulp-sequence');
+const plumber = require('gulp-plumber');
+const sass = require('gulp-sass');
+
+const onError = require('./gulp_settings/error-handler').onError;
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -28,8 +33,10 @@ const LIVERELOAD_PORT = 35729;
 
 const CONFIG = {
     tempFolder: 'tmp',
-    destFolder: 'web/js/',
-    appEntryPoint: './app/app.jsx'
+    jsDestFolder: 'web/js/',
+    cssDestFolder: 'web/css/',
+    appEntryPoint: './app/app.jsx',
+    destFolder: 'web'
 };
 
 // Gulp tasks
@@ -59,18 +66,21 @@ gulp.task('deploy', function (callback) {
 });
 
 gulp.task('watch', function () {
+    gulp.watch('app/**/*.scss', ['sass']);
     gulp.watch(['app/*.jsx'], ['scripts']);
     gulp.watch([`${CONFIG.tempFolder}/bundle.js`], ['clean', 'revision']);
-    gulp.watch([`${CONFIG.destFolder}*.js`], function (event) {
+    gulp.watch([`${CONFIG.jsDestFolder}*.js`], function (event) {
         if (event.type === 'renamed') {
             gulp.start('index');
         }
     });
+    gulp.watch(`${CONFIG.cssDestFolder}*.css`, ['index'])
     gulp.watch(['./index.html']).on('change', browserSync.reload);
+    gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', browserSync.reload);
 });
 
 gulp.task('clean', function () {
-    return del([`${CONFIG.destFolder}*.js`]);
+    return del([`${CONFIG.jsDestFolder}*.js`]);
 });
 
 gulp.task('js-watch', ['scripts'], function (done) {
@@ -89,22 +99,30 @@ gulp.task('connect', function () {
 gulp.task('revision', function () {
     return gulp.src([`${CONFIG.tempFolder}/*.js`])
         .pipe(rev())
-        .pipe(gulp.dest(`${CONFIG.destFolder}`));
+        .pipe(gulp.dest(`${CONFIG.jsDestFolder}`));
 });
 
 gulp.task('index', function () {
     var target = gulp.src('./index.html');
 
-    var source = gulp.src([`${CONFIG.destFolder}vendor*.js`, `${CONFIG.destFolder}*.js`], { read: false });
+    var source = gulp.src([`${CONFIG.jsDestFolder}vendor*.js`, `${CONFIG.jsDestFolder}*.js`, `${CONFIG.cssDestFolder}*.css`], { read: false });
 
     return target.pipe(inject(source))
         .pipe(gulp.dest('./'));
 });
 
+gulp.task('sass', () => {
+    return gulp.src('app/**/*.scss')
+        .pipe(plumber({ errorHandler: onError }))
+        .pipe(sass())
+        .pipe(gulp.dest(`${CONFIG.cssDestFolder}`))
+        .pipe(browserSync.stream());
+});
+
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', ['clean', 'scripts', 'watch', 'connect']);
+gulp.task('default', gulpSequence('clean', ['sass', 'scripts', 'watch', 'connect']));
 
 // Private Functions
 // ----------------------------------------------------------------------------
