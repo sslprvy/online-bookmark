@@ -25,8 +25,6 @@ const dependencies = [
     'react',
     'react-dom'
 ];
-// keep a count of the times a task refires
-var scriptsCount = 0;
 
 const SERVER_PORT = 9000;
 const LIVERELOAD_PORT = 35729;
@@ -38,6 +36,9 @@ const CONFIG = {
     appEntryPoint: './app/app.jsx',
     destFolder: 'web'
 };
+
+// keep a count of the times a task refires
+var scriptsCount = 0;
 
 // Gulp tasks
 // ----------------------------------------------------------------------------
