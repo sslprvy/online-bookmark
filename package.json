@@ -35,7 +35,11 @@
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-inject": "^4.1.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
     "gulp-rev": "^7.1.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-sequence": "^0.4.6",
     "gulp-util": "^3.0.7",
     "vinyl-source-stream": "^1.1.0"
   },
