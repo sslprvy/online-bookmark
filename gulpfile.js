@@ -16,6 +16,7 @@ const browserSync = require('browser-sync').create();
 const gulpSequence = require('gulp-sequence');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
+const merge = require('merge-stream');
 
 const onError = require('./gulp_settings/error-handler').onError;
 
@@ -74,7 +75,8 @@ gulp.task('watch', function () {
             gulp.start('index');
         }
     });
-    gulp.watch(`${CONFIG.cssDestFolder}*.css`, ['index'])
+    gulp.watch(`${CONFIG.tempFolder}/*.css`, ['revision']);
+    gulp.watch(`${CONFIG.cssDestFolder}*.css`, ['index']);
     gulp.watch(['./index.html']).on('change', browserSync.reload);
     gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', browserSync.reload);
 });
@@ -97,9 +99,13 @@ gulp.task('connect', function () {
 });
 
 gulp.task('revision', function () {
-    return gulp.src([`${CONFIG.tempFolder}/*.js`])
+    var jsRevision = gulp.src([`${CONFIG.tempFolder}/*.js`])
         .pipe(rev())
         .pipe(gulp.dest(`${CONFIG.jsDestFolder}`));
+    var cssRevision = gulp.src([`${CONFIG.tempFolder}/*.css`])
+        .pipe(rev())
+        .pipe(gulp.dest(`${CONFIG.cssDestFolder}`));
+    return merge(jsRevision, cssRevision);
 });
 
 gulp.task('index', function () {
@@ -115,7 +121,7 @@ gulp.task('sass', () => {
     return gulp.src('app/**/*.scss')
         .pipe(plumber({ errorHandler: onError }))
         .pipe(sass())
-        .pipe(gulp.dest(`${CONFIG.cssDestFolder}`))
+        .pipe(gulp.dest(`${CONFIG.tempFolder}`))
         .pipe(browserSync.stream());
 });
 

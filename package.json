@@ -41,6 +41,7 @@
     "gulp-sass": "^2.3.2",
     "gulp-sequence": "^0.4.6",
     "gulp-util": "^3.0.7",
+    "merge-stream": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "engine": "5.10.1",
