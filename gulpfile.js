@@ -70,26 +70,23 @@ gulp.task('deploy', function (callback) {
 
 gulp.task('watch', function () {
     gulp.watch('app/**/*.scss', ['sass']);
-    gulp.watch(['app/*.jsx'], ['scripts']);
-    gulp.watch([`${CONFIG.tempFolder}/bundle.js`], ['clean', 'revision']);
-    gulp.watch([`${CONFIG.jsDestFolder}*.js`], function (event) {
-        if (event.type === 'renamed') {
-            gulp.start('index');
-        }
+    gulp.watch(['app/**/*.jsx'], ['scripts']);
+    gulp.watch([`${CONFIG.tempFolder}/bundle.js`], function () {
+        sequence('clean-js', 'revision', 'index')();
     });
-    gulp.watch(`${CONFIG.tempFolder}/*.css`, ['revision']);
-    gulp.watch(`${CONFIG.cssDestFolder}*.css`, ['index']);
+    gulp.watch(`${CONFIG.tempFolder}/*.css`, function () {
+        sequence('clean-css', 'revision', 'index')();
+    });
     gulp.watch(['./index.html']).on('change', browserSync.reload);
     gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', browserSync.reload);
 });
 
-gulp.task('clean', function () {
+gulp.task('clean-js', function () {
     return del([`${CONFIG.jsDestFolder}*.js`]);
 });
 
-gulp.task('js-watch', ['scripts'], function (done) {
-    browserSync.reload();
-    done();
+gulp.task('clean-css', function () {
+    return del([`${CONFIG.cssDestFolder}*.css`]);
 });
 
 gulp.task('connect', function () {
@@ -129,8 +126,7 @@ gulp.task('sass', () => {
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', sequence('clean', ['sass', 'scripts', 'watch', 'connect']));
-
+gulp.task('default', sequence(['clean-js', 'clean-css'], ['sass', 'scripts', 'watch', 'connect'], 'index'));
 
 // Private Functions
 // ----------------------------------------------------------------------------
