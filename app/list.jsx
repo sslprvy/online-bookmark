@@ -16,14 +16,14 @@ class ListElement extends React.Component {
     render() {
         var tagObjects = this.props.data.tags.map((tag, index) => {
             var key = `${this.props.data.title}-tag-${index}`;
-            return <span className="display-list-element-tag" key={key}>{tag}</span>;
+            return <div className="display-list-element-tag" key={key}>{tag}</div>;
         });
         return (
                 <li className="display-list-element" key={this.props.data.title}>
                     <div>
                         <span className="display-list-element-title">{this.props.data.title}</span><br/>
-                        <span className="display-list-element-url">{this.props.data.url}</span><br/>
-                        <span>{tagObjects}</span>
+                        <span className="display-list-element-url"><a href={this.props.data.url} target="_blank">{this.props.data.url}</a></span><br/>
+                        <div className="display-list-element-tag-container">{tagObjects}</div>
                     </div>
                 </li>
         );

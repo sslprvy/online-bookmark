@@ -1,0 +1,12 @@
+.display-list-element {
+    padding-top: 10px;
+
+    .display-list-element-tag-container {
+        display: flex;
+
+        .display-list-element-tag {
+            padding-top: 10px;
+            padding-right: 15px;
+        }
+    }
+}
