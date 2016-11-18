@@ -13,7 +13,7 @@ const rev = require('gulp-rev');
 const inject = require('gulp-inject');
 const del = require('del');
 const browserSync = require('browser-sync').create();
-const gulpSequence = require('gulp-sequence');
+const sequence = require('gulp-sequence');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
 
@@ -122,7 +122,7 @@ gulp.task('sass', () => {
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', gulpSequence('clean', ['sass', 'scripts', 'watch', 'connect']));
+gulp.task('default', sequence('clean', ['sass', 'scripts', 'watch', 'connect']));
 
 // Private Functions
 // ----------------------------------------------------------------------------
