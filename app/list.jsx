@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 export class List extends React.Component {
     render() {
         var urlObjects = this.props.objects.map(function (urlObject, index) {
-            var listElementKey = `${urlObject}-${index}`;
+            var listElementKey = `${urlObject.title}-${index}`;
             return <ListElement data={urlObject} key={listElementKey}/>;
         });
 
