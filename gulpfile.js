@@ -40,6 +40,7 @@ const CONFIG = {
 // keep a count of the times a task refires
 var scriptsCount = 0;
 
+
 // Gulp tasks
 // ----------------------------------------------------------------------------
 
@@ -75,7 +76,7 @@ gulp.task('watch', function () {
             gulp.start('index');
         }
     });
-    gulp.watch(`${CONFIG.cssDestFolder}*.css`, ['index'])
+    gulp.watch(`${CONFIG.cssDestFolder}*.css`, ['index']);
     gulp.watch(['./index.html']).on('change', browserSync.reload);
     gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', browserSync.reload);
 });
@@ -105,10 +106,9 @@ gulp.task('revision', function () {
 
 gulp.task('index', function () {
     var target = gulp.src('./index.html');
-
     var source = gulp.src([`${CONFIG.jsDestFolder}vendor*.js`, `${CONFIG.jsDestFolder}*.js`, `${CONFIG.cssDestFolder}*.css`], { read: false });
-
-    return target.pipe(inject(source))
+    return target
+        .pipe(inject(source))
         .pipe(gulp.dest('./'));
 });
 
@@ -125,10 +125,13 @@ gulp.task('sass', () => {
 // If there's a change, the task 'scripts' defined above will fire.
 gulp.task('default', sequence('clean', ['sass', 'scripts', 'watch', 'connect']));
 
+
 // Private Functions
 // ----------------------------------------------------------------------------
+
 function bundleApp(isProduction) {
     scriptsCount++;
+
     // Browserify will bundle all our js files together in to one and will let
     // us use modules in the front end.
     const appBundler = browserify({
@@ -160,7 +163,7 @@ function bundleApp(isProduction) {
     }
 
     appBundler
-    // transform ES6 and JSX to ES5 with babelify
+        // transform ES6 and JSX to ES5 with babelify
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
         .on('error', gutil.log)
