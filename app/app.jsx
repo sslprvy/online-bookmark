@@ -3,7 +3,9 @@ import ReactDom from 'react-dom';
 
 import { List } from './list.jsx';
 
-import mockJson from '../data-structure-proposal.json';
+import mockJson from './mock-data.json';
+
+var USERNAME = 'kunstkammern';
 
 export default class App extends React.Component {
     constructor() {
@@ -14,4 +16,4 @@ export default class App extends React.Component {
     }
 }
 
-ReactDom.render(<App userData={mockJson.mockUsername} />, document.getElementById('app-content'));
+ReactDom.render(<App userData={mockJson[USERNAME]} />, document.getElementById('app-content'));
