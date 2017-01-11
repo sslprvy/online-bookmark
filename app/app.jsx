@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import { List } from './list.jsx';
+import { List } from './list';
 
-import mockJson from './mock-data.json';
+import mockJson from './mock-data';
 
 var USERNAME = 'kunstkammern';
 

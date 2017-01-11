@@ -35,7 +35,8 @@ const CONFIG = {
     jsDestFolder: 'web/js/',
     cssDestFolder: 'web/css/',
     appEntryPoint: './app/app.jsx',
-    destFolder: 'web'
+    destFolder: 'web',
+    extensions: ['.js', '.json', '.jsx']
 };
 
 // keep a count of the times a task refires
@@ -138,7 +139,8 @@ function bundleApp(isProduction) {
     // us use modules in the front end.
     const appBundler = browserify({
         entries: CONFIG.appEntryPoint,
-        debug: true
+        debug: true,
+        extensions: CONFIG.extensions
     });
 
     // If it's not for production, a separate vendors.js file will be created
@@ -148,7 +150,8 @@ function bundleApp(isProduction) {
         // create vendors.js for dev environment.
         browserify({
             require: dependencies,
-            debug: true
+            debug: true,
+            extensions: CONFIG.extensions
         })
             .bundle()
             .on('error', gutil.log)
