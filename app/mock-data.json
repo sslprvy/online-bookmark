@@ -1,23 +1,25 @@
 {
-	"kunstkammern": {
-		"isUeser": true,
-		"isMutable": true,
-		"data": [
-			{
-				"title": "Cabinet of curiosities",
-				"url": "https://en.wikipedia.org/wiki/Cabinet_of_curiosities",
-				"tags": [
-					"funfact"
-				]
-			},
-			{
-				"title": "Malaria Killed Half the People Who Have Ever Lived",
-				"url": "http://factmyth.com/factoids/malaria-killed-half-the-people-who-have-ever-lived/",
-				"tags": [
-					"funfact",
-          "myth"
-				]
-			}
-		]
+	"users": {
+		"kunstkammern": {
+			"isUeser": true,
+			"isMutable": true,
+			"data": [
+				{
+					"title": "Cabinet of curiosities",
+					"url": "https://en.wikipedia.org/wiki/Cabinet_of_curiosities",
+					"tags": [
+						"funfact"
+					]
+				},
+				{
+					"title": "Malaria Killed Half the People Who Have Ever Lived",
+					"url": "http://factmyth.com/factoids/malaria-killed-half-the-people-who-have-ever-lived/",
+					"tags": [
+						"funfact",
+			"myth"
+					]
+				}
+			]
+		}
 	}
 }
