@@ -7,6 +7,10 @@ const mapUsers = (state) => {
     };
 };
 
+const hashId = (title) => {
+    return `${title.toLowerCase().replace(/\s/g,'-')}`;
+};
+
 const List = ({ userData }) => {
     let userObjects = userData.map(user => {
         return user.data.map((listElement, index) => {
@@ -17,10 +21,10 @@ const List = ({ userData }) => {
             );
 
             return (
-                <li className="display-list-element" key={`${listElement.title}-${index}`}>
+                <li className="display-list-element" id={hashId(listElement.title)} key={`${listElement.title}-${index}`}>
                     <div>
-                        <span className="display-list-element-title">{listElement.title}</span><br/>
-                        <span className="display-list-element-url"><a href={listElement.url} target="_blank">{listElement.url}</a></span><br/>
+                        <a className="display-list-element-title" href={`#${hashId(listElement.title)}`}>{listElement.title}</a>
+                        <span className="display-list-element-url"><a href={listElement.url} target="_blank">{listElement.url}</a></span>
                         <div className="display-list-element-tag-container">{tagObjects}</div>
                     </div>
                 </li>
