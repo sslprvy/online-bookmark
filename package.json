@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "start node node_modules/json-server/bin/index.js --watch app/mock-data.json && node node_modules/gulp/bin/gulp.js --color"
+    "start": "node node_modules/gulp/bin/gulp.js --color"
   },
   "repository": {
     "type": "git",
@@ -50,6 +50,7 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "^5.0.2",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
   }
 }
