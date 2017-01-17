@@ -1,30 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const mapUsers = (state) => {
+import ListElement from './list-element';
+
+const mapState = ({ appData, editEntry }) => {
     return {
-        userData: state.appData.users
+        userData: appData.users,
+        editEntry
     };
 };
 
-const List = ({ userData }) => {
+const List = ({ userData, editEntry }) => {
     let userObjects = userData.map(user => {
         return user.data.map((listElement, index) => {
-            const tagObjects = listElement.tags.map((tag, index) => (
-                <div className="display-list-element-tag" key={`${tag}-${index}`}>
-                    <span>{tag}</span>
-                </div>
-            ));
 
-            return (
-                <li className="display-list-element" key={`${listElement.title}-${index}`}>
-                    <div>
-                        <span className="display-list-element-title">{listElement.title}</span><br/>
-                        <span className="display-list-element-url"><a href={listElement.url} target="_blank">{listElement.url}</a></span><br/>
-                        <div className="display-list-element-tag-container">{tagObjects}</div>
-                    </div>
-                </li>
-            )
+            const key = `${listElement.title}-${index}`;
+                return <ListElement listElement={listElement} key={key} ownKey={key}/>;
         });
     });
 
@@ -35,4 +26,4 @@ const List = ({ userData }) => {
     );
 };
 
-export default connect(mapUsers)(List);
+export default connect(mapState)(List);
