@@ -70,7 +70,7 @@ gulp.task('deploy', function (callback) {
 
 gulp.task('watch', function () {
     gulp.watch('app/**/*.scss', ['sass']);
-    gulp.watch(['app/**/*.jsx'], ['scripts']);
+    gulp.watch(['app/**/*.jsx', 'app/**/*.js'], ['scripts']);
     gulp.watch([`${CONFIG.tempFolder}/bundle.js`], function () {
         sequence('clean-js', 'revision', 'index')();
     });
