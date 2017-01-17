@@ -20,6 +20,8 @@ const merge = require('merge-stream');
 
 const onError = require('./gulp_settings/error-handler').onError;
 
+require('./gulp_settings/server')();
+
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
 const dependencies = [
