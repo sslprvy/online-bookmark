@@ -10,7 +10,7 @@ const mapUsers = (state) => {
 const List = ({ userData }) => {
     let userObjects = userData.map(user => {
         return user.data.map((listElement, index) => {
-            const tagObjects = listElement.tags.map((tag, index) =>
+            const tagObjects = listElement.tags.sort().map((tag, index) =>
                 <div className="display-list-element-tag" key={`${tag}-${index}`}>
                     <span>{tag}</span>
                 </div>
