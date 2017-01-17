@@ -33,7 +33,7 @@ const List = ({ userData }) => {
     });
 
     return (
-        <ul>
+        <ul className="display-list">
             {userObjects}
         </ul>
     );
