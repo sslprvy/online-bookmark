@@ -29,9 +29,6 @@ const dependencies = [
     'react-dom'
 ];
 
-const SERVER_PORT = 9000;
-const LIVERELOAD_PORT = 35729;
-
 const CONFIG = {
     tempFolder: 'tmp',
     jsDestFolder: 'web/js/',
