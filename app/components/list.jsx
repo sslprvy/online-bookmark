@@ -1,31 +1,38 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import { connect } from 'react-redux';
 
-export class List extends React.Component {
-    render() {
-        var urlObjects = this.props.objects.map(function (urlObject, index) {
-            var listElementKey = `${urlObject.title}-${index}`;
-            return <ListElement data={urlObject} key={listElementKey}/>;
-        });
+const mapUsers = (state) => {
+    return {
+        userData: state.appData.users
+    };
+};
 
-        return <ul className="display-list">{urlObjects}</ul>;
-    }
-}
+const List = ({ userData }) => {
+    let userObjects = userData.map(user => {
+        return user.data.map((listElement, index) => {
+            const tagObjects = listElement.tags.map((tag, index) => (
+                <div className="display-list-element-tag" key={`${tag}-${index}`}>
+                    <span>{tag}</span>
+                </div>
+            ));
 
-class ListElement extends React.Component {
-    render() {
-        var tagObjects = this.props.data.tags.map((tag, index) => {
-            var key = `${this.props.data.title}-tag-${index}`;
-            return <div className="display-list-element-tag" key={key}>{tag}</div>;
-        });
-        return (
-                <li className="display-list-element" key={this.props.data.title}>
+            return (
+                <li className="display-list-element" key={`${listElement.title}-${index}`}>
                     <div>
-                        <span className="display-list-element-title">{this.props.data.title}</span><br/>
-                        <span className="display-list-element-url"><a href={this.props.data.url} target="_blank">{this.props.data.url}</a></span><br/>
+                        <span className="display-list-element-title">{listElement.title}</span><br/>
+                        <span className="display-list-element-url"><a href={listElement.url} target="_blank">{listElement.url}</a></span><br/>
                         <div className="display-list-element-tag-container">{tagObjects}</div>
                     </div>
                 </li>
-        );
-    }
-}
+            )
+        });
+    });
+
+    return (
+        <ul>
+            {userObjects}
+        </ul>
+    );
+};
+
+export default connect(mapUsers)(List);

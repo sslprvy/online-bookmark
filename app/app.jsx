@@ -1,38 +1,37 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import thunkMiddleware from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 
-import { List } from './components/list';
-
-import config from '../config';
+import List from './components/list';
+import appReducers from './reducers/index';
+import { fetchData } from './actions/app-data';
 
 var USERNAME = 'kunstkammern';
 
-export default class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            userData: {
-                data: []
-            }
-        }
-    }
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-    componentDidMount() {
-        const request = new Request(`${config.path}/users`, {
-            method: 'GET'
-        });
-        fetch(request)
-            .then(response => response.json())
-            .then(users => {
-                this.setState({
-                    userData: users[USERNAME]
-                });
-            });
-    }
+let store = createStore(
+    appReducers,
+    composeEnhancers(
+        applyMiddleware(thunkMiddleware)
+    )
+);
 
-    render() {
-        return <div><List objects={this.state.userData.data} /></div>;
-    }
-}
+store.dispatch(fetchData());
 
-ReactDom.render(<App />, document.getElementById('app-content'));
+const App = () => (
+    <div id="wrapper">
+        <List />
+    </div>
+);
+
+document.addEventListener('DOMContentLoaded', () => {
+    ReactDom.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById('app-content')
+    );
+});
