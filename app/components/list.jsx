@@ -10,11 +10,11 @@ const mapUsers = (state) => {
 const List = ({ userData }) => {
     let userObjects = userData.map(user => {
         return user.data.map((listElement, index) => {
-            const tagObjects = listElement.tags.map((tag, index) => (
+            const tagObjects = listElement.tags.map((tag, index) =>
                 <div className="display-list-element-tag" key={`${tag}-${index}`}>
                     <span>{tag}</span>
                 </div>
-            ));
+            );
 
             return (
                 <li className="display-list-element" key={`${listElement.title}-${index}`}>
@@ -24,7 +24,7 @@ const List = ({ userData }) => {
                         <div className="display-list-element-tag-container">{tagObjects}</div>
                     </div>
                 </li>
-            )
+            );
         });
     });
 
