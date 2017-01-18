@@ -37,11 +37,15 @@
             margin-top: 0.4em;
 
             .display-list-element-tag {
+                @extend .nonselectable;
+
                 margin-right: 2px;
                 padding: 0.3em 0.6em;
                 border-radius: 3px;
                 background-color: $tag-background-color;
                 color: $tag-font-color;
+                cursor: pointer;
+
                 &:hover {
                     background-color: $tag-background-color-hover;
                 }
