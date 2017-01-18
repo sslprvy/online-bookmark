@@ -11,6 +11,10 @@ const mapDispatch = (dispatch) => {
     };
 };
 
+const hashId = (title) => {
+    return `${title.toLowerCase().replace(/\s/g,'-')}`;
+};
+
 const ListElement = ({ listElement, editEntry}) => {
     const tagObjects = listElement.tags.map((tag, index) =>
         <div className="display-list-element-tag" key={`${tag}-${index}`}>
@@ -18,9 +22,9 @@ const ListElement = ({ listElement, editEntry}) => {
         </div>
     );
     return (
-        <li className="display-list-element">
+        <li className="display-list-element" id={hashId(listElement.title)}>
             <div>
-                <span className="display-list-element-title">{listElement.title}</span><br/>
+                <a className="display-list-element-title" href={`#${hashId(listElement.title)}`}>{listElement.title}</a>
                 <span className="display-list-element-url"><a href={listElement.url} target="_blank">{listElement.url}</a></span><br/>
                 <div className="display-list-element-tag-container">{tagObjects}</div>
             </div>

@@ -25,7 +25,7 @@ const List = ({ userData, editEntry }) => {
     });
 
     return (
-        <ul>
+        <ul className="display-list">
             {userObjects}
         </ul>
     );
