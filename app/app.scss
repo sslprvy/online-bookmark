@@ -4,15 +4,16 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: $background-color;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: $base-font-size;
     font-style: normal;
     font-variant: normal;
     font-weight: 400;
-    color: #000000;
+    color: $font-color;
 }
 
 a {
     text-decoration: none;
-    color: #000000;
+    color: $anchor-color;
 }

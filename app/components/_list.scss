@@ -1,3 +1,4 @@
+@import "variables";
 @import "../commons.scss";
 
 .display-list {
@@ -26,7 +27,7 @@
 
             a {
                 &:hover {
-                    color: #009acc;
+                    color: $anchor-color-hover;
                 }
             }
         }
@@ -39,13 +40,20 @@
                 margin-right: 2px;
                 padding: 0.3em 0.6em;
                 border-radius: 3px;
-                background-color: #009acc;
-                color: #ffffff;
+                background-color: $tag-background-color;
+                color: $tag-font-color;
+                &:hover {
+                    background-color: $tag-background-color-hover;
+                }
             }
         }
 
+        &:hover {
+            background-color: $target-background-color;
+        }
+
         &:target {
-            background-color: #d7effc;
+            background-color: $target-background-color;
         }
     }
 }
