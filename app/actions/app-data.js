@@ -9,8 +9,16 @@ function fetchingData() {
 function receivedData(data) {
     return {
         type: 'RECEIVED_DATA',
-        data: data.users
+        data: data
     };
+}
+
+export function updateUser({user, id}) {
+    return {
+        type: 'UPDATE_USER',
+        user,
+        id
+    }
 }
 
 export function fetchData() {
