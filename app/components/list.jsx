@@ -17,9 +17,9 @@ const List = ({ userData, editEntry }) => {
 
             const key = `${listElement.title}-${index}`;
             if (editEntry.editing && key === editEntry.underEdit) {
-                return <EditableListElement />
+                return <EditableListElement listElement={listElement} ownKey={key} />;
             } else {
-                return <ListElement listElement={listElement} key={key} ownKey={key}/>;
+                return <ListElement listElement={listElement} key={key} ownKey={key} />;
             }
         });
     });
