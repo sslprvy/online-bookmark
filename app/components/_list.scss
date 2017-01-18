@@ -1,3 +1,6 @@
+@import "variables";
+@import "../commons.scss";
+
 .display-list {
     margin: 0;
     padding: 0;
@@ -6,40 +9,55 @@
     list-style-image: none;
 
     .display-list-element {
-        padding: 15px 13px;
+        padding: 0.8em 5%;
 
         .display-list-element-title {
+            @extend .no-wrap-overflow;
+
             display: block;
-            padding-bottom: 10px;
-            font-size: 16px;
+            padding-bottom: 0.6em;
+            font-size: 1.3em;
             font-weight: bold;
         }
 
         .display-list-element-url {
+            @extend .no-wrap-overflow;
+
             display: block;
 
             a {
                 &:hover {
-                    color: #009acc;
+                    color: $anchor-color-hover;
                 }
             }
         }
 
         .display-list-element-tag-container {
             display: flex;
-            margin-top: 8px;
+            margin-top: 0.4em;
 
             .display-list-element-tag {
-                margin-right: 3px;
-                padding: 4px 8px;
+                @extend .nonselectable;
+
+                margin-right: 2px;
+                padding: 0.3em 0.6em;
                 border-radius: 3px;
-                background-color: #009acc;
-                color: #ffffff;
+                background-color: $tag-background-color;
+                color: $tag-font-color;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $tag-background-color-hover;
+                }
             }
         }
 
+        &:hover {
+            background-color: $target-background-color;
+        }
+
         &:target {
-            background-color: #d7effc;
+            background-color: $target-background-color;
         }
     }
 }
