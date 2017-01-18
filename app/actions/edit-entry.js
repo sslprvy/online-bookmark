@@ -1,5 +1,4 @@
 export function editEntry(id) {
-    console.log(id);
     return {
         type: 'EDIT_ENTRY',
         id
