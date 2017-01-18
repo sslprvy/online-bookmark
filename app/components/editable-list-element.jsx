@@ -34,7 +34,7 @@ const EditableListElement = ({ saveEntry, user, updateUser, listElement }) => {
     }
 
     return (
-        <li>
+        <li className="display-list-element">
             <label>
                 Title:
                 <input value={listElement.title} onChange={updateEntry} name="title" />
