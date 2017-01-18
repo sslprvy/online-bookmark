@@ -11,7 +11,7 @@ const mapDispatch = (dispatch) => {
     };
 };
 
-const ListElement = ({ listElement, editEntry, ownKey }) => {
+const ListElement = ({ listElement, editEntry}) => {
     const tagObjects = listElement.tags.map((tag, index) =>
         <div className="display-list-element-tag" key={`${tag}-${index}`}>
             <span>{tag}</span>
@@ -24,14 +24,13 @@ const ListElement = ({ listElement, editEntry, ownKey }) => {
                 <span className="display-list-element-url"><a href={listElement.url} target="_blank">{listElement.url}</a></span><br/>
                 <div className="display-list-element-tag-container">{tagObjects}</div>
             </div>
-            <span onClick={editEntry.bind(null, ownKey)}>Edit</span>
+            <button onClick={editEntry.bind(null, listElement.id)}>Edit</button>
         </li>
     );
 };
 
 ListElement.propTypes = {
-    listElement: PropTypes.object.isRequired,
-    ownKey: PropTypes.string.isRequired
+    listElement: PropTypes.object.isRequired
 };
 
 export default connect(null, mapDispatch)(ListElement);

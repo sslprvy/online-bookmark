@@ -5,6 +5,7 @@ const defaultState = {
 
 export default function editEntry(state = defaultState, action) {
     switch (action.type) {
+        case 'UPDATE_USER':
         case 'EDIT_ENTRY':
             return {
                 editing: true,

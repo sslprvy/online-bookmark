@@ -16,10 +16,10 @@ const List = ({ userData, editEntry }) => {
         return user.data.map((listElement, index) => {
 
             const key = `${listElement.title}-${index}`;
-            if (editEntry.editing && key === editEntry.underEdit) {
-                return <EditableListElement listElement={listElement} ownKey={key} />;
+            if (editEntry.editing && listElement.id === editEntry.underEdit) {
+                return <EditableListElement user={user} listElement={listElement} />;
             } else {
-                return <ListElement listElement={listElement} key={key} ownKey={key} />;
+                return <ListElement listElement={listElement} key={key} />;
             }
         });
     });

@@ -13,6 +13,14 @@ function receivedData(data) {
     };
 }
 
+export function updateUser({user, id}) {
+    return {
+        type: 'UPDATE_USER',
+        user,
+        id
+    }
+}
+
 export function fetchData() {
     return function (dispatch) {
         dispatch(fetchingData());
