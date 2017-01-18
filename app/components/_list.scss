@@ -1,4 +1,4 @@
-@import '../commons.scss';
+@import "../commons.scss";
 
 .display-list {
     margin: 0;
@@ -8,14 +8,14 @@
     list-style-image: none;
 
     .display-list-element {
-        padding: 15px 5%;
+        padding: 0.8em 5%;
 
         .display-list-element-title {
             @extend .no-wrap-overflow;
 
             display: block;
-            padding-bottom: 10px;
-            font-size: 16px;
+            padding-bottom: 0.6em;
+            font-size: 1.3em;
             font-weight: bold;
         }
 
@@ -33,11 +33,11 @@
 
         .display-list-element-tag-container {
             display: flex;
-            margin-top: 8px;
+            margin-top: 0.4em;
 
             .display-list-element-tag {
                 margin-right: 3px;
-                padding: 4px 8px;
+                padding: 0.3em 0.6em;
                 border-radius: 3px;
                 background-color: #009acc;
                 color: #ffffff;
