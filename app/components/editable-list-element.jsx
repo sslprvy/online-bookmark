@@ -29,7 +29,7 @@ const EditableListElement = ({ saveEntry, user, updateUser, listElement }) => {
             }
         });
 
-        const newUser = Object.assign({}, user, { data: userData })
+        const newUser = Object.assign({}, user, { data: userData });
         updateUser({ user: newUser, id: listElement.id });
     }
 

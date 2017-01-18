@@ -18,7 +18,7 @@ export function updateUser({user, id}) {
         type: 'UPDATE_USER',
         user,
         id
-    }
+    };
 }
 
 export function fetchData() {
