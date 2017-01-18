@@ -91,6 +91,7 @@ gulp.task('clean-css', function () {
 
 gulp.task('connect', function () {
     browserSync.init({
+        port: 4000,
         server: {
             baseDir: './'
         }
