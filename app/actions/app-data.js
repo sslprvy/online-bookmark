@@ -9,7 +9,7 @@ function fetchingData() {
 function receivedData(data) {
     return {
         type: 'RECEIVED_DATA',
-        data: data.users
+        data: data
     };
 }
 
