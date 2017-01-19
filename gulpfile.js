@@ -17,6 +17,7 @@ const sequence = require('gulp-sequence');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
 const merge = require('merge-stream');
+const _ = require('lodash');
 
 const onError = require('./gulp_settings/error-handler').onError;
 
@@ -78,7 +79,12 @@ gulp.task('watch', function () {
         sequence('clean-css', 'revision', 'index')();
     });
     gulp.watch(['./index.html']).on('change', browserSync.reload);
-    gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', browserSync.reload);
+    gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', _.debounce(browserSync.reload, 100));
+});
+
+gulp.task('copy:index.html', function () {
+    return gulp.src('index.html')
+        .pipe(gulp.dest(CONFIG.destFolder));
 });
 
 gulp.task('clean-js', function () {
@@ -93,7 +99,7 @@ gulp.task('connect', function () {
     browserSync.init({
         port: 4000,
         server: {
-            baseDir: './'
+            baseDir: CONFIG.destFolder
         }
     });
 });
@@ -109,11 +115,11 @@ gulp.task('revision', function () {
 });
 
 gulp.task('index', function () {
-    var target = gulp.src('./index.html');
+    var target = gulp.src(`${CONFIG.destFolder}/index.html`);
     var source = gulp.src([`${CONFIG.jsDestFolder}vendor*.js`, `${CONFIG.jsDestFolder}*.js`, `${CONFIG.cssDestFolder}*.css`], { read: false });
     return target
-        .pipe(inject(source))
-        .pipe(gulp.dest('./'));
+        .pipe(inject(source, { ignorePath: 'web' }))
+        .pipe(gulp.dest(CONFIG.destFolder));
 });
 
 gulp.task('sass', () => {
@@ -127,7 +133,7 @@ gulp.task('sass', () => {
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', sequence(['clean-js', 'clean-css'], ['sass', 'scripts', 'watch'], 'index', 'connect'));
+gulp.task('default', sequence(['clean-js', 'clean-css'], ['copy:index.html', 'sass', 'scripts', 'watch'], 'index', 'connect'));
 
 // Private Functions
 // ----------------------------------------------------------------------------
