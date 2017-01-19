@@ -87,6 +87,11 @@ gulp.task('copy:index.html', function () {
         .pipe(gulp.dest(CONFIG.destFolder));
 });
 
+gulp.task('copy:fonts', function () {
+    return gulp.src('node_modules/font-awesome/fonts/*.*')
+        .pipe(gulp.dest(`${CONFIG.destFolder}/fonts`));
+});
+
 gulp.task('clean-js', function () {
     return del([`${CONFIG.jsDestFolder}*.js`]);
 });
@@ -123,7 +128,7 @@ gulp.task('index', function () {
 });
 
 gulp.task('sass', () => {
-    return gulp.src('app/**/*.scss')
+    return gulp.src(['node_modules/font-awesome/scss/*.scss', 'app/**/*.scss'])
         .pipe(plumber({ errorHandler: onError }))
         .pipe(sass())
         .pipe(gulp.dest(`${CONFIG.tempFolder}`))
@@ -133,7 +138,7 @@ gulp.task('sass', () => {
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', sequence(['clean-js', 'clean-css'], ['copy:index.html', 'sass', 'scripts', 'watch'], 'index', 'connect'));
+gulp.task('default', sequence(['clean-js', 'clean-css'], ['copy:index.html', 'copy:fonts', 'sass', 'scripts', 'watch'], 'index', 'connect'));
 
 // Private Functions
 // ----------------------------------------------------------------------------
