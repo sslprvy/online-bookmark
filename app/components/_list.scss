@@ -56,6 +56,18 @@
                     }
                 }
             }
+
+            input {
+                border: 0.1em solid $input-field-border-color;
+                background: $input-field-background-color;
+                padding: 0.3em 0.4em;
+                width: 60%;
+                font-size: 1em;
+
+                &:not(:last-child) {
+                    margin-bottom: 0.3em;
+                }
+            }
         }
 
         .display-list-element-control {
