@@ -29,11 +29,11 @@ const ListElement = ({ listElement, editEntry}) => {
                 <div className="display-list-element-tag-container">{tagObjects}</div>
             </div>
             <div className="display-list-element-control">
-                <i className="fa fa-trash-o display-list-element-remove-button"
-                    aria-hidden="true"></i>
                 <i className="fa fa-pencil display-list-element-edit-button"
                     aria-hidden="true"
                     onClick={editEntry.bind(null, listElement.id)}></i>
+                <i className="fa fa-trash-o display-list-element-remove-button"
+                    aria-hidden="true"></i>
             </div>
         </li>
     );
