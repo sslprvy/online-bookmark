@@ -24,11 +24,10 @@ const ListElement = ({ listElement, editEntry}) => {
     return (
         <li className="display-list-element" id={hashId(listElement.title)}>
             <div>
-                <a className="display-list-element-title" href={`#${hashId(listElement.title)}`}>{listElement.title}</a>
+                <i className="fa fa-pencil" aria-hidden="true" onClick={editEntry.bind(null, listElement.id)}></i><a className="display-list-element-title" href={`#${hashId(listElement.title)}`}>{listElement.title}</a>
                 <span className="display-list-element-url"><a href={listElement.url} target="_blank">{listElement.url}</a></span><br/>
                 <div className="display-list-element-tag-container">{tagObjects}</div>
             </div>
-            <button onClick={editEntry.bind(null, listElement.id)}>Edit</button>
         </li>
     );
 };
