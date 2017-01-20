@@ -6,27 +6,28 @@ import EditableListElement from './editable-list-element';
 
 const mapState = ({ appData, editEntry }) => {
     return {
-        userData: appData.users,
+        userData: appData.users[0],
         editEntry
     };
 };
 
 const List = ({ userData, editEntry }) => {
-    let userObjects = userData.map(user => {
-        return user.data.map((listElement, index) => {
+    if (!userData) {
+        return null;
+    }
 
-            const key = `${listElement.title}-${index}`;
-            if (editEntry.editing && listElement.id === editEntry.underEdit) {
-                return <EditableListElement user={user} listElement={listElement} />;
-            } else {
-                return <ListElement listElement={listElement} key={key} />;
-            }
-        });
+    let userObject = userData.data.map((listElement, index) => {
+        const key = `${listElement.title}-${index}`;
+        if (editEntry.editing && listElement.id === editEntry.underEdit) {
+            return <EditableListElement user={user} listElement={listElement} />;
+        } else {
+            return <ListElement listElement={listElement} key={key} />;
+        }
     });
 
     return (
         <ul className="display-list">
-            {userObjects}
+            {userObject}
         </ul>
     );
 };
