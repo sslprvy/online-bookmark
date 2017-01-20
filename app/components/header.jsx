@@ -15,7 +15,9 @@ const Header = ({ userData }) => {
     let username = userData.name;
 
     return (
-        <div className="page-header">{username}</div>
+        <div className="page-header">
+            <div className="page-header-username">{username}</div>
+        </div>
     );
 };
 
