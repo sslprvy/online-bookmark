@@ -9,51 +9,91 @@
     list-style-image: none;
 
     .display-list-element {
+        display: flex;
         padding: 0.8em 5%;
 
-        .display-list-element-title {
-            @extend .no-wrap-overflow;
+        .display-list-element-content {
+            overflow: hidden;
+            width: 100%;
 
-            display: block;
-            padding-bottom: 0.6em;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
+            .display-list-element-title {
+                @extend .no-wrap-overflow;
 
-        .display-list-element-url {
-            @extend .no-wrap-overflow;
+                display: block;
+                margin-bottom: 0.6em;
+                font-size: 1.3em;
+                font-weight: bold;
+            }
 
-            display: block;
+            .display-list-element-url {
+                @extend .no-wrap-overflow;
 
-            a {
-                &:hover {
-                    color: $anchor-color-hover;
+                display: block;
+
+                a {
+                    &:hover {
+                        color: $anchor-color-hover;
+                    }
+                }
+            }
+
+            .display-list-element-tag-container {
+                display: flex;
+                margin-top: 0.4em;
+
+                .display-list-element-tag {
+                    @extend .nonselectable;
+
+                    margin-right: 2px;
+                    padding: 0.3em 0.6em;
+                    border-radius: 3px;
+                    background-color: $tag-background-color;
+                    color: $tag-font-color;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: $tag-background-color-hover;
+                    }
+                }
+            }
+
+            input {
+                border: 0.1em solid $input-field-border-color;
+                background: $input-field-background-color;
+                padding: 0.3em 0.4em;
+                width: 60%;
+                font-size: 1em;
+
+                &:not(:last-child) {
+                    margin-bottom: 0.3em;
                 }
             }
         }
 
-        .display-list-element-tag-container {
-            display: flex;
-            margin-top: 0.4em;
+        .display-list-element-control {
+            display: none;
+            justify-content: flex-end;
+            align-items: center;
+            margin-left: 1em;
+            width: 6em;
+            font-size: 1.8em;
 
-            .display-list-element-tag {
-                @extend .nonselectable;
-
-                margin-right: 2px;
-                padding: 0.3em 0.6em;
-                border-radius: 3px;
-                background-color: $tag-background-color;
-                color: $tag-font-color;
+            i {
+                margin: 0.3em 0.6em;
                 cursor: pointer;
 
                 &:hover {
-                    background-color: $tag-background-color-hover;
+                    color: $font-color-hover;
                 }
             }
         }
 
         &:hover {
             background-color: $target-background-color;
+
+            .display-list-element-control {
+                display: flex;
+            }
         }
 
         &:target {

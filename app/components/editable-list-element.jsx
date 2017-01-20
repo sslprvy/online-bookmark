@@ -29,21 +29,23 @@ const EditableListElement = ({ saveEntry, user, updateUser, listElement }) => {
             }
         });
 
-        const newUser = Object.assign({}, user, { data: userData })
+        const newUser = Object.assign({}, user, { data: userData });
         updateUser({ user: newUser, id: listElement.id });
     }
 
     return (
-        <li>
-            <label>
-                Title:
+        <li className="display-list-element">
+            <div className="display-list-element-content">
                 <input value={listElement.title} onChange={updateEntry} name="title" />
-            </label>
-            <label>
-                Url:
                 <input value={listElement.url} onChange={updateEntry} name="url" />
-            </label>
-            <button onClick={saveEntry.bind(null, listElement.id)}>Done</button>
+            </div>
+            <div className="display-list-element-control">
+                <i className="fa fa-floppy-o display-list-element-remove-button"
+                    aria-hidden="true"
+                    onClick={saveEntry.bind(null, listElement.id)}></i>
+                <i className="fa fa-times display-list-element-cancel-button"
+                    aria-hidden="true"></i>
+            </div>
         </li>
     );
 };
