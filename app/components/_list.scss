@@ -10,7 +10,7 @@
 
     .display-list-element {
         display: flex;
-        padding: 0.8em 0;
+        padding: 0.8em $base-left-right-padding;
 
         .display-list-element-content {
             overflow: hidden;
