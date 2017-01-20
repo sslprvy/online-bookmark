@@ -8,7 +8,7 @@ import List from './components/list';
 import appReducers from './reducers/index';
 import { fetchData } from './actions/app-data';
 
-var USERNAME = 'kunstkammern';
+const USERNAME = 'kunstkammern';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -19,7 +19,7 @@ let store = createStore(
     )
 );
 
-store.dispatch(fetchData());
+store.dispatch(fetchData(USERNAME));
 
 const App = () => (
     <div id="wrapper">
