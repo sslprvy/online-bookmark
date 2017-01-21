@@ -61,7 +61,8 @@
                 border: 0.1em solid $input-field-border-color;
                 background: $input-field-background-color;
                 padding: 0.3em 0.4em;
-                width: 60%;
+                width: 40em;
+                max-width: 95%;
                 font-size: 1em;
 
                 &:not(:last-child) {
@@ -75,7 +76,6 @@
             justify-content: flex-end;
             align-items: center;
             margin-left: 1em;
-            width: 6em;
             font-size: 1.8em;
 
             i {
