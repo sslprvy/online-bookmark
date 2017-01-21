@@ -82,6 +82,14 @@
                 margin: 0.3em 0.6em;
                 cursor: pointer;
 
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
                 &:hover {
                     color: $font-color-hover;
                 }
