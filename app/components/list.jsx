@@ -19,7 +19,7 @@ const List = ({ userData, editEntry }) => {
     let userObject = userData.data.map((listElement, index) => {
         const key = `${listElement.title}-${index}`;
         if (editEntry.editing && listElement.id === editEntry.underEdit) {
-            return <EditableListElement user={user} listElement={listElement} />;
+            return <EditableListElement user={userData} listElement={listElement} />;
         } else {
             return <ListElement listElement={listElement} key={key} />;
         }
