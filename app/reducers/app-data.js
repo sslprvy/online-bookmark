@@ -1,6 +1,6 @@
 const defaultState = {
     isFetching: false,
-    users: []
+    userData: {}
 };
 
 export default function appData(state = defaultState, action) {
@@ -8,23 +8,17 @@ export default function appData(state = defaultState, action) {
         case 'FETCHING_DATA':
             return {
                 isFetching: true,
-                users: state.users
+                userData: state.userData[0]
             };
         case 'RECEIVED_DATA':
             return {
                 isFetching: false,
-                users: action.data
+                userData: action.data[0]
             };
         case 'UPDATE_USER':
             return {
                 isFetching: false,
-                users: state.users.map(user => {
-                    if (user.id === action.user.id) {
-                        return action.user;
-                    } else {
-                        return user;
-                    }
-                })
+                userData: action.user
             };
         default:
             return state;

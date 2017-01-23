@@ -6,7 +6,7 @@ import EditableListElement from './editable-list-element';
 
 const mapState = ({ appData, editEntry }) => {
     return {
-        userData: appData.users[0],
+        userData: appData.userData,
         editEntry
     };
 };
