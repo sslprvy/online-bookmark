@@ -8,7 +8,7 @@ export default function appData(state = defaultState, action) {
         case 'FETCHING_DATA':
             return {
                 isFetching: true,
-                userData: state.userData[0]
+                userData: state.userData
             };
         case 'RECEIVED_DATA':
             return {

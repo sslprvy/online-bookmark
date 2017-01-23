@@ -12,7 +12,8 @@ const mapState = ({ appData, editEntry }) => {
 };
 
 const List = ({ userData, editEntry }) => {
-    if (!userData) {
+    // NTOE: could be replaced with `_.isEmpty()`
+    if (userData.constructor === Object && Object.keys(userData).length === 0) {
         return null;
     }
 
