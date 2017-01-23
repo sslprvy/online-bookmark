@@ -31,7 +31,7 @@
 		// stylistic issues
 		"camelcase": 1,
 		"eol-last": 1,
-		"indent": ["error", 4],
+		"indent": ["error", 4, {"SwitchCase": 1}],
 		"semi": 1
 		// ecma script 6
 		// plugin related
