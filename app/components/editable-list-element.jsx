@@ -9,12 +9,11 @@ const mapDispatch = (dispatch) => {
         saveEntry: (id) => {
             dispatch(saveEntry(id));
         },
-        updateUser: (user) => {
-            dispatch(updateUser(user));
+        updateUser: ({ user, id }) => {
+            dispatch(updateUser({ user, id }));
         }
     };
 };
-
 
 const EditableListElement = ({ saveEntry, user, updateUser, listElement }) => {
     function updateEntry(event) {
