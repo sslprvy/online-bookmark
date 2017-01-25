@@ -10,6 +10,7 @@
           "id": 1,
           "title": "Cabinet of curiosities",
           "url": "https://en.wikipedia.org/wiki/Cabinet_of_curiosities",
+          "lists": [],
           "tags": [
             "funfact"
           ]
@@ -17,10 +18,25 @@
         {
           "id": 2,
           "title": "Malaria Killed Half the People Who Have Ever Lived",
-          "url": "http://factmyth.com/factoids/malaria-killed-half-the-people-who-have-ever-lived/",
+          "url": "http://factmyth.com/factoids/malaria-killed-half-the-people-who-have-ever-lived",
+          "lists": [
+            "Let's keep our brains stimulated!"
+          ],
           "tags": [
             "funfact",
             "myth"
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Messages For The Future",
+          "url": "https://www.youtube.com/watch?v=GDrBIKOR01c",
+          "lists": [
+            "Let's keep our brains stimulated!"
+          ],
+          "tags": [
+            "video",
+            "vsauce"
           ]
         }
       ]

@@ -1,0 +1,12 @@
+@import "variables";
+
+.page-header {
+	padding: 0 $base-left-right-padding;
+	padding-top: 1.8em;
+	padding-bottom: 0.6em;
+	background-color: $header-background-color;
+	border-bottom: 0.1em solid $header-border-color;
+	font-size: 1.8em;
+	font-weight: 700;
+	color: $header-font-color;
+}

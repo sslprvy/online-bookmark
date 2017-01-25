@@ -10,7 +10,7 @@
 
     .display-list-element {
         display: flex;
-        padding: 0.8em 5%;
+        padding: 0.8em $base-left-right-padding;
 
         .display-list-element-content {
             overflow: hidden;
@@ -58,10 +58,12 @@
             }
 
             input {
+                display: block;
                 border: 0.1em solid $input-field-border-color;
                 background: $input-field-background-color;
                 padding: 0.3em 0.4em;
-                width: 60%;
+                width: 40em;
+                max-width: 95%;
                 font-size: 1em;
 
                 &:not(:last-child) {
@@ -75,12 +77,19 @@
             justify-content: flex-end;
             align-items: center;
             margin-left: 1em;
-            width: 6em;
             font-size: 1.8em;
 
             i {
                 margin: 0.3em 0.6em;
                 cursor: pointer;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
 
                 &:hover {
                     color: $font-color-hover;

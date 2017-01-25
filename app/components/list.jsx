@@ -6,27 +6,30 @@ import EditableListElement from './editable-list-element';
 
 const mapState = ({ appData, editEntry }) => {
     return {
-        userData: appData.users,
+        userData: appData.userData,
         editEntry
     };
 };
 
 const List = ({ userData, editEntry }) => {
-    let userObjects = userData.map(user => {
-        return user.data.map((listElement, index) => {
+    // NTOE: could be replaced with `_.isEmpty()`
+    if (userData.constructor === Object && Object.keys(userData).length === 0) {
+        return null;
+    }
 
+    let userObject = userData.data.map((listElement, index) => {
+        if (editEntry.editing && listElement.id === editEntry.underEdit) {
+            const key = `${listElement.title}-${index}-edit`;
+            return <EditableListElement user={userData} listElement={listElement} key={key} />;
+        } else {
             const key = `${listElement.title}-${index}`;
-            if (editEntry.editing && listElement.id === editEntry.underEdit) {
-                return <EditableListElement user={user} listElement={listElement} />;
-            } else {
-                return <ListElement listElement={listElement} key={key} />;
-            }
-        });
+            return <ListElement listElement={listElement} key={key} />;
+        }
     });
 
     return (
         <ul className="display-list">
-            {userObjects}
+            {userObject}
         </ul>
     );
 };

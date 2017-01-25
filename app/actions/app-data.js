@@ -1,4 +1,4 @@
-import { getUsers } from '../http.client';
+import { getUserData } from '../http.client';
 
 function fetchingData() {
     return {
@@ -21,11 +21,14 @@ export function updateUser({user, id}) {
     };
 }
 
-export function fetchData() {
+export function fetchData(username) {
+    if (username === undefined) {
+        // TODO: implement error handling
+    }
     return function (dispatch) {
         dispatch(fetchingData());
 
-        return getUsers()
+        return getUserData(username)
             .then(users => dispatch(receivedData(users)));
     };
 }
