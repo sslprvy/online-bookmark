@@ -6,8 +6,8 @@ import { updateUser } from '../actions/app-data';
 
 const mapDispatch = (dispatch) => {
     return {
-        saveEntry: (id) => {
-            dispatch(saveEntry(id));
+        saveEntry: (id, user) => {
+            dispatch(saveEntry({id, user}));
         },
         updateUser: (user) => {
             dispatch(updateUser(user));
@@ -42,7 +42,7 @@ const EditableListElement = ({ saveEntry, user, updateUser, listElement }) => {
             <div className="display-list-element-control">
                 <i className="fa fa-floppy-o display-list-element-remove-button"
                     aria-hidden="true"
-                    onClick={saveEntry.bind(null, listElement.id)}></i>
+                    onClick={saveEntry.bind(null, listElement.id, user)}></i>
                 <i className="fa fa-times display-list-element-cancel-button"
                     aria-hidden="true"></i>
             </div>

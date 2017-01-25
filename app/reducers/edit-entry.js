@@ -11,12 +11,11 @@ export default function editEntry(state = defaultState, action) {
                 editing: true,
                 underEdit: action.id
             };
-        case 'SAVE_ENTRY': {
+        case 'SAVE_ENTRY':
             return {
                 editing: false,
                 underEdit: ''
             };
-        }
         default:
             return state;
     }
