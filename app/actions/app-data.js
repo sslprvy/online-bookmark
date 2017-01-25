@@ -13,7 +13,7 @@ function receivedData(data) {
     };
 }
 
-export function updateUser({user, id}) {
+export function updateUser({ user, id }) {
     return {
         type: 'UPDATE_USER',
         user,
