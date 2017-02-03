@@ -8,7 +8,7 @@ const mapState = ({ appData }) => {
 };
 
 const Header = ({ userData }) => {
-    // NTOE: could be replaced with `_.isEmpty()`
+    // NOTE: could be replaced with `_.isEmpty()`
     if (userData.constructor === Object && Object.keys(userData).length === 0) {
         return null;
     }
