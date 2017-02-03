@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import appData from './app-data';
-import editEntry from './edit-entry';
+import editEntry from './entry';
 
 const appReducers = combineReducers({
     appData,
