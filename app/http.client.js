@@ -32,3 +32,9 @@ export function createLink(link, user) {
 
     return saveUserData(modifiedUser);
 }
+
+export function deleteLink(linkToDelete, user) {
+    const modifiedUser = Object.assign({}, user, { data: user.data.filter(link => link !== linkToDelete) });
+
+    return saveUserData(modifiedUser);
+}

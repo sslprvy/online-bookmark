@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { editEntry } from '../actions/entry';
+import { editEntry, deleteEntry } from '../actions/entry';
 
 const mapDispatch = (dispatch) => {
     return {
         editEntry: (id) => {
             dispatch(editEntry(id));
-        }
+        },
+        deleteEntry: (link, user) => dispatch(deleteEntry(link, user))
     };
 };
 
@@ -15,7 +16,7 @@ const hashId = (title) => {
     return `${title.toLowerCase().replace(/\s/g,'-')}`;
 };
 
-const ListElement = ({ listElement, editEntry}) => {
+const ListElement = ({ listElement, editEntry, deleteEntry, user }) => {
     const tagObjects = listElement.tags.map((tag, index) =>
         <div className="display-list-element-tag" key={`${tag}-${index}`}>
             <span>{tag}</span>
@@ -33,14 +34,16 @@ const ListElement = ({ listElement, editEntry}) => {
                     aria-hidden="true"
                     onClick={editEntry.bind(null, listElement.id)}></i>
                 <i className="fa fa-trash-o display-list-element-remove-button"
-                    aria-hidden="true"></i>
+                    aria-hidden="true"
+                    onClick={deleteEntry.bind(null, listElement, user)}></i>
             </div>
         </li>
     );
 };
 
 ListElement.propTypes = {
-    listElement: PropTypes.object.isRequired
+    listElement: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
 };
 
 export default connect(null, mapDispatch)(ListElement);

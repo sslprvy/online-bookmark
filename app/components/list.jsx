@@ -24,12 +24,12 @@ const List = ({ userData, editEntry }) => {
             return <EditableListElement user={userData} listElement={listElement} key={key} />;
         } else {
             const key = `${listElement.id}-${index}`;
-            return <ListElement listElement={listElement} key={key} />;
+            return <ListElement listElement={listElement} key={key} user={userData} />;
         }
     });
 
     if (editEntry.editing && editEntry.newEntry) {
-        userObject.unshift(<NewElement key="new-element" user={userData}/>);
+        userObject.unshift(<NewElement key="new-element" user={userData} />);
     }
 
     return (
