@@ -29,6 +29,8 @@ export function fetchData(username) {
         dispatch(fetchingData());
 
         return getUserData(username)
-            .then(users => dispatch(receivedData(users)));
+            .then(users => {
+                dispatch(receivedData(users[0]));
+            });
     };
 }
