@@ -16,10 +16,14 @@ export default function appData(state = defaultState, action) {
                 userData: action.data
             };
         case 'ADD_ENTRY':
-            let userData = Object.assign({}, state.userData, { data: state.userData.data.concat(action.link) });
             return {
                 isFetching: false,
-                userData
+                userData: Object.assign({}, state.userData, { data: state.userData.data.concat(action.link) })
+            };
+        case 'DELETE_ENTRY':
+            return {
+                isFetching: false,
+                userData: Object.assign({}, state.userData, { data: state.userData.data.filter(link => link !== action.link) })
             };
         case 'UPDATE_USER':
             return {

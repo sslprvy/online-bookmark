@@ -1,4 +1,4 @@
-import { saveUserData, createLink } from '../http.client';
+import { saveUserData, createLink, deleteLink } from '../http.client';
 
 function saveEntryAction({ id, user }) {
     return {
@@ -22,10 +22,23 @@ function addEntryAction(link) {
     };
 }
 
+function deleteEntryAction(link) {
+    return {
+        type: 'DELETE_ENTRY',
+        link
+    };
+}
+
 export function editEntry(id) {
     return {
         type: 'EDIT_ENTRY',
         id
+    };
+}
+
+export function newEntry() {
+    return {
+        type: 'NEW_ENTRY'
     };
 }
 
@@ -38,12 +51,6 @@ export function saveEntry({ id, user }) {
     };
 }
 
-export function newEntry() {
-    return {
-        type: 'NEW_ENTRY'
-    };
-}
-
 export function addEntry(link, user) {
     return function (dispatch) {
         return createLink(link, user)
@@ -51,5 +58,12 @@ export function addEntry(link, user) {
                 let savedLink = savedUser.data.slice().reverse()[0];
                 dispatch(addEntryAction(savedLink))
             });
+    };
+}
+
+export function deleteEntry(link, user) {
+    return function (dispatch) {
+        return deleteLink(link, user)
+            .then(savedUser => dispatch(deleteEntryAction(link)));
     };
 }
