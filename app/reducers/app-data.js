@@ -20,7 +20,7 @@ export default function appData(state = defaultState, action) {
             return {
                 isFetching: false,
                 userData
-            }
+            };
         case 'UPDATE_USER':
             return {
                 isFetching: false,
