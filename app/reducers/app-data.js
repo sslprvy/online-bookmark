@@ -13,7 +13,13 @@ export default function appData(state = defaultState, action) {
         case 'RECEIVED_DATA':
             return {
                 isFetching: false,
-                userData: action.data[0]
+                userData: action.data
+            };
+        case 'ADD_ENTRY':
+            let userData = Object.assign({}, state.userData, { data: state.userData.data.concat(action.link) });
+            return {
+                isFetching: false,
+                userData
             };
         case 'UPDATE_USER':
             return {

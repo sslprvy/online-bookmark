@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { editEntry } from '../actions/edit-entry';
+import { editEntry } from '../actions/entry';
 
 const mapDispatch = (dispatch) => {
     return {

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { saveEntry } from '../actions/edit-entry';
+import { saveEntry } from '../actions/entry';
 import { updateUser } from '../actions/app-data';
 
 const mapDispatch = (dispatch) => {

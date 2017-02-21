@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import ListElement from './list-element';
 import EditableListElement from './editable-list-element';
+import NewElement from './new-element';
 
 const mapState = ({ appData, editEntry }) => {
     return {
@@ -26,6 +27,10 @@ const List = ({ userData, editEntry }) => {
             return <ListElement listElement={listElement} key={key} />;
         }
     });
+
+    if (editEntry.editing && editEntry.newEntry) {
+        userObject.unshift(<NewElement key="new-element" user={userData}/>);
+    }
 
     return (
         <ul className="display-list">
