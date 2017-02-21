@@ -23,6 +23,7 @@ export function saveUserData(user) {
 }
 
 export function createLink(link, user) {
+    // TODO: This should happen on the backend
     const highestId = user.data.reduce((accumulator, link) => {
         return link.id > accumulator ? link.id : accumulator;
     }, 0);
