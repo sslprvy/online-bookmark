@@ -1,4 +1,8 @@
 # Online-bookmark backend
+## Install Swagger
+```bash
+npm i -g swagger
+```
 ## How to run
 ```bash
 npm i
