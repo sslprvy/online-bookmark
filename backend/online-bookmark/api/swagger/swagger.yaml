@@ -1,0 +1,193 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Online Bookmark
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths
+basePath: /
+#
+schemes:
+  # tip: remove http to make production-grad
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /lists:
+    get:
+      summary: Lists of a user
+      description: |
+        The Lists end point returns the lists of a given user
+      responses:
+        "200":
+          description: An array of lists
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ListElement"
+    post:
+      description: |
+        Creates a new list for the given user
+      parameters:
+        - name: name
+          in: body
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+  /lists/{listId}:
+    post:
+      description: |
+        Adds a new element to the list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          type: string
+        - name: list-element
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ListElement"
+      responses:
+        "200":
+          description: List element created
+    put:
+      description: |
+        Modifies the given list and save it to the database
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          type: string
+        - name: list-element
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/List"
+      responses:
+        "200":
+          description: List updated
+  /search/tags:
+    get:
+      summary: Searching within the tags
+      description: |
+        This endpoint will returns the elements which has at least on of the tags
+        passed in as query param(s)
+      parameters:
+        - name: tags
+          in: query
+          required: true
+          type: string
+          description:
+            Words separated with comma
+      responses:
+        "200":
+          description: An array of elements
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ListElement"
+  /search/title:
+    get:
+      summary: Searching within the titles
+      description: |
+        This endpoint will returns the element(s) with the given title
+      parameters:
+        - name: title
+          in: query
+          required: true
+          type: string
+      responses:
+        "200":
+          description: An array of elements
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ListElement"
+  /search:
+    post:
+      summary: Searching with tags and titles
+      description: |
+        This endpoint will returns the element(s) with the given title and tags
+      parameters:
+        - name: query-element
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/QueryElement'
+      responses:
+        "200":
+          description: An array of elements
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ListElement"
+  /hello:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    get:
+      description: Returns 'Hello' to the caller
+      # used as the method name of the controller
+      operationId: hello
+      parameters:
+        - name: name
+          in: query
+          description: The name of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  QueryElement:
+    properties:
+      tags:
+        type: array
+        items:
+          type: string
+      title:
+        type: string
+  List:
+    type: array
+    items:
+      $ref: '#/definitions/ListElement'
+  ListElement:
+    properties:
+      title:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      url:
+        type: string
+  HelloWorldResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
