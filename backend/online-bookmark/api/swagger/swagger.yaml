@@ -47,7 +47,9 @@ paths:
           schema:
             $ref: "#/definitions/List"
   /lists/{listId}:
+    x-swagger-router-controller: lists
     post:
+      operationId: newListElement
       description: |
         Adds a new element to the list
       parameters:
@@ -63,6 +65,8 @@ paths:
       responses:
         "200":
           description: List element created
+          schema:
+            $ref: "#/definitions/List"
     put:
       description: |
         Modifies the given list and saves it to the database
