@@ -18,7 +18,9 @@ produces:
   - application/json
 paths:
   /lists:
+    x-swagger-router-controller: lists
     get:
+      operationId: lists
       summary: Lists of a user
       description: |
         The Lists end point returns the lists of a given user
@@ -30,6 +32,7 @@ paths:
             items:
               $ref: "#/definitions/ListElement"
     post:
+      operationId: newList
       description: |
         Creates a new list for the given user
       parameters:
@@ -41,6 +44,8 @@ paths:
       responses:
         "200":
           description: Success
+          schema:
+            $ref: "#/definitions/List"
   /lists/{listId}:
     post:
       description: |
@@ -60,7 +65,7 @@ paths:
           description: List element created
     put:
       description: |
-        Modifies the given list and save it to the database
+        Modifies the given list and saves it to the database
       parameters:
         - name: listId
           in: path
@@ -166,9 +171,13 @@ definitions:
       title:
         type: string
   List:
-    type: array
-    items:
-      $ref: '#/definitions/ListElement'
+    properties:
+      id:
+        type: string
+      elements:
+        type: array
+        items:
+          $ref: '#/definitions/ListElement'
   ListElement:
     properties:
       title:
