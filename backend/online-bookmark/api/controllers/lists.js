@@ -39,8 +39,7 @@ function newListElement(req, res) {
         // if we have the exact same link in the links collection use that one
         db.collection('links').findOne(listElement).then(link => {
             if (!link) {
-                db.collection('links').insert(listElement);
-                return db.collection('links').findOne(listElement).then(link => {
+                db.collection('links').insert(listElement).then(({ ops: link }) => {
                     return db.collection('onlineBookmark').findOneAndUpdate(
                         { _id: ObjectID(listId) },
                         { $push: { elements: link }},
@@ -51,7 +50,7 @@ function newListElement(req, res) {
                     db.close();
                 });
             } else {
-                return db.collection('onlineBookmark').findOneAndUpdate(
+                db.collection('onlineBookmark').findOneAndUpdate(
                     { _id: ObjectID(listId) },
                     { $push: { elements: link }},
                     { returnNewDocument: true }
