@@ -38,27 +38,16 @@ function newListElement(req, res) {
         const listId = req.swagger.params.listId.value;
         // if we have the exact same link in the links collection use that one
         db.collection('links').findOne(listElement).then(link => {
-            if (!link) {
-                db.collection('links').insert(listElement).then(({ ops: link }) => {
-                    return db.collection('onlineBookmark').findOneAndUpdate(
-                        { _id: ObjectID(listId) },
-                        { $push: { elements: link }},
-                        { returnNewDocument: true }
-                    );
-                }).then(modifiedList => {
-                    res.json(modifiedList.value);
-                    db.close();
-                });
-            } else {
-                db.collection('onlineBookmark').findOneAndUpdate(
-                    { _id: ObjectID(listId) },
-                    { $push: { elements: link }},
-                    { returnNewDocument: true }
-                ).then(modifiedList => {
-                    res.json(modifiedList.value);
-                    db.close();
-                });
-            }
+            return link ? link : db.collection('links').insert(listElement).then(({ ops: link }) => link);
+        }).then(link => {
+            db.collection('onlineBookmark').findOneAndUpdate(
+                { _id: ObjectID(listId) },
+                { $push: { elements: link }},
+                { returnNewDocument: true }
+            ).then(modifiedList => {
+                res.json(modifiedList.value);
+                db.close();
+            });
         }, (err) => {
             console.log(err);
             res.json(err);
