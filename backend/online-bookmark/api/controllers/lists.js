@@ -4,7 +4,8 @@ const ObjectID = require('mongodb').ObjectID;
 module.exports = {
     lists,
     newList,
-    newListElement
+    newListElement,
+    editList
 };
 
 function lists(req, res) {
@@ -53,6 +54,24 @@ function newListElement(req, res) {
             res.json(err);
             db.close();
         });
+    });
+}
+
+function editList(req, res) {
+    DB.connect().then(db => {
+        const listElement = req.swagger.params['list-element'].value;
+        const listId = req.swagger.params.listId.value;
+
+        db.collection('links').update(
+            { _id: ObjectID(listElement._id ) },
+            Object.assign({}, listElement, { _id: ObjectID(listElement._id) }),
+            { returnNewDocument: true }
+        );
+
+        db.collection('onlineBookmark').updateMany(
+            { _id: ObjectID(listId) },
+
+        )
     });
 }
 
