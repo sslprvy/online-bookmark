@@ -68,6 +68,7 @@ paths:
           schema:
             $ref: "#/definitions/List"
     put:
+      operationId: editList
       description: |
         Modifies the given list and saves it to the database
       parameters:
@@ -183,7 +184,10 @@ definitions:
         items:
           $ref: '#/definitions/ListElement'
   ListElement:
+    required: ["title", "tags", "url"]
     properties:
+      id:
+        type: string
       title:
         type: string
       tags:
