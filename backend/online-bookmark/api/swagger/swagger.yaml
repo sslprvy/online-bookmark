@@ -30,7 +30,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/ListElement"
+              $ref: "#/definitions/List"
     post:
       operationId: newList
       description: |
@@ -83,7 +83,9 @@ paths:
             $ref: "#/definitions/List"
       responses:
         "200":
-          description: List updated
+          description: List updated,
+          schema:
+            $ref: "#/definitions/List"
   /search/tags:
     get:
       summary: Searching within the tags
