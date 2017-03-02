@@ -78,9 +78,7 @@ function editList(req, res) {
                         'elements.$.tags': listElement.tags
                     }},
                     { returnNewDocument: true }
-                ).then(result => {
-                    resolve(result);
-                })
+                ).then(resolve)
             })]
         ).then(() => {
             return db.collection('onlineBookmark').findOne({ _id: ObjectID(listId) });
