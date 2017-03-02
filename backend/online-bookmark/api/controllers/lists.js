@@ -14,7 +14,6 @@ function lists(req, res) {
     });
 }
 
-// req.swagger.params.name.value
 function newList(req, res) {
     const listNameObject = JSON.parse(req.swagger.params.name.value);
     DB.connect().then(db => {
@@ -62,16 +61,33 @@ function editList(req, res) {
         const listElement = req.swagger.params['list-element'].value;
         const listId = req.swagger.params.listId.value;
 
-        db.collection('links').update(
-            { _id: ObjectID(listElement._id ) },
-            Object.assign({}, listElement, { _id: ObjectID(listElement._id) }),
-            { returnNewDocument: true }
-        );
-
-        db.collection('onlineBookmark').updateMany(
-            { _id: ObjectID(listId) },
-
-        )
+        Promise.all([
+            new Promise(resolve => {
+                db.collection('links').update(
+                    { _id: ObjectID(listElement._id ) },
+                    Object.assign({}, listElement, { _id: ObjectID(listElement._id) }),
+                    { returnNewDocument: true }
+                ).then(resolve);
+            }),
+            new Promise(resolve => {
+                db.collection('onlineBookmark').updateMany(
+                    { 'elements._id': ObjectID(listElement._id) },
+                    { $set: {
+                        'elements.$.title': listElement.title,
+                        'elements.$.url': listElement.url,
+                        'elements.$.tags': listElement.tags
+                    }},
+                    { returnNewDocument: true }
+                ).then(result => {
+                    resolve(result);
+                })
+            })]
+        ).then(() => {
+            return db.collection('onlineBookmark').findOne({ _id: ObjectID(listId) });
+        }).then(modifiedList => {
+            res.json(modifiedList);
+            db.close();
+        });
     });
 }
 
