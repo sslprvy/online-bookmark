@@ -128,7 +128,9 @@ paths:
             items:
               $ref: "#/definitions/Link"
   /search:
+    x-swagger-router-controller: search
     post:
+      operationId: searchTitleAndTags
       summary: Searching with tags and titles
       description: |
         This endpoint will returns the element(s) with the given title and tags
