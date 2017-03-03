@@ -159,6 +159,20 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Link"
+    post:
+      operationId: createLink
+      summary: Creates a link
+      parameters:
+        - name: link
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Link"
+      responses:
+        "200":
+          description: A link
+          schema:
+              $ref: "#/definitions/Link"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
