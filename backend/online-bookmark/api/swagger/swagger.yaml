@@ -87,7 +87,9 @@ paths:
           schema:
             $ref: "#/definitions/List"
   /search/tags:
+    x-swagger-router-controller: search
     get:
+      operationId: searchTags
       summary: Searching within the tags
       description: |
         This endpoint will returns the elements which has at least on of the tags
