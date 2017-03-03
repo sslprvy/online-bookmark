@@ -61,7 +61,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/ListElement"
+            $ref: "#/definitions/Link"
       responses:
         "200":
           description: List element created
@@ -105,7 +105,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/ListElement"
+              $ref: "#/definitions/Link"
   /search/title:
     get:
       summary: Searching within the titles
@@ -122,7 +122,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/ListElement"
+              $ref: "#/definitions/Link"
   /search:
     post:
       summary: Searching with tags and titles
@@ -140,7 +140,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/ListElement"
+              $ref: "#/definitions/Link"
   /hello:
     # binds a127 app logic to a route
     x-swagger-router-controller: hello_world
@@ -184,8 +184,8 @@ definitions:
       elements:
         type: array
         items:
-          $ref: '#/definitions/ListElement'
-  ListElement:
+          $ref: '#/definitions/Link'
+  Link:
     required: ["title", "tags", "url"]
     properties:
       id:
