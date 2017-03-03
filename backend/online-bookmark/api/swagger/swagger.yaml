@@ -109,7 +109,9 @@ paths:
             items:
               $ref: "#/definitions/Link"
   /search/title:
+    x-swagger-router-controller: search
     get:
+      operationId: searchTitle
       summary: Searching within the titles
       description: |
         This endpoint will returns the element(s) with the given title
