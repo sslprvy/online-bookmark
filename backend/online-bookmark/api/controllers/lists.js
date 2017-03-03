@@ -1,6 +1,8 @@
 const DB = require('../helpers/db-connection');
 const ObjectID = require('mongodb').ObjectID;
 
+const handleQuery = require('../common/handle-simple-query');
+
 module.exports = {
     lists,
     newList,
@@ -87,15 +89,4 @@ function editList(req, res) {
             db.close();
         });
     });
-}
-
-function handleQuery(db, res, err, docs) {
-    if (err) {
-        res.json(JSON.stringify(err));
-    }
-
-    res.json(docs);
-
-    // Close the DB
-    db.close();
 }
