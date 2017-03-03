@@ -147,6 +147,18 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Link"
+  /links:
+    x-swagger-router-controller: links
+    get:
+      operationId: getLinks
+      summary: Get the list of the links
+      responses:
+        "200":
+          description: An array of links
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Link"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
