@@ -22,6 +22,7 @@ const _ = require('lodash');
 const onError = require('./gulp_settings/error-handler').onError;
 
 require('./gulp_settings/server')();
+require('./gulp_settings/backend');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -138,7 +139,12 @@ gulp.task('sass', () => {
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
-gulp.task('default', sequence(['clean-js', 'clean-css'], ['copy:index.html', 'copy:fonts', 'sass', 'scripts', 'watch'], 'index', 'connect'));
+gulp.task('default', sequence(
+    ['clean-js', 'clean-css'],
+    ['copy:index.html', 'copy:fonts', 'sass', 'scripts', 'watch', 'backend', 'watch:backend'],
+    'index',
+    'connect'
+));
 
 // Private Functions
 // ----------------------------------------------------------------------------
