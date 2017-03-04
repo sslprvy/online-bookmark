@@ -19,7 +19,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
     const port = process.env.PORT || 10010;
     app.listen(port);
 
-    console.log('Registering handlers...');
+    console.log('Routes');
     Object.keys(swaggerExpress.runner.swagger.paths)
         .filter(path => path !== '/swagger')
         .forEach(path => {
