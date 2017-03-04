@@ -11,7 +11,7 @@ const config = {
 };
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
-    if (err) { throw err; }
+    if (err) { return; }
 
     // install middleware
     swaggerExpress.register(app);
