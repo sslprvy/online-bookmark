@@ -6,11 +6,11 @@ let backendProcess;
 
 gulp.task('backend', (done) => {
     if (!_.isUndefined(backendProcess)) {
-        backendProcess.on('exit', () => {
+        backendProcess.on('close', () => {
             backendProcess = startProcess();
             done();
-        })
-        backendProcess.kill('SIGINT');
+        });
+        backendProcess.kill('SIGTERM');
     } else {
         backendProcess = startProcess();
         done();
