@@ -19,14 +19,6 @@ function connect() {
             console.log('Successfully connected to server');
 
             resolve(db);
-
-            // // Find some documents in our collection
-            // db.collection('onlineBookmark').find({}).toArray(handleQuery.bind(null, db));
-
-            // // Declare success
-            // console.log('Called find()');
         }
-
-
     });
 }
