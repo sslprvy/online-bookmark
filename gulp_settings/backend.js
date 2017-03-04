@@ -20,10 +20,8 @@ gulp.task('backend', (done) => {
 gulp.task('watch:backend', () => {
     let backendProcess;
 
-    gulp.watch([
-        'backend/online-bookmark/api/**/*.js',
-        'backend/online-bookmark/api/**/*.yaml'
-        ], ['backend']);
+    gulp.watch(['backend/online-bookmark/api/**/*.yaml'], _.debounce(() => gulp.start(['backend']), 500));
+    gulp.watch('backend/online-bookmark/api/**/*.js', ['backend']);
 });
 
 function startProcess() {
