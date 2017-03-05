@@ -23,9 +23,7 @@
           "name": "swagger",
           "program": "${workspaceRoot}\\backend\\online-bookmark\\app.js",
           "cwd": "${workspaceRoot}",
-          "args": [
-            "--u freddy_krueger", "--pw ThisIstheMostFuckedUpPasswordEver", "--ip 185.111.88.74", "--p 27017"
-          ]
+          "args": []
         }
     ]
 }
