@@ -173,6 +173,26 @@ paths:
           description: A link
           schema:
               $ref: "#/definitions/Link"
+  /links/{linkId}:
+    x-swagger-router-controller: links
+    put:
+      operationId: updateLink
+      summary: Updates a link
+      parameters:
+        - name: linkId
+          in: path
+          required: true
+          type: string
+        - name: link
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Link"
+      responses:
+        "200":
+          description: A link
+          schema:
+             $ref: "#/definitions/Link"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
