@@ -10,8 +10,7 @@
   "dependencies": {
     "express": "^4.12.3",
     "mongodb": "^2.2.24",
-    "swagger-express-mw": "^0.1.0",
-    "yargs": "^6.6.0"
+    "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
     "chalk": "^1.1.3",
