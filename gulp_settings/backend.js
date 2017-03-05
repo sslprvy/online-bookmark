@@ -37,11 +37,5 @@ function startBackendTask() {
 }
 
 function startProcess() {
-    return spawn('node', [
-            'backend/online-bookmark/app.js',
-            '--u freddy_krueger',
-            '--pw ThisIstheMostFuckedUpPasswordEver',
-            '--ip 185.111.88.74',
-            '--p 27017'
-        ], { stdio: 'inherit' });
+    return spawn('node', ['backend/online-bookmark/app.js',], { stdio: 'inherit' });
 }
