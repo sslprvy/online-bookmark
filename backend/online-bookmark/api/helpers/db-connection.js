@@ -1,14 +1,11 @@
 const MongoClient = require('mongodb').MongoClient;
-const argv = require('yargs').argv;
 
-let url;
+const user = String(process.env.USER).trim();
+const password = String(process.env.PASSWORD).trim();
+const port = String(process.env.BACKEND_PORT).trim();
+const ip = String(process.env.IP_ADDRESS).trim();
 
-if (argv.pw) {
-    url = `mongodb://${argv.u}:${argv.pw}@${argv.ip}:${argv.p}/online-bookmark`;
-} else {
-    let [user, password, ip, port] = process.argv.slice(2);
-    url = `mongodb://${user.split(' ')[1]}:${password.split(' ')[1]}@${ip.split(' ')[1]}:${port.split(' ')[1]}/online-bookmark`;
-}
+const url = `mongodb://${user}:${password}@${ip}:${port}/online-bookmark`;
 
 module.exports = {
     connect
