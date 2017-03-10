@@ -192,7 +192,25 @@ paths:
         "200":
           description: A link
           schema:
-             $ref: "#/definitions/Link"
+            $ref: "#/definitions/Link"
+  /user:
+    x-swagger-router-controller: user
+    post:
+      operationId: createUser
+      summary: Creates a user
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: User created
+        "409":
+          description: Username, or email address in use
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -225,6 +243,13 @@ definitions:
         items:
           type: string
       url:
+        type: string
+  User:
+    required: ["email", "password"]
+    properties:
+      email:
+        type: string
+      password:
         type: string
   ErrorResponse:
     required:
