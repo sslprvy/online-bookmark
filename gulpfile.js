@@ -141,9 +141,10 @@ gulp.task('sass', () => {
 // If there's a change, the task 'scripts' defined above will fire.
 gulp.task('default', sequence(
     ['clean-js', 'clean-css'],
-    ['copy:index.html', 'copy:fonts', 'sass', 'scripts', 'watch', 'backend', 'watch:backend'],
+    ['copy:index.html', 'copy:fonts', 'sass', 'scripts', 'backend'],
     'index',
-    'connect'
+    'connect',
+    ['watch', 'watch:backend']
 ));
 
 // Private Functions
