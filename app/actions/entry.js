@@ -56,7 +56,7 @@ export function addEntry(link, user) {
         return createLink(link, user)
             .then(savedUser => {
                 let savedLink = savedUser.data.slice().reverse()[0];
-                dispatch(addEntryAction(savedLink))
+                dispatch(addEntryAction(savedLink));
             });
     };
 }

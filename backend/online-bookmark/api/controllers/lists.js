@@ -25,7 +25,7 @@ function newList(req, res) {
                     elements: []
                 })
             );
-            res.json({ message: 'list created' })
+            res.json({ message: 'list created' });
         } catch (err) {
             res.json(err);
         } finally {
@@ -80,7 +80,7 @@ function editList(req, res) {
                         'elements.$.tags': listElement.tags
                     }},
                     { returnNewDocument: true }
-                ).then(resolve)
+                ).then(resolve);
             })]
         ).then(() => {
             return db.collection('onlineBookmark').findOne({ _id: ObjectID(listId) });
