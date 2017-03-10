@@ -27,5 +27,5 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
             Object.keys(swaggerExpress.runner.swagger.paths[path])
                 .filter(method => method !== 'x-swagger-router-controller')
                 .forEach(method => console.log(`- ${chalk.cyan(method)}`));
-  });
+        });
 });
