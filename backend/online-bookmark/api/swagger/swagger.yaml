@@ -263,6 +263,10 @@ paths:
       responses:
         "200":
           description: Successful update
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /user/login:
     x-swagger-router-controller: user
     post:
