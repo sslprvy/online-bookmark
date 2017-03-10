@@ -211,6 +211,22 @@ paths:
           description: Username, or email address in use
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /user/login:
+    x-swagger-router-controller: user
+    post:
+      operationId: loginUser
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: User logged in
+          schema:
+            type: string
+            description: Bearer token
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
