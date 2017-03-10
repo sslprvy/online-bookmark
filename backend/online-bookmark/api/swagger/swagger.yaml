@@ -75,11 +75,11 @@ paths:
           description: List element created
           schema:
             $ref: "#/definitions/List"
-    put:
         "401":
           description: Unathorized access
           schema:
             $ref: "#/definitions/ErrorResponse"
+    patch:
       operationId: editList
       description: |
         Modifies the given list and saves it to the database
@@ -211,7 +211,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /links/{linkId}:
     x-swagger-router-controller: links
-    put:
+    patch:
       operationId: updateLink
       summary: Updates a link
       parameters:
