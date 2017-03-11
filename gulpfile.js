@@ -61,10 +61,11 @@ gulp.task('lint', function () {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('deploy', function (done) {
-    bundleApp(true);
-    done();
-});
+gulp.task('deploy', sequence(
+    ['clean-js', 'clean-css'],
+    ['copy:index.html', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app'],
+    'index'
+));
 
 gulp.task('watch', function () {
     gulp.watch('app/**/*.scss', ['sass']);
