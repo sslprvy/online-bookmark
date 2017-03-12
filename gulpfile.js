@@ -138,8 +138,8 @@ gulp.task('sass', () => {
         .pipe(browserSync.stream());
 });
 
-gulp.task('scripts:vendor', (done) => {
-    browserify({
+gulp.task('scripts:vendor', () => {
+    return browserify({
         require: dependencies,
         debug: ENVIRONMENT.isDev,
         extensions: CONFIG.extensions
@@ -148,10 +148,9 @@ gulp.task('scripts:vendor', (done) => {
         .on('error', gutil.log)
         .pipe(source('vendors.js'))
         .pipe(gulp.dest(CONFIG.tempFolder));
-    done();
 });
 
-gulp.task('scripts:app', (done) => {
+gulp.task('scripts:app', () => {
     const appBundler = browserify({
         entries: CONFIG.appEntryPoint,
         debug: ENVIRONMENT.isDev,
@@ -162,14 +161,13 @@ gulp.task('scripts:app', (done) => {
         appBundler.external(dep);
     });
 
-    appBundler
+    return appBundler
         // transform ES6 and JSX to ES5 with babelify
         .transform('babelify', { presets: ['es2015', 'react'] })
         .bundle()
         .on('error', gutil.log)
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(CONFIG.tempFolder));
-    done();
 });
 
 // When running 'gulp' on the terminal this task will fire.
