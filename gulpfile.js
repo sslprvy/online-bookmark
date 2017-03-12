@@ -61,12 +61,6 @@ gulp.task('lint', function () {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('deploy', sequence(
-    ['clean:js', 'clean:css'],
-    ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app'],
-    'index'
-));
-
 gulp.task('watch', function () {
     gulp.watch('app/**/*.scss', ['sass']);
     gulp.watch(['app/**/*.jsx', 'app/**/*.js'], ['scripts:app']);
@@ -170,12 +164,20 @@ gulp.task('scripts:app', () => {
         .pipe(gulp.dest(CONFIG.tempFolder));
 });
 
+gulp.task('deploy', sequence(
+    ['clean:js', 'clean:css'],
+    ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app'],
+    'revision',
+    'index'
+));
+
 // When running 'gulp' on the terminal this task will fire.
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts:app' defined above will fire.
 gulp.task('default', sequence(
     ['clean:js', 'clean:css'],
     ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app', 'backend'],
+    'revision',
     'index',
     'connect',
     ['watch', 'watch:backend']
