@@ -31,6 +31,10 @@ const dependencies = [
     'react-dom'
 ];
 
+if (_.isUndefined(process.env.NODE_ENV)) {
+    throw new Error('Environment variable NODE_ENV is not defined! Should be either "dev" or "prod"');
+}
+
 const ENVIRONMENT = {
     isDev: process.env.NODE_ENV.trim() === 'dev',
     isProd: process.env.NODE_ENV.trim() === 'prod'
