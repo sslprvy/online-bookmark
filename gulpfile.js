@@ -62,8 +62,8 @@ gulp.task('lint', function () {
 });
 
 gulp.task('deploy', sequence(
-    ['clean-js', 'clean-css'],
-    ['copy:index.html', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app'],
+    ['clean:js', 'clean:css'],
+    ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app'],
     'index'
 ));
 
@@ -71,16 +71,16 @@ gulp.task('watch', function () {
     gulp.watch('app/**/*.scss', ['sass']);
     gulp.watch(['app/**/*.jsx', 'app/**/*.js'], ['scripts:app']);
     gulp.watch([`${CONFIG.tempFolder}/bundle.js`], function () {
-        sequence('clean-js', 'revision', 'index')();
+        sequence('clean:js', 'revision', 'index')();
     });
     gulp.watch(`${CONFIG.tempFolder}/*.css`, function () {
-        sequence('clean-css', 'revision', 'index')();
+        sequence('clean:css', 'revision', 'index')();
     });
     gulp.watch(['./index.html']).on('change', browserSync.reload);
     gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', _.debounce(browserSync.reload, 100));
 });
 
-gulp.task('copy:index.html', function () {
+gulp.task('copy:index', function () {
     return gulp.src('index.html')
         .pipe(gulp.dest(CONFIG.destFolder));
 });
@@ -90,11 +90,11 @@ gulp.task('copy:fonts', function () {
         .pipe(gulp.dest(`${CONFIG.destFolder}/fonts`));
 });
 
-gulp.task('clean-js', function () {
+gulp.task('clean:js', function () {
     return del([`${CONFIG.jsDestFolder}*.js`]);
 });
 
-gulp.task('clean-css', function () {
+gulp.task('clean:css', function () {
     return del([`${CONFIG.cssDestFolder}*.css`]);
 });
 
@@ -176,8 +176,8 @@ gulp.task('scripts:app', (done) => {
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts' defined above will fire.
 gulp.task('default', sequence(
-    ['clean-js', 'clean-css'],
-    ['copy:index.html', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app', 'backend'],
+    ['clean:js', 'clean:css'],
+    ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app', 'backend'],
     'index',
     'connect',
     ['watch', 'watch:backend']
