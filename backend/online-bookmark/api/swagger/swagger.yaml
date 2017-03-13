@@ -251,6 +251,10 @@ paths:
           description: Username, or email address in use
           schema:
             $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: Unexpected error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     patch:
       operationId: updateUser
       summary: Update user preferences
