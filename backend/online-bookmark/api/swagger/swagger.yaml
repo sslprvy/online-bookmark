@@ -31,6 +31,10 @@ paths:
             type: array
             items:
               $ref: "#/definitions/List"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     post:
       operationId: newList
       description: |
@@ -46,6 +50,10 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/List"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /lists/{listId}:
     x-swagger-router-controller: lists
     post:
@@ -67,7 +75,11 @@ paths:
           description: List element created
           schema:
             $ref: "#/definitions/List"
-    put:
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
       operationId: editList
       description: |
         Modifies the given list and saves it to the database
@@ -86,6 +98,10 @@ paths:
           description: List updated,
           schema:
             $ref: "#/definitions/List"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /search/tags:
     x-swagger-router-controller: search
     get:
@@ -108,6 +124,10 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Link"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /search/title:
     x-swagger-router-controller: search
     get:
@@ -127,6 +147,10 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Link"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /search:
     x-swagger-router-controller: search
     post:
@@ -147,6 +171,10 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Link"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /links:
     x-swagger-router-controller: links
     get:
@@ -159,6 +187,10 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Link"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     post:
       operationId: createLink
       summary: Creates a link
@@ -173,9 +205,13 @@ paths:
           description: A link
           schema:
               $ref: "#/definitions/Link"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /links/{linkId}:
     x-swagger-router-controller: links
-    put:
+    patch:
       operationId: updateLink
       summary: Updates a link
       parameters:
@@ -192,7 +228,61 @@ paths:
         "200":
           description: A link
           schema:
-             $ref: "#/definitions/Link"
+            $ref: "#/definitions/Link"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /user:
+    x-swagger-router-controller: user
+    post:
+      operationId: createUser
+      summary: Creates a user
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: User created
+        "409":
+          description: Username, or email address in use
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
+      operationId: updateUser
+      summary: Update user preferences
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Successful update
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /user/login:
+    x-swagger-router-controller: user
+    post:
+      operationId: loginUser
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: User logged in
+          schema:
+            type: string
+            description: Bearer token
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -225,6 +315,15 @@ definitions:
         items:
           type: string
       url:
+        type: string
+  User:
+    required: ["email", "password", "username"]
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
         type: string
   ErrorResponse:
     required:
