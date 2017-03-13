@@ -30,6 +30,8 @@ function createUser(req, res) {
             if (err.message === '409') {
                 res.status(409).send({ message: 'Username, or email address in use' });
             }
+
+            res.status(500).send({ message: `Unexpected error: ${err.message}` });
         });
     });
 }
