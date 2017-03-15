@@ -3,7 +3,8 @@ const { sendMailVerificationLink } = require('../helpers/email-server');
 const { generateToken } = require('../helpers/crypto');
 
 module.exports = {
-    createUser
+    createUser,
+    loginUser
 };
 
 function createUser(req, res) {
@@ -40,5 +41,36 @@ function createUser(req, res) {
 
             res.status(500).send({ message: `Unexpected error: ${err.message}` });
         });
+    });
+}
+
+function loginUser(req, res) {
+    const credentials = req.swagger.params.user.value;
+
+    DB.connect().then(db => {
+        db.collection('users')
+            .findOne(credentials, { username: 1, email: 1, password: 1 })
+            .then(user => {
+                if (!user) {
+                    throw new Error(`Wrong credentials`);
+                }
+
+                const token = generateToken(user);
+                return [user, token];
+            })
+            .then(([user, token]) => {
+                db.collection('users')
+                    .findOneAndUpdate(user, { $set: { token }})
+                    .then(() => {
+                        res.json({
+                            token_type: 'bearer',
+                            access_token: token
+                        });
+                        db.close();
+                    });
+            })
+            .catch(err => {
+                res.status(500).json({ message: err.message });
+            });
     });
 }
