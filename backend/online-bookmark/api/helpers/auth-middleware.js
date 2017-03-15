@@ -2,7 +2,7 @@ const DB = require('./db-connection');
 const { verifyToken, generateToken } = require('./crypto');
 const { pick } = require('../helpers/common');
 
-const authExceptions = ['/user/login', 'verifyEmail/{token}', 'resendVerificationEmail/{token}'];
+const authExceptions = ['/user/login', '/verifyEmail/{token}', '/resendVerificationEmail/{token}'];
 
 module.exports = function checkAuthorization(req, res, next) {
     // we are not checking the token for the above urls
