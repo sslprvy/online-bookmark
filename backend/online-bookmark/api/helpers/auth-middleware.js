@@ -23,15 +23,12 @@ module.exports = function checkAuthorization(req, res, next) {
             DB.connect().then(db => {
                 const user = pick(decoded, 'username', 'email', 'password');
                 const newToken = generateToken(user);
-                db.collection('users')
-                    .findOneAndUpdate({ token }, { $set: { token: newToken }})
-                    .then(() => {
-                        res.setHeader('authorization', newToken);
-                        next();
-                    })
-                    .catch(() => {
-                        next();
-                    });
+                res.setHeader('authorization', newToken);
+                res.on('finish', () => {
+                    db.collection('users')
+                        .findOneAndUpdate({ token }, { $set: { token: newToken }});
+                });
+                next();
             });
         })
         .catch(err => {
