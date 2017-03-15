@@ -4,7 +4,8 @@ const { generateToken } = require('../helpers/crypto');
 
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    updateUser
 };
 
 function createUser(req, res) {
@@ -73,5 +74,19 @@ function loginUser(req, res) {
                 res.status(500).json({ message: err.message });
                 db.close();
             });
+    });
+}
+
+function updateUser(req, res) {
+    const user = req.swagger.params.user.value;
+    const token = req.headers.authorization;
+
+    DB.connect().then(db => {
+        db.collection('users')
+            .findOneAndUpdate({ token }, { $set: user })
+            .then(() => {
+                res.json({ message: 'Success' });
+            })
+            .catch(console.log);
     });
 }
