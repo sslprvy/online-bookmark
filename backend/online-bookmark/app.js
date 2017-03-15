@@ -3,8 +3,11 @@
 const SwaggerExpress = require('swagger-express-mw');
 const app = require('express')();
 const chalk = require('chalk');
+const auth = require('./api/helpers/auth-middleware');
 
 module.exports = app; // for testing
+
+app.use(auth);
 
 const config = {
     appRoot: __dirname // required config
