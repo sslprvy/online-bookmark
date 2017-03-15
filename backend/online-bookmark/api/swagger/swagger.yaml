@@ -285,8 +285,7 @@ paths:
         "200":
           description: User logged in
           schema:
-            type: string
-            description: Bearer token
+            $ref: "#/definitions/Token"
         "400":
           description: Bad request
           schema:
@@ -357,7 +356,7 @@ definitions:
       url:
         type: string
   User:
-    required: ["email", "password", "username"]
+    required: ["password"]
     properties:
       email:
         type: string
@@ -370,4 +369,10 @@ definitions:
       - message
     properties:
       message:
+        type: string
+  Token:
+    properties:
+      token_type:
+        type: string
+      access_token:
         type: string
