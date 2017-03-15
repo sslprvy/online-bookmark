@@ -49,7 +49,7 @@ function loginUser(req, res) {
 
     DB.connect().then(db => {
         db.collection('users')
-            .findOne(credentials, { username: 1, email: 1, password: 1 })
+            .findOne(credentials, { username: 1, email: 1, password: 1, _id: 0 })
             .then(user => {
                 if (!user) {
                     throw new Error(`Wrong credentials`);
