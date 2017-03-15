@@ -1,12 +1,16 @@
 const DB = require('./db-connection');
-const { verifyToken, generateToken } = require('./crypto');
+const { verifyToken, generateToken, decodeToken } = require('./crypto');
 const { pick } = require('../helpers/common');
 
-const authExceptions = ['/user/login', '/verifyEmail/{token}', '/resendVerificationEmail/{token}'];
+const authExceptions = ['/user/login']
+const verifyEmailUrlPartial = '/verifyEmail';
+const resendVerificationEmailUrlPartial = '/resendVerificationEmail';
 
 module.exports = function checkAuthorization(req, res, next) {
     // we are not checking the token for the above urls
-    if (authExceptions.includes(req.originalUrl)) {
+    if (authExceptions.includes(req.originalUrl) ||
+        req.originalUrl.includes(verifyEmailUrlPartial) ||
+        req.originalUrl.includes(resendVerificationEmailUrlPartial)) {
         next();
         return;
     }
@@ -20,15 +24,43 @@ module.exports = function checkAuthorization(req, res, next) {
 
     verifyToken(token)
         .then((decoded) => {
+            const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+
             DB.connect().then(db => {
-                const user = pick(decoded, 'username', 'email', 'password');
-                const newToken = generateToken(user);
-                res.setHeader('authorization', newToken);
-                res.on('finish', () => {
-                    db.collection('users')
-                        .findOneAndUpdate({ token }, { $set: { token: newToken }});
-                });
-                next();
+                db.collection('users')
+                    .findOne({ token }, { isVerified: 1 })
+                    .then(user => {
+                        // token is not in the database
+                        if (!user) {
+                            throw new Error('unathorized');
+                        }
+                        if (user.isVerified) {
+                            // if there is less then 5 minutes left from the token
+                            if (decoded.exp - currentTimeInSeconds < 300) {
+                                const user = pick(decoded, 'username', 'email', 'password');
+                                const newToken = generateToken(user);
+                                res.setHeader('authorization', newToken);
+                                res.on('finish', () => {
+                                    db.collection('users')
+                                        .findOneAndUpdate({ token }, { $set: { token: newToken }});
+                                });
+                                next();
+                            } else {
+                                res.setHeader('authorization', token);
+                                next();
+                            }
+                        } else {
+                            throw new Error('notVerified');
+                        }
+                    })
+                    .catch(err => {
+                        if (err.message === 'unathorized') {
+                            res.status(401).json({ message: 'Unathorized' });
+                            return;
+                        }
+                        res.status(400).json({ message: 'Email is not verified' });
+                        return;
+                    });
             });
         })
         .catch(err => {
