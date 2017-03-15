@@ -287,6 +287,42 @@ paths:
           schema:
             type: string
             description: Bearer token
+        "400":
+          description: Bad request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /verifyEmail/{token}:
+    x-swagger-router-controller: email
+    get:
+      operationId: verifyEmail
+      parameters:
+        - name: token
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Bad request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /resendVerificationEmail/{token}:
+    x-swagger-router-controller: email
+    get:
+      operationId: resendVerificationEmail
+      parameters:
+        - name: token
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Bad request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
