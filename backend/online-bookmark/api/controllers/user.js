@@ -87,6 +87,9 @@ function updateUser(req, res) {
             .then(() => {
                 res.json({ message: 'Success' });
             })
-            .catch(console.log);
+            .catch(err => {
+                res.status(400).json({ message: err.message });
+                db.close();
+            });
     });
 }
