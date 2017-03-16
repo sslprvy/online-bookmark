@@ -1,5 +1,6 @@
 const DB = require('../helpers/db-connection');
 const ObjectID = require('mongodb').ObjectID;
+const { decodeToken } = require('../helpers/crypto');
 
 const handleQuery = require('../common/handle-simple-query');
 
@@ -18,19 +19,21 @@ function lists(req, res) {
 
 function newList(req, res) {
     const listNameObject = JSON.parse(req.swagger.params.name.value);
+    const { username } = decodeToken(req.headers.authorization);
+
     DB.connect().then(db => {
-        try {
-            db.collection('onlineBookmark').insert(
-                Object.assign({}, listNameObject, {
-                    elements: []
-                })
-            );
+        db.collection('onlineBookmark').insert(
+            Object.assign({}, listNameObject, {
+                user: username,
+                elements: []
+            })
+        ).then(() => {
             res.json({ message: 'list created' });
-        } catch (err) {
-            res.json(err);
-        } finally {
             db.close();
-        }
+        }, (err) => {
+            res.json(err);
+            db.close();
+        });
     });
 }
 
