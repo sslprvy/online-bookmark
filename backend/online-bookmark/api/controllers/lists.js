@@ -41,23 +41,24 @@ function newListElement(req, res) {
     DB.connect().then(db => {
         const listElement = req.swagger.params['list-element'].value;
         const listId = req.swagger.params.listId.value;
+        const { username } = decodeToken(req.headers.authorization);
+
         // if we have the exact same link in the links collection use that one
-        db.collection('links').findOne(listElement).then(link => {
-            return link ? link : db.collection('links').insert(listElement).then(({ ops: link }) => link);
-        }).then(link => {
-            db.collection('onlineBookmark').findOneAndUpdate(
-                { _id: ObjectID(listId) },
-                { $push: { elements: link }},
-                { returnNewDocument: true }
-            ).then(modifiedList => {
-                res.json(modifiedList.value);
+        db.collection('links')
+            .findOneAndUpdate(listElement, Object.assign({}, listElement, { user: username }), { upsert: true })
+            .then(({ value: link }) => {
+                db.collection('onlineBookmark').findOneAndUpdate(
+                    { _id: ObjectID(listId) },
+                    { $push: { elements: link }},
+                    { returnOriginal: false }
+                ).then(modifiedList => {
+                    res.json(modifiedList.value);
+                    db.close();
+                });
+            }, (err) => {
+                res.json(err);
                 db.close();
             });
-        }, (err) => {
-            console.log(err);
-            res.json(err);
-            db.close();
-        });
     });
 }
 
