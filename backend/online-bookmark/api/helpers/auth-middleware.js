@@ -1,6 +1,7 @@
 const DB = require('./db-connection');
 const { verifyToken, generateToken, decodeToken } = require('./crypto');
 const { pick } = require('../helpers/common');
+const { expiryThreshold } = require('../../../../online-bookmark-config/jwt.json');
 
 const authExceptions = ['/user/login']
 const verifyEmailUrlPartial = '/verifyEmail';
@@ -36,7 +37,7 @@ module.exports = function checkAuthorization(req, res, next) {
                         }
                         if (user.isVerified) {
                             // if there is less then 5 minutes left from the token
-                            if (decoded.exp - currentTimeInSeconds < 300) {
+                            if (decoded.exp - currentTimeInSeconds < expiryThreshold) {
                                 const user = pick(decoded, 'username', 'email', 'password');
                                 const newToken = generateToken(user);
                                 res.setHeader('authorization', newToken);
