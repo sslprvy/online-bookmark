@@ -1,7 +1,7 @@
 'use strict';
 import config from '../config';
-import { dispatch, store } from './store';
-import { updateToken } from './actions/auth';
+import { store } from './store';
+import handleResponse from './helpers/response-handler';
 
 export function getUserData(username) {
     const request = new Request(`${config.path}/lists`, {
@@ -11,14 +11,7 @@ export function getUserData(username) {
         }
     });
 
-    return fetch(request).then(response => {
-        if (response.status === 200) {
-            dispatch(updateToken(response.headers.get('authorization')));
-            return response.json();
-        } else {
-            return Promise.reject('no soup for you!');
-        }
-    });
+    return fetch(request).then(handleResponse);
 }
 
 export function saveUserData(user) {
