@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import Header from './components/header';
 import List from './components/list';
+import Login from './components/login';
 import { fetchData } from './actions/app-data';
 import { store } from './store';
 
@@ -15,6 +16,7 @@ const App = () => (
     <div id="wrapper">
         <Header />
         <List />
+        <Login />
     </div>
 );
 

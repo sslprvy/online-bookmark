@@ -1,3 +1,5 @@
+import { authenticate } from '../http.client';
+
 export function updateToken(token) {
     return {
         type: 'UPDATE_TOKEN',
@@ -5,8 +7,12 @@ export function updateToken(token) {
     };
 }
 
-export function logIn() {
+export function logIn(user) {
+    return authenticate(user);
+}
+
+export function loggedIn() {
     return {
-        type: 'LOGIN'
+        type: 'LOGGED_IN'
     };
 }

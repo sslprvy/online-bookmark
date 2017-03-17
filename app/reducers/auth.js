@@ -10,7 +10,7 @@ export default function(state = defaultState, action) {
                 token: action.token,
                 isLoggedIn: state.isLoggedIn
             };
-        case 'LOGIN':
+        case 'LOGGED_IN':
             return {
                 isLoggedIn: true,
                 token: state.token
