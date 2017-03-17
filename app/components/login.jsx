@@ -11,7 +11,7 @@ const mapState = ({ auth }) => {
 const mapDispatch = (dispatch) => {
     return {
         login: (user) => {
-            logIn(user);
+            dispatch(logIn(user));
         }
     };
 };

@@ -57,8 +57,10 @@ export function authenticate(user) {
     });
 
     return fetch(request)
-        .then(handleResponse)
-        .then(() => {
-            dispatch(loggedIn())
+        .then(response => response.json())
+        .then((token) => {
+
+            dispatch(loggedIn());
+            return token;
         });
 }
