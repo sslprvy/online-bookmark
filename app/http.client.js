@@ -11,7 +11,10 @@ export function getUserData(username) {
         }
     });
 
-    return fetch(request).then(response => response.json());
+    return fetch(request).then(response => {
+        dispatch(updateToken(response.headers.get('authorization')));
+        return response.json();
+    });
 }
 
 export function saveUserData(user) {
