@@ -4,3 +4,9 @@ export function updateToken(token) {
         token
     };
 }
+
+export function logIn() {
+    return {
+        type: 'LOGIN'
+    };
+}
