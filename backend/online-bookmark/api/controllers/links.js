@@ -10,8 +10,10 @@ module.exports = {
 };
 
 function getLinks(req, res) {
+    const { username } = decodeToken(req.headers.authorization);
+
     DB.connect().then(db => {
-        db.collection('links').find({}).toArray(handleQuery.bind(null, db, res));
+        db.collection('links').find({ user: username }).toArray(handleQuery.bind(null, db, res));
     });
 }
 
