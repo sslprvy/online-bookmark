@@ -71,7 +71,6 @@ function editList(req, res) {
             new Promise(resolve => {
                 db.collection('links').update(
                     { _id: ObjectID(listElement._id ) },
-                    { returnNewDocument: true }
                     { $set: listElement }
                 ).then(resolve);
             }),
@@ -82,8 +81,7 @@ function editList(req, res) {
                         'elements.$.title': listElement.title,
                         'elements.$.url': listElement.url,
                         'elements.$.tags': listElement.tags
-                    }},
-                    { returnNewDocument: true }
+                    }}
                 ).then(resolve);
             })]
         ).then(() => {
