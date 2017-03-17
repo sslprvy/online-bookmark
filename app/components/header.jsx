@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import { newEntry } from '../actions/entry';
 
-const mapState = ({ appData }) => {
+const mapState = ({ appData, authToken }) => {
+    console.log(authToken);
     return {
         userData: appData.userData
     };
