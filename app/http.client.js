@@ -1,7 +1,7 @@
 'use strict';
 import config from '../config';
 import { dispatch, store } from './store';
-import { updateToken } from './actions/auth-token';
+import { updateToken } from './actions/auth';
 
 export function getUserData(username) {
     const request = new Request(`${config.path}/lists`, {
