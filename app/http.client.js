@@ -4,7 +4,7 @@ import { store, dispatch } from './store';
 import handleResponse from './helpers/response-handler';
 import { loggedIn } from './actions/auth';
 
-export function getUserData(username) {
+export function getUserData() {
     const headers = new Headers({
         Authorization: store.getState().auth.token
     });

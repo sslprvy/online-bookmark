@@ -21,14 +21,11 @@ export function updateUser({ user, id }) {
     };
 }
 
-export function fetchData(username) {
-    if (username === undefined) {
-        // TODO: implement error handling
-    }
+export function fetchData() {
     return function (dispatch) {
         dispatch(fetchingData());
 
-        return getUserData(username)
+        return getUserData()
             .then(users => {
                 dispatch(receivedData(users[0]));
             });

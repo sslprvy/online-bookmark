@@ -8,9 +8,7 @@ import Login from './components/login';
 import { fetchData } from './actions/app-data';
 import { store } from './store';
 
-const USERNAME = 'kunstkammern';
-
-store.dispatch(fetchData(USERNAME));
+store.dispatch(fetchData());
 
 const App = () => (
     <div id="wrapper">
