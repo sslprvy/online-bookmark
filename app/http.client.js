@@ -7,7 +7,7 @@ export function getUserData(username) {
     const request = new Request(`${config.path}/lists`, {
         method: 'GET',
         headers: {
-            Authorization: store.getState().authToken.token
+            Authorization: store.getState().auth.token
         }
     });
 
