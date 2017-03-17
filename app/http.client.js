@@ -1,9 +1,14 @@
 'use strict';
 import config from '../config';
+import { dispatch, store } from './store';
+import { updateToken } from './actions/auth-token';
 
 export function getUserData(username) {
-    const request = new Request(`${config.path}/users?name=${username}`, {
-        method: 'GET'
+    const request = new Request(`${config.path}/lists`, {
+        method: 'GET',
+        headers: {
+            Authorization: store.getState().authToken.token
+        }
     });
 
     return fetch(request).then(response => response.json());
