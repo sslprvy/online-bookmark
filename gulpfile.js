@@ -131,7 +131,7 @@ gulp.task('index', function () {
 });
 
 gulp.task('sass', () => {
-    return gulp.src(['node_modules/font-awesome/scss/*.scss', 'app/**/*.scss'])
+    return gulp.src(['node_modules/animate.css/animate.css', 'node_modules/font-awesome/scss/*.scss', 'app/**/*.scss'])
         .pipe(plumber({ errorHandler: onError }))
         .pipe(sass())
         .pipe(gulp.dest(`${CONFIG.tempFolder}`))
