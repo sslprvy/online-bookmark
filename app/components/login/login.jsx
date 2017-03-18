@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logIn } from '../actions/auth';
+import { logIn } from '../../actions/auth';
 
 const mapState = ({ auth }) => {
     return {
@@ -31,6 +31,12 @@ const Login = ({ isLoggedIn, login}) => {
         let loginFormState = {
             username: '',
             password: ''
+        };
+
+        let createAccountFormState = {
+            username: '',
+            password: '',
+            email: ''
         };
 
         return (
