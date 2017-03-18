@@ -61,7 +61,7 @@ export function authenticate(user) {
         .then(response => response.json())
         .then((token) => {
 
-            dispatch(loggedIn());
+            dispatch(loggedIn(user.username));
             return token;
         });
 }
