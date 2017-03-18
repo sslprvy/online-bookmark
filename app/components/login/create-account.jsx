@@ -61,9 +61,9 @@ export default class CreateAccount extends Component {
     }
 
     render() {
-        let opts = {};
+        let attributes = {};
         if (!(this.state.isValidEmail || this.isValidPassword || this.isValidUsername)) {
-            opts['disabled'] = 'disabled';
+            attributes['disabled'] = 'disabled';
         }
 
         return (
@@ -73,7 +73,7 @@ export default class CreateAccount extends Component {
                 <input type="password" placeholder="password" name="password"
                        onChange={this.handleOnChange} onBlur={this.handleOnBlur}/>
                 <input type="text" placeholder="email address" name="email" onBlur={this.handleOnBlur}/>
-                <button {...opts}>create</button>
+                <button {...attributes}>create</button>
                 <p className="message">Already registered? <a href="#" onClick={this.props.onLinkClick.bind(null, 'register-form')}>Sign In</a></p>
             </form>
         );
