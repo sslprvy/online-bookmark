@@ -3,7 +3,7 @@ const { verifyToken, generateToken, decodeToken } = require('./crypto');
 const { pick } = require('../helpers/common');
 const { expiryThreshold } = require('../../../../online-bookmark-config/jwt.json');
 
-const authExceptions = ['/user/login'];
+const authExceptions = ['/user/login', '/user/validate'];
 const verifyEmailUrlPartial = '/verifyEmail';
 const resendVerificationEmailUrlPartial = '/resendVerificationEmail';
 
