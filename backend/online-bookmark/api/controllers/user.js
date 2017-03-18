@@ -133,15 +133,15 @@ function verifyUserCredentials(req, res) {
             db.collection('users').findOne({ username: user.username }),
             db.collection('users').findOne({ email: user.email })
         ]).then(([userByName, userByEmail]) => {
-            if (userByName || userByEmail) {
-                let validationObject = {
-                    username: !!userByName,
-                    email: !!userByEmail
-                };
+            let validationObject = {
+                username: !!userByName,
+                email: !!userByEmail
+            };
 
+            if (userByName || userByEmail) {
                 res.status(409).json(validationObject);
             } else {
-                res.sendStatus(200);
+                res.status(200).json(validationObject);
             }
         });
 

@@ -64,3 +64,36 @@ export function authenticate(user) {
             return token;
         });
 }
+
+export function validateUsername(user) {
+    return validateUserCredentials(user)
+        .then(() => false)
+        .catch(response => response.username);
+}
+
+export function validateEmail(user) {
+    return validateUserCredentials(user)
+        .then(() => false)
+        .catch(response => response.email);
+}
+
+export function validateUserCredentials(user) {
+    const headers = new Headers({
+        'Content-Type': 'application/json'
+    });
+    const request = new Request(`${config.path}/user/validate`, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers
+    });
+
+    return fetch(request)
+        .then(response => Promise.all([response.ok, response.json()]))
+        .then(([isOk, response]) => {
+            if (!isOk) {
+                throw response;
+            }
+
+            return response;
+        });
+}
