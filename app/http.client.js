@@ -77,7 +77,7 @@ export function validateEmail(user) {
         .catch(response => response.email);
 }
 
-export function validateUserCredentials(user) {
+function validateUserCredentials(user) {
     const headers = new Headers({
         'Content-Type': 'application/json'
     });
