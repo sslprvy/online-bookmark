@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { validateEmail, validateUsername } from '../../http.client';
+import { validateEmail, validateUsername, createUser } from '../../http.client';
+import { store } from '../../store';
 
 export default class CreateAccount extends Component {
     constructor() {
@@ -17,16 +18,33 @@ export default class CreateAccount extends Component {
             isValidEmail: false,
             isPristineUsername: true,
             isPristineEmail: true,
-            isDisabled: false
+            isDisabled: false,
+            isCreated: false
         };
 
         this.handleOnBlur = this.handleOnBlur.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
+        this.updateState = this.updateState.bind(this);
+        this.unsub = store.subscribe(() => {
+            const { userAccount } = store.getState();
+            if (userAccount.userCreated) {
+                this.updateState({ isCreated: true });
+            }
+        });
     }
 
-    handleSubmit(event) {
+    updateState(newState) {
+        this.setState(newState);
+    }
+
+    componentWillUnmount() {
+        this.unsub();
+    }
+
+    handleSubmit(user, event) {
         event.preventDefault();
         event.stopPropagation();
+        createUser(user);
     }
 
     handleOnBlur(event) {
@@ -90,9 +108,8 @@ export default class CreateAccount extends Component {
 
         let userNameError = this.state.isValidUsername || this.state.isPristineUsername ? null : <p className="error">Username taken</p>;
         let emailError = this.state.isValidEmail || this.state.isPristineEmail ? null : <p className="error">Error in email</p>;
-
-        return (
-            <form className="register-form hide-form" onSubmit={this.handleSubmit}>
+        let registerForm = (
+            <form className="register-form hide-form" onSubmit={this.handleSubmit.bind(null, this.state.createAccountFormState)}>
                 {userNameError}
                 <input type="text" placeholder="username" name="username"
                        onChange={this.handleOnChange} onBlur={this.handleOnBlur}/>
@@ -105,6 +122,16 @@ export default class CreateAccount extends Component {
                 <p className="message">Already registered? <a href="#" onClick={this.props.onLinkClick.bind(null, 'register-form')}>Sign In</a></p>
             </form>
         );
+
+        // TODO: resend verification email when email address is wrong
+        let userCreated = (
+            <div>
+                <h3>User successfully created</h3>
+                <p className="text">Please check your email and verify it by clicking on the sent link</p>
+            </div>
+        );
+
+        return this.state.isCreated ? userCreated : registerForm;
     }
 }
 

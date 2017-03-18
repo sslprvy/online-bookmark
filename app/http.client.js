@@ -3,6 +3,7 @@ import config from '../config';
 import { store, dispatch } from './store';
 import handleResponse from './helpers/response-handler';
 import { loggedIn } from './actions/auth';
+import { userCreated } from './actions/user';
 
 export function getUserData() {
     const headers = new Headers({
@@ -94,6 +95,25 @@ function validateUserCredentials(user) {
                 throw response;
             }
 
+            return response;
+        });
+}
+
+export function createUser(user) {
+    console.log(user);
+    const headers = new Headers({
+        'Content-Type': 'application/json'
+    });
+    const request = new Request(`${config.path}/user`, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers
+    });
+
+    return fetch(request)
+        .then(response => response.json())
+        .then((response) => {
+            dispatch(userCreated());
             return response;
         });
 }
