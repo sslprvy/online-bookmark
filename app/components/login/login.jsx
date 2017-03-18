@@ -34,12 +34,6 @@ const Login = ({ isLoggedIn, login}) => {
             password: ''
         };
 
-        let createAccountFormState = {
-            username: '',
-            password: '',
-            email: ''
-        };
-
         return (
             <div className="login-page">
                 <div className="form">
