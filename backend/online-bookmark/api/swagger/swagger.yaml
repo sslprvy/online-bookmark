@@ -271,6 +271,26 @@ paths:
           description: Unathorized access
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /user/validate:
+    x-swagger-router-controller: user
+    post:
+      operationId: verifyUserCredentials
+      summary: Verifies user credentials
+      description: |
+        Used for form validation on the front end
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: No collision
+        "409":
+          description: Collision with a user in the database
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /user/login:
     x-swagger-router-controller: user
     post:
