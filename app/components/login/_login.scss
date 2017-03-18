@@ -3,7 +3,7 @@
 .login-page {
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;      
+    -moz-osx-font-smoothing: grayscale;
     width: 360px;
     padding: 8% 0 0;
     margin: auto;
@@ -45,6 +45,10 @@
 
         &:hover, &:active, &:focus {
             background: #43A047;
+        }
+
+        &:disabled {
+            background: #96DF99;
         }
     }
 
