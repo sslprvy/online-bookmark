@@ -20,6 +20,7 @@ const merge = require('merge-stream');
 const _ = require('lodash');
 
 const onError = require('./gulp_settings/error-handler').onError;
+const modRewrite = require('connect-modrewrite');
 
 require('./gulp_settings/server')();
 require('./gulp_settings/backend');
@@ -47,7 +48,7 @@ const CONFIG = {
     tempFolder: 'tmp',
     jsDestFolder: 'web/js/',
     cssDestFolder: 'web/css/',
-    appEntryPoint: './app/app.jsx',
+    appEntryPoint: './app/root.jsx',
     destFolder: 'web',
     extensions: ['.js', '.json', '.jsx']
 };
@@ -103,7 +104,12 @@ gulp.task('connect', function () {
     browserSync.init({
         port: 4000,
         server: {
-            baseDir: CONFIG.destFolder
+            baseDir: CONFIG.destFolder,
+            middleware: [
+                modRewrite([
+                    '!\\.\\w+$ /index.html [L]'
+                ])
+            ]
         }
     });
 });
