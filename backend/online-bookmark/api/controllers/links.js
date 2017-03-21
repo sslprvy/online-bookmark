@@ -1,6 +1,7 @@
 const DB = require('../helpers/db-connection');
 const handleQuery = require('../common/handle-simple-query');
 const ObjectID = require('mongodb').ObjectID;
+const { decodeToken } = require('../helpers/crypto');
 
 module.exports = {
     getLinks,
@@ -17,10 +18,11 @@ function getLinks(req, res) {
 function createLink(req, res) {
     DB.connect().then(db => {
         const link = req.swagger.params.link.value;
+        const { username } = decodeToken(req.headers.authorization);
 
         db.collection('links')
-            .insert(link)
-            .then(({ ops: insertedLink }) => {
+            .findOneAndUpdate(link, Object.assign({}, link, { user: username }), { upsert: true })
+            .then(({ value: insertedLink }) => {
                 res.json(insertedLink);
                 db.close();
             });

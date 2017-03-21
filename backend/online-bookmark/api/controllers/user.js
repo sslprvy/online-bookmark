@@ -1,6 +1,7 @@
 const DB = require('../helpers/db-connection');
 const { sendMailVerificationLink } = require('../helpers/email-server');
-const { generateToken } = require('../helpers/crypto');
+const { generateToken, decodeToken } = require('../helpers/crypto');
+const { pick } = require('../helpers/common');
 
 module.exports = {
     createUser,
@@ -78,17 +79,46 @@ function loginUser(req, res) {
 }
 
 function updateUser(req, res) {
-    const user = req.swagger.params.user.value;
+    const updatedUser = req.swagger.params.user.value;
     const token = req.headers.authorization;
+    const user = decodeToken(token);
 
     DB.connect().then(db => {
-        db.collection('users')
-            .findOneAndUpdate({ token }, { $set: user })
+        const userUpdate = db.collection('users')
+            .findOneAndUpdate(
+                { token },
+                { $set: updatedUser },
+                { returnNewDocument: true }
+            )
+            .then(({ value: user }) => generateToken(pick(user, 'username', 'password', 'email')))
+            .then(newToken => [newToken, db.collection('users').findOneAndUpdate({ token }, { $set: { token: newToken }})])
+            .then(([newToken]) => {
+                res.setHeader('authorization', newToken);
+            });
+        let linksUpdate = Promise.resolve('done');
+        let listsUpdate = Promise.resolve('done');
+
+        // only update if the username is changed
+        if (updatedUser.username && user.username !== updatedUser.username) {
+            linksUpdate = db.collection('links')
+                .updateMany(
+                    { user: user.username },
+                    { $set: { user: updatedUser.username }}
+                );
+            listsUpdate = db.collection('onlineBookmark')
+                .updateMany(
+                    { user: user.username },
+                    { $set: { user: updatedUser.username }}
+                );
+        }
+
+        Promise.all([userUpdate, linksUpdate, listsUpdate])
             .then(() => {
                 res.json({ message: 'Success' });
+                db.close();
             })
             .catch(err => {
-                res.status(400).json({ message: err.message });
+                res.status(500).json({ message: err.message });
                 db.close();
             });
     });
