@@ -12,8 +12,10 @@ module.exports = {
 };
 
 function lists(req, res) {
+    const { username } = decodeToken(req.headers.authorization);
+
     DB.connect().then(db => {
-        db.collection('onlineBookmark').find({}).toArray(handleQuery.bind(null, db, res));
+        db.collection('onlineBookmark').find({ user: username }).toArray(handleQuery.bind(null, db, res));
     });
 }
 
