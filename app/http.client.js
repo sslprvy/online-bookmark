@@ -1,14 +1,16 @@
 'use strict';
 import config from '../config';
-import { store } from './store';
+import { store, dispatch } from './store';
 import handleResponse from './helpers/response-handler';
+import { loggedIn } from './actions/auth';
 
-export function getUserData(username) {
+export function getUserData() {
+    const headers = new Headers({
+        Authorization: store.getState().auth.token
+    });
     const request = new Request(`${config.path}/lists`, {
         method: 'GET',
-        headers: {
-            Authorization: store.getState().authToken.token
-        }
+        headers
     });
 
     return fetch(request).then(handleResponse);
@@ -42,4 +44,23 @@ export function deleteLink(linkToDelete, user) {
     const modifiedUser = Object.assign({}, user, { data: user.data.filter(link => link !== linkToDelete) });
 
     return saveUserData(modifiedUser);
+}
+
+export function authenticate(user) {
+    const headers = new Headers({
+        'Content-Type': 'application/json'
+    });
+    const request = new Request(`${config.path}/user/login`, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers
+    });
+
+    return fetch(request)
+        .then(response => response.json())
+        .then((token) => {
+
+            dispatch(loggedIn());
+            return token;
+        });
 }

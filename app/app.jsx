@@ -4,17 +4,14 @@ import { Provider } from 'react-redux';
 
 import Header from './components/header';
 import List from './components/list';
-import { fetchData } from './actions/app-data';
+import Login from './components/login';
 import { store } from './store';
-
-const USERNAME = 'kunstkammern';
-
-store.dispatch(fetchData(USERNAME));
 
 const App = () => (
     <div id="wrapper">
         <Header />
         <List />
+        <Login />
     </div>
 );
 

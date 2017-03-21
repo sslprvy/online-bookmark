@@ -49,6 +49,7 @@
   },
   "engine": "5.10.1",
   "dependencies": {
+    "animate.css": "^3.5.2",
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "^7.3.0",
     "nodemailer": "^3.1.5",
