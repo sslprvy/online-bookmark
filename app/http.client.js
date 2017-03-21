@@ -1,12 +1,17 @@
 'use strict';
 import config from '../config';
+import { store } from './store';
+import handleResponse from './helpers/response-handler';
 
 export function getUserData(username) {
-    const request = new Request(`${config.path}/users?name=${username}`, {
-        method: 'GET'
+    const request = new Request(`${config.path}/lists`, {
+        method: 'GET',
+        headers: {
+            Authorization: store.getState().authToken.token
+        }
     });
 
-    return fetch(request).then(response => response.json());
+    return fetch(request).then(handleResponse);
 }
 
 export function saveUserData(user) {

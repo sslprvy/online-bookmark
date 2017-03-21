@@ -3,11 +3,16 @@ const { verifyToken, generateToken, decodeToken } = require('./crypto');
 const { pick } = require('../helpers/common');
 const { expiryThreshold } = require('../../../../online-bookmark-config/jwt.json');
 
-const authExceptions = ['/user/login']
+const authExceptions = ['/user/login'];
 const verifyEmailUrlPartial = '/verifyEmail';
 const resendVerificationEmailUrlPartial = '/resendVerificationEmail';
 
-module.exports = function checkAuthorization(req, res, next) {
+module.exports = {
+    checkAuthorization,
+    allowCrossDomain
+};
+
+function checkAuthorization(req, res, next) {
     // we are not checking the token for the above urls
     if (authExceptions.includes(req.originalUrl) ||
         req.originalUrl.includes(verifyEmailUrlPartial) ||
@@ -68,3 +73,18 @@ module.exports = function checkAuthorization(req, res, next) {
             res.status(401).json({ message: err });
         });
 };
+
+function allowCrossDomain(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, authorization');
+    res.header('Access-Control-Expose-Headers', 'authorization');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' === req.method) {
+        res.sendStatus(200);
+    }
+    else {
+        next();
+    }
+}
