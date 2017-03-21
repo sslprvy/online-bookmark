@@ -6,7 +6,8 @@ const { pick } = require('../helpers/common');
 module.exports = {
     createUser,
     loginUser,
-    updateUser
+    updateUser,
+    verifyUserCredentials
 };
 
 function createUser(req, res) {
@@ -121,5 +122,28 @@ function updateUser(req, res) {
                 res.status(500).json({ message: err.message });
                 db.close();
             });
+    });
+}
+
+function verifyUserCredentials(req, res) {
+    const user = req.swagger.params.user.value;
+
+    DB.connect().then(db => {
+        Promise.all([
+            db.collection('users').findOne({ username: user.username }),
+            db.collection('users').findOne({ email: user.email })
+        ]).then(([userByName, userByEmail]) => {
+            let validationObject = {
+                username: !!userByName,
+                email: !!userByEmail
+            };
+
+            if (userByName || userByEmail) {
+                res.status(409).json(validationObject);
+            } else {
+                res.status(200).json(validationObject);
+            }
+        });
+
     });
 }

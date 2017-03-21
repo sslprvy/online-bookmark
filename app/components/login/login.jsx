@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logIn } from '../actions/auth';
+import { logIn } from '../../actions/auth';
+import CreateAccount from './create-account';
 
 const mapState = ({ auth }) => {
     return {
@@ -36,13 +37,7 @@ const Login = ({ isLoggedIn, login}) => {
         return (
             <div className="login-page">
                 <div className="form">
-                    <form className="register-form hide-form">
-                        <input type="text" placeholder="username"/>
-                        <input type="password" placeholder="password"/>
-                        <input type="text" placeholder="email address"/>
-                        <button>create</button>
-                        <p className="message">Already registered? <a href="#" onClick={addfadeOut.bind(null, 'register-form')}>Sign In</a></p>
-                    </form>
+                    <CreateAccount onLinkClick={addfadeOut} />
                     <form className="login-form" onSubmit={handleSubmit.bind(null, loginFormState)}>
                         <input type="text" placeholder="username"
                                name="username" onChange={onChange.bind(null, loginFormState)}/>

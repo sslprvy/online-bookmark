@@ -3,7 +3,8 @@ const { verifyToken, generateToken, decodeToken } = require('./crypto');
 const { pick } = require('../helpers/common');
 const { expiryThreshold } = require('../../../../online-bookmark-config/jwt.json');
 
-const authExceptions = ['/user/login'];
+const authExceptions = ['/user/login', '/user/validate'];
+const userCreation = '/user';
 const verifyEmailUrlPartial = '/verifyEmail';
 const resendVerificationEmailUrlPartial = '/resendVerificationEmail';
 
@@ -16,7 +17,8 @@ function checkAuthorization(req, res, next) {
     // we are not checking the token for the above urls
     if (authExceptions.includes(req.originalUrl) ||
         req.originalUrl.includes(verifyEmailUrlPartial) ||
-        req.originalUrl.includes(resendVerificationEmailUrlPartial)) {
+        req.originalUrl.includes(resendVerificationEmailUrlPartial) ||
+        (req.originalUrl === userCreation && req.method === 'POST')) {
         next();
         return;
     }

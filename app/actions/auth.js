@@ -8,9 +8,10 @@ export function updateToken(token) {
     };
 }
 
-export function loggedIn() {
+export function loggedIn(userName) {
     return {
-        type: 'LOGGED_IN'
+        type: 'LOGGED_IN',
+        userName
     };
 }
 

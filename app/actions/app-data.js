@@ -1,5 +1,4 @@
 import { getUserData } from '../http.client';
-import { store } from '../store';
 
 function fetchingData() {
     return {

@@ -1,6 +1,7 @@
 const defaultState = {
     token: '',
-    isLoggedIn: false
+    isLoggedIn: false,
+    userName: ''
 };
 
 export default function(state = defaultState, action) {
@@ -8,12 +9,14 @@ export default function(state = defaultState, action) {
         case 'UPDATE_TOKEN':
             return {
                 token: action.token,
-                isLoggedIn: state.isLoggedIn
+                isLoggedIn: state.isLoggedIn,
+                userName: state.userName
             };
         case 'LOGGED_IN':
             return {
                 isLoggedIn: true,
-                token: state.token
+                token: state.token,
+                userName: action.userName
             };
         default:
             return state;

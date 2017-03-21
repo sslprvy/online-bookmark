@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import Header from './components/header';
 import List from './components/list';
-import Login from './components/login';
+import Login from './components/login/login';
 import { store } from './store';
 
 const App = () => (
