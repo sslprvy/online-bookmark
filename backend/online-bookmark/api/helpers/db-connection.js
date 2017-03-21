@@ -1,9 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 
-const user = String(process.env.USER).trim();
-const password = String(process.env.PASSWORD).trim();
-const port = String(process.env.BACKEND_PORT).trim();
-const ip = String(process.env.IP_ADDRESS).trim();
+const { user, password, port, ip } = require('../../../../online-bookmark-config/mongo.json');
 
 const url = `mongodb://${user}:${password}@${ip}:${port}/online-bookmark`;
 
