@@ -28,7 +28,8 @@ require('./gulp_settings/backend');
 // but include in your application deployment
 const dependencies = [
     'react',
-    'react-dom'
+    'react-dom',
+    'react-router-dom'
 ];
 
 const NODE_ENV = ['dev', 'prod'];
