@@ -5,13 +5,17 @@ import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom
 import { store } from './store';
 
 import Login from './pages/login/login';
+import CreateAccount from './pages/login/create-account';
+import App from './pages/app';
 
 const Root = ({ store }) => (
     <Provider store={store}>
         <Router>
             <div>
                 <Route path="/login" component={Login} />
-                <Redirect from="/" to="/login" />
+                <Route path="/register" component={CreateAccount} />
+                {/*<Redirect from="/" to="/login" />*/}
+                <Route path="/main" component={App} />
             </div>
         </Router>
     </Provider>

@@ -1,11 +1,17 @@
 import React from 'react';
-import Header from './components/header';
-import List from './components/list';
+import { connect } from 'react-redux';
+import Header from '../components/header';
+import List from '../components/list';
+import CreateAccount from './login/create-account';
 
-const App = () => (
-    <div id="wrapper">
-        <Header />
-        <List />
-        <Login />
-    </div>
-);
+const App = () => {
+    return (
+        <div id="wrapper">
+            <h2>ASDASD</h2>
+            <Header />
+            <List />
+        </div>
+    );
+};
+
+export default connect()(App);
