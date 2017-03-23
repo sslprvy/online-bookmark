@@ -1,6 +1,7 @@
 const DB = require('../helpers/db-connection');
 const ObjectID = require('mongodb').ObjectID;
 const { decodeToken } = require('../helpers/crypto');
+const { pick } = require('../helpers/common');
 
 const handleQuery = require('../common/handle-simple-query');
 
@@ -66,19 +67,20 @@ function newListElement(req, res) {
 
 function editList(req, res) {
     DB.connect().then(db => {
-        const listElement = req.swagger.params['list-element'].value;
+        const listElementId = req.swagger.params['list-element'].value._id;
+        const listElement = pick(req.swagger.params['list-element'].value, 'title', 'url', 'tags');
         const listId = req.swagger.params.listId.value;
 
         Promise.all([
             new Promise(resolve => {
                 db.collection('links').update(
-                    { _id: ObjectID(listElement._id ) },
+                    { _id: ObjectID(listElementId) },
                     { $set: listElement }
                 ).then(resolve);
             }),
             new Promise(resolve => {
                 db.collection('onlineBookmark').updateMany(
-                    { 'elements._id': ObjectID(listElement._id) },
+                    { 'elements._id': ObjectID(listElementId) },
                     { $set: {
                         'elements.$.title': listElement.title,
                         'elements.$.url': listElement.url,
