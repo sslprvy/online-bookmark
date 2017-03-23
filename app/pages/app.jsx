@@ -2,16 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/header';
 import List from '../components/list';
-import CreateAccount from './login/create-account';
 
-const App = () => {
-    return (
+const mapState = ({ appData }) => {
+    return {
+        userData: appData.userData
+    };
+};
+
+const App = ({ userData }) => {
+    return Object.keys(userData).length === 0 ? null : (
         <div id="wrapper">
-            <h2>ASDASD</h2>
             <Header />
             <List />
         </div>
     );
 };
 
-export default connect()(App);
+export default connect(mapState)(App);

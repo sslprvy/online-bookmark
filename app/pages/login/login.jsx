@@ -17,7 +17,7 @@ const mapDispatch = (dispatch) => {
     };
 };
 
-const Login = ({ isLoggedIn, login}) => {
+const Login = ({ isLoggedIn, login, history }) => {
     function onChange(loginFormState, event) {
         loginFormState[event.target.name] = event.target.value;
     }
@@ -26,6 +26,7 @@ const Login = ({ isLoggedIn, login}) => {
         event.preventDefault();
         event.stopPropagation();
         login(loginFormState);
+        history.push('/main');
     }
 
     if (!isLoggedIn) {
