@@ -17,14 +17,20 @@ export function getUserData() {
     return fetch(request).then(handleResponse);
 }
 
-export function saveUserData(user) {
+export function saveList(id, listElement) {
     const headers = new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: store.getState().auth.token
     });
-    const request = new Request(`${config.path}/users/${user.id}`, {
-        method: 'PUT',
+
+    const payload = {
+        'list-element': listElement
+    }
+
+    const request = new Request(`${config.path}/lists/${id}`, {
+        method: 'PATCH',
         headers,
-        body: JSON.stringify(user)
+        body: JSON.stringify(payload)
     });
 
     return fetch(request).then(response => response.json());
@@ -38,13 +44,13 @@ export function createLink(link, user) {
     const modifiedLink = Object.assign({}, link, { id: highestId + 1 });
     const modifiedUser = Object.assign({}, user, { data: user.data.concat(modifiedLink) });
 
-    return saveUserData(modifiedUser);
+    return saveList(modifiedUser);
 }
 
 export function deleteLink(linkToDelete, user) {
     const modifiedUser = Object.assign({}, user, { data: user.data.filter(link => link !== linkToDelete) });
 
-    return saveUserData(modifiedUser);
+    return saveList(modifiedUser);
 }
 
 export function authenticate(user) {

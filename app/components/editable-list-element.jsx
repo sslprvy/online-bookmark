@@ -15,7 +15,7 @@ const mapDispatch = (dispatch) => {
     };
 };
 
-const EditableListElement = ({ saveEntry, user, updateUser, listElement }) => {
+const EditableListElement = ({ saveEntry, user, updateUser, listElement, listId }) => {
     function updateEntry(event) {
         const property = event.target.name;
         const userData = user.data.map(element => {
@@ -41,7 +41,7 @@ const EditableListElement = ({ saveEntry, user, updateUser, listElement }) => {
             <div className="display-list-element-control">
                 <i className="fa fa-floppy-o display-list-element-remove-button"
                     aria-hidden="true"
-                    onClick={saveEntry.bind(null, listElement.id, user)}></i>
+                    onClick={saveEntry.bind(null, listId, user)}></i>
                 <i className="fa fa-times display-list-element-cancel-button"
                     aria-hidden="true"></i>
             </div>
@@ -51,7 +51,8 @@ const EditableListElement = ({ saveEntry, user, updateUser, listElement }) => {
 
 EditableListElement.propTypes = {
     user: PropTypes.object.isRequired,
-    listElement: PropTypes.object.isRequired
+    listElement: PropTypes.object.isRequired,
+    listId: PropTypes.string.isRequired
 };
 
 export default connect(null, mapDispatch)(EditableListElement);
