@@ -173,7 +173,10 @@ gulp.task('scripts:app', () => {
         // transform ES6 and JSX to ES5 with babelify
         .transform('babelify', { presets: ['es2015', 'react'] })
         .bundle()
-        .on('error', gutil.log)
+        .on('error', function (err) {
+            gutil.log(err.message);
+            this.emit('end');
+        })
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(CONFIG.tempFolder));
 });
