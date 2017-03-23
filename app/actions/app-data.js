@@ -26,8 +26,8 @@ export function fetchData() {
         dispatch(fetchingData());
 
         return getLists()
-            .then(users => {
-                dispatch(receivedData(users[0]));
+            .then(lists => {
+                dispatch(receivedData(lists[0]));
             });
     };
 }
