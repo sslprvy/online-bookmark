@@ -102,7 +102,6 @@ function validateUserCredentials(user) {
 }
 
 export function createUser(user) {
-    console.log(user);
     const headers = new Headers({
         'Content-Type': 'application/json'
     });
