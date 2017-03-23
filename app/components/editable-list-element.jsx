@@ -32,7 +32,9 @@ export default class EditableListElement extends Component {
         );
         const updatedList = Object.assign({}, this.props.list, { elements: updatedElements });
 
+        // This is to update the applications own state
         dispatch(updateList({ list: updatedList, id: this.state.listElement._id }));
+        // This is to persist the change to the backend
         dispatch(saveEntry({ id: updatedList._id, listElement: this.state.listElement }));
     }
 
