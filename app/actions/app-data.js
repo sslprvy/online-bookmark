@@ -1,6 +1,4 @@
 import { getUserData } from '../http.client';
-import Browsing from '../helpers/browsing';
-const browsing = new Browsing();
 
 function fetchingData() {
     return {
@@ -29,7 +27,6 @@ export function fetchData() {
 
         return getUserData()
             .then(users => {
-                browsing.location = { path: '/main' };
                 dispatch(receivedData(users[0]));
             });
     };
