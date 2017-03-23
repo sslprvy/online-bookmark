@@ -6,8 +6,8 @@ import { updateUser } from '../actions/app-data';
 
 const mapDispatch = (dispatch) => {
     return {
-        saveEntry: (id, user) => {
-            dispatch(saveEntry({id, user}));
+        saveEntry: (id, listElement) => {
+            dispatch(saveEntry({id, listElement}));
         },
         updateUser: ({ user, id }) => {
             dispatch(updateUser({ user, id }));
@@ -18,7 +18,7 @@ const mapDispatch = (dispatch) => {
 const EditableListElement = ({ saveEntry, user, updateUser, listElement, listId }) => {
     function updateEntry(event) {
         const property = event.target.name;
-        const userData = user.data.map(element => {
+        const userData = user.elements.map(element => {
             if (element === listElement) {
                 let newProperty = {};
                 newProperty[property] = event.target.value;
@@ -41,7 +41,7 @@ const EditableListElement = ({ saveEntry, user, updateUser, listElement, listId 
             <div className="display-list-element-control">
                 <i className="fa fa-floppy-o display-list-element-remove-button"
                     aria-hidden="true"
-                    onClick={saveEntry.bind(null, listId, user)}></i>
+                    onClick={saveEntry.bind(null, listId, listElement)}></i>
                 <i className="fa fa-times display-list-element-cancel-button"
                     aria-hidden="true"></i>
             </div>

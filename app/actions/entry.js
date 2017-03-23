@@ -1,9 +1,9 @@
 import { saveList, createLink, deleteLink } from '../http.client';
 
-function saveEntryAction({ id, user }) {
+function saveEntryAction({ id, listElement }) {
     return {
         type: 'SAVE_ENTRY',
-        user,
+        listElement,
         id
     };
 }
@@ -42,11 +42,11 @@ export function newEntry() {
     };
 }
 
-export function saveEntry({ id, list }) {
+export function saveEntry({ id, listElement }) {
     return function (dispatch) {
-        dispatch(saveEntryAction({ id, list }));
+        dispatch(saveEntryAction({ id, listElement }));
 
-        return saveList(id, list)
+        return saveList(id, listElement)
             .then(savedUser => dispatch(entrySaved({ user: savedUser })));
     };
 }

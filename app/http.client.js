@@ -23,14 +23,10 @@ export function saveList(id, listElement) {
         Authorization: store.getState().auth.token
     });
 
-    const payload = {
-        'list-element': listElement
-    }
-
     const request = new Request(`${config.path}/lists/${id}`, {
         method: 'PATCH',
         headers,
-        body: JSON.stringify(payload)
+        body: JSON.stringify(listElement)
     });
 
     return fetch(request).then(response => response.json());
