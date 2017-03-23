@@ -22,7 +22,6 @@ const _ = require('lodash');
 const onError = require('./gulp_settings/error-handler').onError;
 const modRewrite = require('connect-modrewrite');
 
-require('./gulp_settings/server')();
 require('./gulp_settings/backend');
 
 // External dependencies you do not want to rebundle while developing,
