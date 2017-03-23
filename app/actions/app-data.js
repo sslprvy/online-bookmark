@@ -1,4 +1,4 @@
-import { getUserData } from '../http.client';
+import { getLists } from '../http.client';
 
 function fetchingData() {
     return {
@@ -25,7 +25,7 @@ export function fetchData() {
     return function (dispatch) {
         dispatch(fetchingData());
 
-        return getUserData()
+        return getLists()
             .then(users => {
                 dispatch(receivedData(users[0]));
             });

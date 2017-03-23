@@ -5,7 +5,7 @@ import handleResponse from './helpers/response-handler';
 import { loggedIn } from './actions/auth';
 import { userCreated } from './actions/user';
 
-export function getUserData() {
+export function getLists() {
     const headers = new Headers({
         Authorization: store.getState().auth.token
     });
