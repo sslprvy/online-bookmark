@@ -32,7 +32,7 @@ const ListElement = ({ listElement, editEntry, deleteEntry, user }) => {
             <div className="display-list-element-control">
                 <i className="fa fa-pencil display-list-element-edit-button"
                     aria-hidden="true"
-                    onClick={editEntry.bind(null, listElement.id)}></i>
+                    onClick={editEntry.bind(null, listElement._id)}></i>
                 <i className="fa fa-trash-o display-list-element-remove-button"
                     aria-hidden="true"
                     onClick={deleteEntry.bind(null, listElement, user)}></i>

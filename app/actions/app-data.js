@@ -9,14 +9,14 @@ function fetchingData() {
 function receivedData(data) {
     return {
         type: 'RECEIVED_DATA',
-        data: data
+        data
     };
 }
 
-export function updateUser({ user, id }) {
+export function updateList({ list, id }) {
     return {
-        type: 'UPDATE_USER',
-        user,
+        type: 'UPDATE_LIST',
+        list,
         id
     };
 }
@@ -27,7 +27,7 @@ export function fetchData() {
 
         return getLists()
             .then(lists => {
-                dispatch(receivedData(lists[0]));
+                dispatch(receivedData(lists));
             });
     };
 }

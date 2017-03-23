@@ -5,12 +5,12 @@ import List from '../components/list';
 
 const mapState = ({ appData }) => {
     return {
-        userData: appData.userData
+        lists: appData.lists
     };
 };
 
-const App = ({ userData }) => {
-    return Object.keys(userData).length === 0 ? null : (
+const App = ({ lists }) => {
+    return Object.keys(lists).length === 0 ? null : (
         <div id="wrapper">
             <Header />
             <List />
