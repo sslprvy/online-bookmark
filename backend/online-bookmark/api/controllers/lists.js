@@ -48,7 +48,7 @@ function newListElement(req, res) {
 
         // if we have the exact same link in the links collection use that one
         db.collection('links')
-            .findOneAndUpdate(listElement, Object.assign({}, listElement, { user: username }), { upsert: true, returnNewDocument: true })
+            .findOneAndUpdate(listElement, Object.assign({}, listElement, { user: username }), { upsert: true, returnOriginal: false })
             .then(({ value: link }) => {
                 db.collection('onlineBookmark').findOneAndUpdate(
                     { _id: ObjectID(listId) },
