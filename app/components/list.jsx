@@ -31,7 +31,7 @@ const List = ({ list, editEntry, listId }) => {
     });
 
     if (editEntry.editing && editEntry.newEntry) {
-        userObject.unshift(<NewElement key="new-element" user={list} />);
+        userObject.unshift(<NewElement key="new-element" list={list} />);
     }
 
     return (

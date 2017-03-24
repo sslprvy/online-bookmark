@@ -4,18 +4,17 @@ import { addEntry } from '../actions/entry';
 
 const mapDispatch = (dispatch) => {
     return {
-        addEntry: (link, user) => {
-            dispatch(addEntry(link, user));
+        addEntry: (link, list) => {
+            dispatch(addEntry(link, list));
         }
     };
 };
 
 
-const NewElement = ({ addEntry, user }) => {
+const NewElement = ({ addEntry, list }) => {
     let link = {
         title: '',
         url: '',
-        lists: [],
         tags: []
     };
 
@@ -35,7 +34,7 @@ const NewElement = ({ addEntry, user }) => {
             <div className="display-list-element-control">
                 <i className="fa fa-floppy-o display-list-element-remove-button"
                     aria-hidden="true"
-                    onClick={addEntry.bind(null, link, user)}></i>
+                    onClick={addEntry.bind(null, link, list)}></i>
                 <i className="fa fa-times display-list-element-cancel-button"
                     aria-hidden="true"></i>
             </div>
@@ -44,7 +43,7 @@ const NewElement = ({ addEntry, user }) => {
 };
 
 NewElement.propTypes = {
-    user: PropTypes.object.isRequired
+    list: PropTypes.object.isRequired
 };
 
 export default connect(null, mapDispatch)(NewElement);
