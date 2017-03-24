@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
 import { dispatch } from '../store';
 
 import { saveEntry } from '../actions/entry';
