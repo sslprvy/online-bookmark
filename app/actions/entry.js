@@ -15,10 +15,11 @@ function entrySaved({ user }) {
     };
 }
 
-function addEntryAction(link) {
+function addEntryAction(link, listId) {
     return {
         type: 'ADD_ENTRY',
-        link
+        link,
+        listId
     };
 }
 
@@ -51,12 +52,13 @@ export function saveEntry({ id, listElement }) {
     };
 }
 
-export function addEntry(link, user) {
+export function addEntry(link, list) {
     return function (dispatch) {
-        return createLink(link, user)
-            .then(savedUser => {
-                let savedLink = savedUser.data.slice().reverse()[0];
-                dispatch(addEntryAction(savedLink));
+        return createLink({ link, id: list._id })
+            .then(savedList => {
+                const savedLink = savedList.elements.slice().reverse()[0];
+                const listId = list._id;
+                dispatch(addEntryAction(savedLink, listId));
             });
     };
 }

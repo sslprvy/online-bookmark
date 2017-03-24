@@ -18,7 +18,13 @@ export default function appData(state = defaultState, action) {
         case 'ADD_ENTRY':
             return {
                 isFetching: false,
-                lists: state.lists.data.concat(action.link)
+                lists: state.lists.map(list => {
+                    if (list._id === action.listId) {
+                        return Object.assign({}, list, { elements: list.elements.concat(action.link) });
+                    } else {
+                        return list;
+                    }
+                })
             };
         case 'DELETE_ENTRY':
             return {

@@ -32,15 +32,19 @@ export function saveList(id, listElement) {
     return fetch(request).then(response => response.json());
 }
 
-export function createLink(link, user) {
-    // TODO: This should happen on the backend
-    const highestId = user.data.reduce((accumulator, link) => {
-        return link.id > accumulator ? link.id : accumulator;
-    }, 0);
-    const modifiedLink = Object.assign({}, link, { id: highestId + 1 });
-    const modifiedUser = Object.assign({}, user, { data: user.data.concat(modifiedLink) });
+export function createLink({ link, id }) {
+    const headers = new Headers({
+        'Content-Type': 'application/json',
+        Authorization: store.getState().auth.token
+    });
 
-    return saveList(modifiedUser);
+    const request = new Request(`${config.path}/lists/${id}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(link)
+    });
+
+    return fetch(request).then(response => response.json());
 }
 
 export function deleteLink(linkToDelete, user) {
