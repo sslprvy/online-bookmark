@@ -32,10 +32,11 @@ export default function appData(state = defaultState, action) {
                 lists: state.lists.data.filter(link => link !== action.link)
             };
         case 'UPDATE_LIST':
-        // TODO: refactor this hack
             return {
                 isFetching: false,
-                lists: [action.list]
+                lists: state.lists.map(list => {
+                    return list._id === action.list._id ? action.list : list;
+                })
             };
         default:
             return state;
