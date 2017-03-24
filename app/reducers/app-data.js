@@ -1,6 +1,6 @@
 const defaultState = {
     isFetching: false,
-    userData: {}
+    lists: {}
 };
 
 export default function appData(state = defaultState, action) {
@@ -8,27 +8,28 @@ export default function appData(state = defaultState, action) {
         case 'FETCHING_DATA':
             return {
                 isFetching: true,
-                userData: state.userData
+                lists: state.lists
             };
         case 'RECEIVED_DATA':
             return {
                 isFetching: false,
-                userData: action.data
+                lists: action.data
             };
         case 'ADD_ENTRY':
             return {
                 isFetching: false,
-                userData: Object.assign({}, state.userData, { data: state.userData.data.concat(action.link) })
+                lists: state.lists.data.concat(action.link)
             };
         case 'DELETE_ENTRY':
             return {
                 isFetching: false,
-                userData: Object.assign({}, state.userData, { data: state.userData.data.filter(link => link !== action.link) })
+                lists: state.lists.data.filter(link => link !== action.link)
             };
-        case 'UPDATE_USER':
+        case 'UPDATE_LIST':
+        // TODO: refactor this hack
             return {
                 isFetching: false,
-                userData: action.user
+                lists: [action.list]
             };
         default:
             return state;

@@ -1,4 +1,4 @@
-import { getUserData } from '../http.client';
+import { getLists } from '../http.client';
 
 function fetchingData() {
     return {
@@ -9,14 +9,14 @@ function fetchingData() {
 function receivedData(data) {
     return {
         type: 'RECEIVED_DATA',
-        data: data
+        data
     };
 }
 
-export function updateUser({ user, id }) {
+export function updateList({ list, id }) {
     return {
-        type: 'UPDATE_USER',
-        user,
+        type: 'UPDATE_LIST',
+        list,
         id
     };
 }
@@ -25,9 +25,9 @@ export function fetchData() {
     return function (dispatch) {
         dispatch(fetchingData());
 
-        return getUserData()
-            .then(users => {
-                dispatch(receivedData(users[0]));
+        return getLists()
+            .then(lists => {
+                dispatch(receivedData(lists));
             });
     };
 }

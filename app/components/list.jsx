@@ -6,25 +6,32 @@ import EditableListElement from './editable-list-element';
 import NewElement from './new-element';
 
 const mapState = ({ appData, editEntry }) => {
+    // TODO: Should be selectable which list to show
     return {
-        userData: appData.userData,
+        list: appData.lists[0],
+        listId: appData.lists[0]._id,
         editEntry
     };
 };
 
-const List = ({ userData, editEntry }) => {
-    let userObject = userData.elements.map((listElement, index) => {
-        if (editEntry.editing && listElement.id === editEntry.underEdit) {
-            const key = `${listElement.id}-${index}-edit`;
-            return <EditableListElement user={userData} listElement={listElement} key={key} />;
+const List = ({ list, editEntry, listId }) => {
+    let userObject = list.elements.map((listElement, index) => {
+        if (editEntry.editing && listElement._id === editEntry.underEdit) {
+            const key = `${listElement._id}-${index}-edit`;
+            const props = {
+                list,
+                listElement,
+                key
+            };
+            return <EditableListElement {...props}/>;
         } else {
-            const key = `${listElement.id}-${index}`;
-            return <ListElement listElement={listElement} key={key} user={userData} />;
+            const key = `${listElement._id}-${index}`;
+            return <ListElement listElement={listElement} key={key} user={list} />;
         }
     });
 
     if (editEntry.editing && editEntry.newEntry) {
-        userObject.unshift(<NewElement key="new-element" user={userData} />);
+        userObject.unshift(<NewElement key="new-element" user={list} />);
     }
 
     return (
