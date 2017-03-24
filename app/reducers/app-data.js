@@ -1,6 +1,6 @@
 const defaultState = {
     isFetching: false,
-    lists: {}
+    lists: []
 };
 
 export default function appData(state = defaultState, action) {
