@@ -29,7 +29,13 @@ export default function appData(state = defaultState, action) {
         case 'DELETE_ENTRY':
             return {
                 isFetching: false,
-                lists: state.lists.data.filter(link => link !== action.link)
+                lists: state.lists.map(list => {
+                    if (list._id === action.listid) {
+                        return Object.assign({}, list, { elements: state.lists[0].elements.filter(link => link !== action.link) });
+                    } else {
+                        return list;
+                    }
+                })
             };
         case 'UPDATE_LIST':
             return {
