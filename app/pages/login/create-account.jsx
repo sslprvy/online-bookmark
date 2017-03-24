@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { validateEmail, validateUsername, createUser } from '../../http.client';
 import { store } from '../../store';
+import { Link } from 'react-router-dom';
 
 export default class CreateAccount extends Component {
     constructor() {
@@ -109,18 +110,22 @@ export default class CreateAccount extends Component {
         let userNameError = this.state.isValidUsername || this.state.isPristineUsername ? null : <p className="error">Username taken</p>;
         let emailError = this.state.isValidEmail || this.state.isPristineEmail ? null : <p className="error">Error in email</p>;
         let registerForm = (
-            <form className="register-form hide-form" onSubmit={this.handleSubmit.bind(null, this.state.createAccountFormState)}>
-                {userNameError}
-                <input type="text" placeholder="username" name="username"
-                       onChange={this.handleOnChange} onBlur={this.handleOnBlur}/>
-                <input type="password" placeholder="password" name="password"
-                       onChange={this.handleOnChange} onBlur={this.handleOnBlur}/>
-                {emailError}
-                <input type="text" placeholder="email address" name="email"
-                       onChange={this.handleOnChange} onBlur={this.handleOnBlur}/>
-                <button {...attributes}>create</button>
-                <p className="message">Already registered? <a href="#" onClick={this.props.onLinkClick.bind(null, 'register-form')}>Sign In</a></p>
-            </form>
+            <div className="login-page">
+                <div className="form">
+                    <form className="register-form" onSubmit={this.handleSubmit.bind(null, this.state.createAccountFormState)}>
+                        {userNameError}
+                        <input type="text" placeholder="username" name="username"
+                            onChange={this.handleOnChange} onBlur={this.handleOnBlur}/>
+                        <input type="password" placeholder="password" name="password"
+                            onChange={this.handleOnChange} onBlur={this.handleOnBlur}/>
+                        {emailError}
+                        <input type="text" placeholder="email address" name="email"
+                            onChange={this.handleOnChange} onBlur={this.handleOnBlur}/>
+                        <button {...attributes}>create</button>
+                        <p className="message">Already registered? <Link to="/login">Sign In</Link></p>
+                    </form>
+                </div>
+            </div>
         );
 
         // TODO: resend verification email when email address is wrong

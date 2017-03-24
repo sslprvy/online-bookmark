@@ -13,11 +13,6 @@ const mapState = ({ appData, editEntry }) => {
 };
 
 const List = ({ userData, editEntry }) => {
-    // NOTE: could be replaced with `_.isEmpty()`
-    if (userData.constructor === Object && Object.keys(userData).length === 0) {
-        return null;
-    }
-
     let userObject = userData.elements.map((listElement, index) => {
         if (editEntry.editing && listElement.id === editEntry.underEdit) {
             const key = `${listElement.id}-${index}-edit`;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { logIn } from '../../actions/auth';
-import CreateAccount from './create-account';
+import { Link } from 'react-router-dom';
 
 const mapState = ({ auth }) => {
     return {
@@ -17,7 +17,7 @@ const mapDispatch = (dispatch) => {
     };
 };
 
-const Login = ({ isLoggedIn, login}) => {
+const Login = ({ isLoggedIn, login, history }) => {
     function onChange(loginFormState, event) {
         loginFormState[event.target.name] = event.target.value;
     }
@@ -26,6 +26,7 @@ const Login = ({ isLoggedIn, login}) => {
         event.preventDefault();
         event.stopPropagation();
         login(loginFormState);
+        history.push('/main');
     }
 
     if (!isLoggedIn) {
@@ -37,14 +38,13 @@ const Login = ({ isLoggedIn, login}) => {
         return (
             <div className="login-page">
                 <div className="form">
-                    <CreateAccount onLinkClick={addfadeOut} />
                     <form className="login-form" onSubmit={handleSubmit.bind(null, loginFormState)}>
                         <input type="text" placeholder="username"
                                name="username" onChange={onChange.bind(null, loginFormState)}/>
                         <input type="password" placeholder="password"
                                name="password" onChange={onChange.bind(null, loginFormState)}/>
                         <button>login</button>
-                        <p className="message">Not registered? <a href="#" onClick={addfadeOut.bind(null, 'login-form')}>Create an account</a></p>
+                        <p className="message">Not registered? <Link to="/register">Create an account</Link></p>
                     </form>
                 </div>
             </div>
