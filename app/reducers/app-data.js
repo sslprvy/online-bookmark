@@ -30,7 +30,7 @@ export default function appData(state = defaultState, action) {
             return {
                 isFetching: false,
                 lists: state.lists.map(list => {
-                    if (list._id === action.listid) {
+                    if (list._id === action.listId) {
                         return Object.assign({}, list, { elements: state.lists[0].elements.filter(link => link !== action.link) });
                     } else {
                         return list;
