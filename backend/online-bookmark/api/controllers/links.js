@@ -23,7 +23,7 @@ function createLink(req, res) {
         const { username } = decodeToken(req.headers.authorization);
 
         db.collection('links')
-            .findOneAndUpdate(link, Object.assign({}, link, { user: username }), { upsert: true })
+            .findOneAndUpdate(link, Object.assign({}, link, { user: username }), { upsert: true, returnNewDocument: true })
             .then(({ value: insertedLink }) => {
                 res.json(insertedLink);
                 db.close();
