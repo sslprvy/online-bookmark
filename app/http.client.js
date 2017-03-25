@@ -47,10 +47,10 @@ export function createLink({ link, id }) {
     return fetch(request).then(response => response.json());
 }
 
-export function deleteLink(linkToDelete, user) {
-    const modifiedUser = Object.assign({}, user, { data: user.data.filter(link => link !== linkToDelete) });
+export function deleteLink(linkToDelete, list) {
+    const modifiedList = Object.assign({}, list, { data: list.elmenets.filter(link => link !== linkToDelete) });
 
-    return saveList(modifiedUser);
+    return saveList(modifiedList);
 }
 
 export function authenticate(user) {

@@ -63,9 +63,9 @@ export function addEntry(link, list) {
     };
 }
 
-export function deleteEntry(link, user) {
+export function deleteEntry(link, list) {
     return function (dispatch) {
-        return deleteLink(link, user)
+        return deleteLink(link, list)
             .then(savedUser => dispatch(deleteEntryAction(link)));
     };
 }
