@@ -9,7 +9,8 @@ module.exports = {
     lists,
     newList,
     newListElement,
-    editList
+    editList,
+    updateList
 };
 
 function lists(req, res) {
@@ -92,6 +93,25 @@ function editList(req, res) {
             return db.collection('onlineBookmark').findOne({ _id: ObjectID(listId) });
         }).then(modifiedList => {
             res.json(modifiedList);
+            db.close();
+        });
+    });
+}
+
+function updateList(req, res) {
+    DB.connect().then(db => {
+        const listId = req.swagger.params.listId.value;
+        const list = pick(req.swagger.params.list.value, 'name', 'user', 'elements');
+
+        db.collection('onlineBookmark').findOneAndUpdate(
+            { _id: ObjectID(listId) },
+            { $set: list },
+            { returnOriginal: false }
+        ).then(({ value }) => {
+            res.json(value);
+            db.close();
+        }, (err) => {
+            res.status(500).json({ message: err.message });
             db.close();
         });
     });
