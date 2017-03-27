@@ -1,3 +1,5 @@
+import { NEW_ENTRY, EDIT_ENTRY, ADD_ENTRY, SAVE_ENTRY } from '../helpers/action-types';
+
 const defaultState = {
     editing: false,
     newEntry: false,
@@ -11,7 +13,6 @@ export default function editEntry(state = defaultState, action) {
                 editing: true,
                 newEntry: true
             };
-        case 'UPDATE_USER':
         case 'EDIT_ENTRY':
             return {
                 editing: true,
