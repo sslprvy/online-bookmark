@@ -62,10 +62,10 @@ gulp.task('watch', function () {
     gulp.watch('app/**/*.scss', ['sass']);
     gulp.watch(['app/**/*.jsx', 'app/**/*.js'], ['scripts:app']);
     gulp.watch([`${CONFIG.tempFolder}/bundle.js`], function () {
-        sequence('clean:js', 'revision', 'index')();
+        sequence('clean:js', 'index')();
     });
     gulp.watch(`${CONFIG.tempFolder}/*.css`, function () {
-        sequence('clean:css', 'revision', 'index')();
+        sequence('clean:css', 'index')();
     });
     gulp.watch(['./index.html']).on('change', browserSync.reload);
     gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', _.debounce(browserSync.reload, 100));
@@ -113,7 +113,7 @@ gulp.task('revision', function () {
     return merge(jsRevision, cssRevision);
 });
 
-gulp.task('index', function () {
+gulp.task('index', ['revision'], function () {
     var target = gulp.src(`${CONFIG.destFolder}/index.html`);
     var source = gulp.src([
         `${CONFIG.jsDestFolder}vendor*.js`,
@@ -176,7 +176,6 @@ gulp.task('scripts:app', () => {
 gulp.task('deploy', sequence(
     ['clean:js', 'clean:css'],
     ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app'],
-    'revision',
     'index'
 ));
 
@@ -186,7 +185,6 @@ gulp.task('deploy', sequence(
 gulp.task('default', sequence(
     ['clean:js', 'clean:css'],
     ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app', 'backend'],
-    'revision',
     'index',
     'connect',
     ['watch', 'watch:backend']
