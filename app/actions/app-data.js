@@ -1,21 +1,22 @@
 import { getLists } from '../http.client';
+import { FETCHING_DATA, RECEIVED_DATA, UPDATE_LIST } from '../helpers/action-types';
 
 function fetchingData() {
     return {
-        type: 'FETCHING_DATA'
+        type: FETCHING_DATA
     };
 }
 
 function receivedData(data) {
     return {
-        type: 'RECEIVED_DATA',
+        type: RECEIVED_DATA,
         data
     };
 }
 
 export function updateList({ list, id }) {
     return {
-        type: 'UPDATE_LIST',
+        type: UPDATE_LIST,
         list,
         id
     };
