@@ -24,13 +24,6 @@ function addEntryAction(link, listId) {
     };
 }
 
-function deleteEntryAction(link) {
-    return {
-        type: 'DELETE_ENTRY',
-        link
-    };
-}
-
 export function editEntry(id) {
     return {
         type: 'EDIT_ENTRY',
