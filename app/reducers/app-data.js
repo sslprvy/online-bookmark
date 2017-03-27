@@ -1,3 +1,5 @@
+import { FETCHING_DATA, RECEIVED_DATA, ADD_ENTRY, UPDATE_LIST } from '../helpers/action-types';
+
 const defaultState = {
     isFetching: false,
     lists: []
@@ -5,17 +7,17 @@ const defaultState = {
 
 export default function appData(state = defaultState, action) {
     switch (action.type) {
-        case 'FETCHING_DATA':
+        case FETCHING_DATA:
             return {
                 isFetching: true,
                 lists: state.lists
             };
-        case 'RECEIVED_DATA':
+        case RECEIVED_DATA:
             return {
                 isFetching: false,
                 lists: action.data
             };
-        case 'ADD_ENTRY':
+        case ADD_ENTRY:
             return {
                 isFetching: false,
                 lists: state.lists.map(list => {
@@ -26,7 +28,7 @@ export default function appData(state = defaultState, action) {
                     }
                 })
             };
-        case 'UPDATE_LIST':
+        case UPDATE_LIST:
             return {
                 isFetching: false,
                 lists: state.lists.map(list => {
