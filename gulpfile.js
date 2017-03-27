@@ -3,21 +3,25 @@
  * http://jpsierens.com/tutorial-gulp-javascript-2015-react/
  */
 
+const _ = require('lodash');
+
+const argv = require('yargs').argv;
+
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-const browserify = require('browserify');
-const source = require('vinyl-source-stream');
-const gutil = require('gulp-util');
-const babelify = require('babelify');
-const rev = require('gulp-rev');
 const inject = require('gulp-inject');
-const del = require('del');
-const browserSync = require('browser-sync').create();
-const sequence = require('gulp-sequence');
 const plumber = require('gulp-plumber');
+const rev = require('gulp-rev');
 const sass = require('gulp-sass');
+const sequence = require('gulp-sequence');
+const gutil = require('gulp-util');
+
+const browserify = require('browserify');
+const browserSync = require('browser-sync').create();
+const source = require('vinyl-source-stream');
+const babelify = require('babelify');
+const del = require('del');
 const merge = require('merge-stream');
-const _ = require('lodash');
 
 const onError = require('./gulp_settings/error-handler').onError;
 const modRewrite = require('connect-modrewrite');
@@ -33,25 +37,10 @@ const dependencies = [
     'history'
 ];
 
-const NODE_ENV = ['dev', 'prod'];
-
-if (!_.includes(NODE_ENV, process.env.NODE_ENV.trim())) {
-    throw new Error('Environment variable NODE_ENV is not defined! Should be either "dev" or "prod"');
-}
-
-const ENVIRONMENT = {
-    isDev: process.env.NODE_ENV.trim() === 'dev',
-    isProd: process.env.NODE_ENV.trim() === 'prod'
-};
-
-const CONFIG = {
-    tempFolder: 'tmp',
-    jsDestFolder: 'web/js/',
-    cssDestFolder: 'web/css/',
-    appEntryPoint: './app/root.jsx',
-    destFolder: 'web',
-    extensions: ['.js', '.json', '.jsx']
-};
+const environment = argv.env || 'dev';
+const CONFIG = require('./gulp-config').default;
+_.merge(CONFIG, require('./gulp-config')[environment]);
+Object.freeze(CONFIG);
 
 // Gulp tasks
 // ----------------------------------------------------------------------------
@@ -73,10 +62,10 @@ gulp.task('watch', function () {
     gulp.watch('app/**/*.scss', ['sass']);
     gulp.watch(['app/**/*.jsx', 'app/**/*.js'], ['scripts:app']);
     gulp.watch([`${CONFIG.tempFolder}/bundle.js`], function () {
-        sequence('clean:js', 'revision', 'index')();
+        sequence('clean:js', 'index')();
     });
     gulp.watch(`${CONFIG.tempFolder}/*.css`, function () {
-        sequence('clean:css', 'revision', 'index')();
+        sequence('clean:css', 'index')();
     });
     gulp.watch(['./index.html']).on('change', browserSync.reload);
     gulp.watch(`${CONFIG.destFolder}/**/*.*`).on('change', _.debounce(browserSync.reload, 100));
@@ -102,7 +91,7 @@ gulp.task('clean:css', function () {
 
 gulp.task('connect', function () {
     browserSync.init({
-        port: 4000,
+        port: CONFIG.browserSyncPort,
         server: {
             baseDir: CONFIG.destFolder,
             middleware: [
@@ -124,7 +113,7 @@ gulp.task('revision', function () {
     return merge(jsRevision, cssRevision);
 });
 
-gulp.task('index', function () {
+gulp.task('index', ['revision'], function () {
     var target = gulp.src(`${CONFIG.destFolder}/index.html`);
     var source = gulp.src([
         `${CONFIG.jsDestFolder}vendor*.js`,
@@ -138,7 +127,11 @@ gulp.task('index', function () {
 });
 
 gulp.task('sass', () => {
-    return gulp.src(['node_modules/animate.css/animate.css', 'node_modules/font-awesome/scss/*.scss', 'app/**/*.scss'])
+    return gulp.src([
+        'node_modules/animate.css/animate.css',
+        'node_modules/font-awesome/scss/*.scss',
+        'app/**/*.scss'
+    ])
         .pipe(plumber({ errorHandler: onError }))
         .pipe(sass())
         .pipe(gulp.dest(`${CONFIG.tempFolder}`))
@@ -148,7 +141,7 @@ gulp.task('sass', () => {
 gulp.task('scripts:vendor', () => {
     return browserify({
         require: dependencies,
-        debug: ENVIRONMENT.isDev,
+        debug: CONFIG.debug,
         extensions: CONFIG.extensions
     })
         .bundle()
@@ -160,7 +153,7 @@ gulp.task('scripts:vendor', () => {
 gulp.task('scripts:app', () => {
     const appBundler = browserify({
         entries: CONFIG.appEntryPoint,
-        debug: ENVIRONMENT.isDev,
+        debug: CONFIG.debugisDev,
         extensions: CONFIG.extensions
     });
 
@@ -180,10 +173,9 @@ gulp.task('scripts:app', () => {
         .pipe(gulp.dest(CONFIG.tempFolder));
 });
 
-gulp.task('deploy', sequence(
+gulp.task('build', sequence(
     ['clean:js', 'clean:css'],
     ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app'],
-    'revision',
     'index'
 ));
 
@@ -191,10 +183,8 @@ gulp.task('deploy', sequence(
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts:app' defined above will fire.
 gulp.task('default', sequence(
-    ['clean:js', 'clean:css'],
-    ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app', 'backend'],
-    'revision',
-    'index',
+    'backend',
+    'build',
     'connect',
     ['watch', 'watch:backend']
 ));

@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set NODE_ENV=dev && node node_modules/gulp/bin/gulp.js --color",
-    "deploy": "set NODE_ENV=prod && node node_modules/gulp/bin/gulp.js deploy --color"
+    "build": "node node_modules/gulp/bin/gulp.js build --env prod --color",
+    "dev": "node node_modules/gulp/bin/gulp.js --env dev --color",
+    "start": "npm run dev"
   },
   "repository": {
     "type": "git",
@@ -46,7 +47,8 @@
     "json-server": "^0.9.4",
     "lodash": "^4.17.4",
     "merge-stream": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "yargs": "^7.0.2"
   },
   "engine": "5.10.1",
   "dependencies": {

@@ -1,0 +1,21 @@
+{
+  "default": {
+    "appEntryPoint": "./app/root.jsx",
+    "destFolder": "web",
+    "cssDestFolder": "web/css/",
+    "jsDestFolder": "web/js/",
+    "tempFolder": "tmp",
+    "extensions": [
+      ".js",
+      ".json",
+      ".jsx"
+    ]
+  },
+  "dev": {
+    "debug": true,
+    "browserSyncPort": 4000
+  },
+  "prod": {
+    "debug": false
+  }
+}
