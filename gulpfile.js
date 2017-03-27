@@ -3,21 +3,25 @@
  * http://jpsierens.com/tutorial-gulp-javascript-2015-react/
  */
 
+const _ = require('lodash');
+
+const argv = require('yargs').argv;
+
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-const browserify = require('browserify');
-const source = require('vinyl-source-stream');
-const gutil = require('gulp-util');
-const babelify = require('babelify');
-const rev = require('gulp-rev');
 const inject = require('gulp-inject');
-const del = require('del');
-const browserSync = require('browser-sync').create();
-const sequence = require('gulp-sequence');
 const plumber = require('gulp-plumber');
+const rev = require('gulp-rev');
 const sass = require('gulp-sass');
+const sequence = require('gulp-sequence');
+const gutil = require('gulp-util');
+
+const browserify = require('browserify');
+const browserSync = require('browser-sync').create();
+const source = require('vinyl-source-stream');
+const babelify = require('babelify');
+const del = require('del');
 const merge = require('merge-stream');
-const _ = require('lodash');
 
 const onError = require('./gulp_settings/error-handler').onError;
 const modRewrite = require('connect-modrewrite');
@@ -33,25 +37,10 @@ const dependencies = [
     'history'
 ];
 
-const NODE_ENV = ['dev', 'prod'];
-
-if (!_.includes(NODE_ENV, process.env.NODE_ENV.trim())) {
-    throw new Error('Environment variable NODE_ENV is not defined! Should be either "dev" or "prod"');
-}
-
-const ENVIRONMENT = {
-    isDev: process.env.NODE_ENV.trim() === 'dev',
-    isProd: process.env.NODE_ENV.trim() === 'prod'
-};
-
-const CONFIG = {
-    tempFolder: 'tmp',
-    jsDestFolder: 'web/js/',
-    cssDestFolder: 'web/css/',
-    appEntryPoint: './app/root.jsx',
-    destFolder: 'web',
-    extensions: ['.js', '.json', '.jsx']
-};
+const environment = argv.env || 'dev';
+const CONFIG = require('./gulp-config').default;
+_.merge(CONFIG, require('./gulp-config')[environment]);
+Object.freeze(CONFIG);
 
 // Gulp tasks
 // ----------------------------------------------------------------------------
@@ -102,7 +91,7 @@ gulp.task('clean:css', function () {
 
 gulp.task('connect', function () {
     browserSync.init({
-        port: 4000,
+        port: CONFIG.browserSyncPort,
         server: {
             baseDir: CONFIG.destFolder,
             middleware: [
@@ -148,7 +137,7 @@ gulp.task('sass', () => {
 gulp.task('scripts:vendor', () => {
     return browserify({
         require: dependencies,
-        debug: ENVIRONMENT.isDev,
+        debug: CONFIG.debug,
         extensions: CONFIG.extensions
     })
         .bundle()
@@ -160,7 +149,7 @@ gulp.task('scripts:vendor', () => {
 gulp.task('scripts:app', () => {
     const appBundler = browserify({
         entries: CONFIG.appEntryPoint,
-        debug: ENVIRONMENT.isDev,
+        debug: CONFIG.debugisDev,
         extensions: CONFIG.extensions
     });
 
