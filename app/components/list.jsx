@@ -18,7 +18,7 @@ const List = ({ list, editEntry, listId }) => {
     let userObject = list.elements.map((listElement, index) => {
         if (editEntry.editing && listElement._id === editEntry.underEdit) {
             const key = `${listElement._id}-${index}-edit`;
-            const props = {
+            let props = {
                 list,
                 listElement,
                 key
@@ -26,7 +26,12 @@ const List = ({ list, editEntry, listId }) => {
             return <EditableListElement {...props}/>;
         } else {
             const key = `${listElement._id}-${index}`;
-            return <ListElement listElement={listElement} key={key} user={list} />;
+            let props = {
+                listElement,
+                list,
+                key
+            };
+            return <ListElement {...props} />;
         }
     });
 

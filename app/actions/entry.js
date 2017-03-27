@@ -1,4 +1,5 @@
 import { saveList, createLink, deleteLink } from '../http.client';
+import { updateList } from './app-data';
 
 function saveEntryAction({ id, listElement }) {
     return {
@@ -20,13 +21,6 @@ function addEntryAction(link, listId) {
         type: 'ADD_ENTRY',
         link,
         listId
-    };
-}
-
-function deleteEntryAction(link) {
-    return {
-        type: 'DELETE_ENTRY',
-        link
     };
 }
 
@@ -63,9 +57,13 @@ export function addEntry(link, list) {
     };
 }
 
-export function deleteEntry(link, user) {
+export function deleteEntry(linkToDelete, list) {
     return function (dispatch) {
-        return deleteLink(link, user)
-            .then(savedUser => dispatch(deleteEntryAction(link)));
+        // we want to instantly change the UI
+        const modifiedList = Object.assign({}, list, { elements: list.elements.filter(link => link !== linkToDelete) });
+        dispatch(updateList({ list: modifiedList, id: list._id }));
+
+        return deleteLink(linkToDelete, list)
+            .then(savedList => dispatch(updateList({ list: savedList, id: savedList._id })));
     };
 }

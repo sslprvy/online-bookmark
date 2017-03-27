@@ -92,10 +92,33 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/List"
+            $ref: "#/definitions/Link"
       responses:
         "200":
           description: List updated,
+          schema:
+            $ref: "#/definitions/List"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      operationId: updateList
+      description: |
+        Updates the given list and saves it to the database
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          type: string
+        - name: list
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/List"
+      responses:
+        "200":
+          description: List updated
           schema:
             $ref: "#/definitions/List"
         "401":

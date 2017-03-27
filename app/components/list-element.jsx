@@ -5,10 +5,8 @@ import { editEntry, deleteEntry } from '../actions/entry';
 
 const mapDispatch = (dispatch) => {
     return {
-        editEntry: (id) => {
-            dispatch(editEntry(id));
-        },
-        deleteEntry: (link, user) => dispatch(deleteEntry(link, user))
+        editEntry: (id) => dispatch(editEntry(id)),
+        deleteEntry: (link, list) => dispatch(deleteEntry(link, list))
     };
 };
 
@@ -16,7 +14,7 @@ const hashId = (title) => {
     return `${title.toLowerCase().replace(/\s/g,'-')}`;
 };
 
-const ListElement = ({ listElement, editEntry, deleteEntry, user }) => {
+const ListElement = ({ listElement, editEntry, deleteEntry, list }) => {
     const tagObjects = listElement.tags.map((tag, index) =>
         <div className="display-list-element-tag" key={`${tag}-${index}`}>
             <span>{tag}</span>
@@ -35,7 +33,7 @@ const ListElement = ({ listElement, editEntry, deleteEntry, user }) => {
                     onClick={editEntry.bind(null, listElement._id)}></i>
                 <i className="fa fa-trash-o display-list-element-remove-button"
                     aria-hidden="true"
-                    onClick={deleteEntry.bind(null, listElement, user)}></i>
+                    onClick={deleteEntry.bind(null, listElement, list)}></i>
             </div>
         </li>
     );
@@ -43,7 +41,7 @@ const ListElement = ({ listElement, editEntry, deleteEntry, user }) => {
 
 ListElement.propTypes = {
     listElement: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
+    list: PropTypes.object.isRequired
 };
 
 export default connect(null, mapDispatch)(ListElement);

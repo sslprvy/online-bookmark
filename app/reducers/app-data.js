@@ -26,11 +26,6 @@ export default function appData(state = defaultState, action) {
                     }
                 })
             };
-        case 'DELETE_ENTRY':
-            return {
-                isFetching: false,
-                lists: state.lists.data.filter(link => link !== action.link)
-            };
         case 'UPDATE_LIST':
             return {
                 isFetching: false,

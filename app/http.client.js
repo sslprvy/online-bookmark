@@ -17,7 +17,7 @@ export function getLists() {
     return fetch(request).then(handleResponse);
 }
 
-export function saveList(id, listElement) {
+export function updateList(id, listElement) {
     const headers = new Headers({
         'Content-Type': 'application/json',
         Authorization: store.getState().auth.token
@@ -27,6 +27,21 @@ export function saveList(id, listElement) {
         method: 'PATCH',
         headers,
         body: JSON.stringify(listElement)
+    });
+
+    return fetch(request).then(response => response.json());
+}
+
+export function saveList(list) {
+    const headers = new Headers({
+        'Content-Type': 'application/json',
+        Authorization: store.getState().auth.token
+    });
+
+    const request = new Request(`${config.path}/lists/${list._id}`, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(list)
     });
 
     return fetch(request).then(response => response.json());
@@ -47,10 +62,10 @@ export function createLink({ link, id }) {
     return fetch(request).then(response => response.json());
 }
 
-export function deleteLink(linkToDelete, user) {
-    const modifiedUser = Object.assign({}, user, { data: user.data.filter(link => link !== linkToDelete) });
+export function deleteLink(linkToDelete, list) {
+    const modifiedList = Object.assign({}, list, { elements: list.elements.filter(link => link !== linkToDelete) });
 
-    return saveList(modifiedUser);
+    return saveList(modifiedList);
 }
 
 export function authenticate(user) {
