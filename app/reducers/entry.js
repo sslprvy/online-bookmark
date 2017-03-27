@@ -1,4 +1,4 @@
-import { NEW_ENTRY, EDIT_ENTRY, ADD_ENTRY, SAVE_ENTRY } from '../helpers/action-types';
+import { NEW_ENTRY, EDIT_ENTRY, ADD_ENTRY, SAVE_ENTRY, CANCEL_EDIT } from '../helpers/action-types';
 
 const defaultState = {
     editing: false,
@@ -19,6 +19,7 @@ export default function editEntry(state = defaultState, action) {
                 underEdit: action.id
             };
         case ADD_ENTRY:
+        case CANCEL_EDIT:
         case SAVE_ENTRY:
             return {
                 editing: false,

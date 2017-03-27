@@ -1,6 +1,6 @@
 import { saveList, createLink, deleteLink } from '../http.client';
 import { updateList } from './app-data';
-import { SAVE_ENTRY, ENTRY_SAVED, ADD_ENTRY, EDIT_ENTRY, NEW_ENTRY } from '../helpers/action-types';
+import { SAVE_ENTRY, ENTRY_SAVED, ADD_ENTRY, EDIT_ENTRY, NEW_ENTRY, CANCEL_EDIT } from '../helpers/action-types';
 
 function saveEntryAction({ id, listElement }) {
     return {
@@ -29,6 +29,12 @@ export function editEntry(id) {
     return {
         type: EDIT_ENTRY,
         id
+    };
+}
+
+export function cancelEdit() {
+    return {
+        type: CANCEL_EDIT
     };
 }
 
