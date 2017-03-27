@@ -1,3 +1,5 @@
+import { UPDATE_TOKEN, LOGGED_IN } from '../helpers/action-types';
+
 const defaultState = {
     token: '',
     isLoggedIn: false,
