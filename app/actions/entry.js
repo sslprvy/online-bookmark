@@ -1,9 +1,10 @@
 import { saveList, createLink, deleteLink } from '../http.client';
 import { updateList } from './app-data';
+import { SAVE_ENTRY, ENTRY_SAVED, ADD_ENTRY, EDIT_ENTRY, NEW_ENTRY } from '../helpers/action-types';
 
 function saveEntryAction({ id, listElement }) {
     return {
-        type: 'SAVE_ENTRY',
+        type: SAVE_ENTRY,
         listElement,
         id
     };
@@ -11,14 +12,14 @@ function saveEntryAction({ id, listElement }) {
 
 function entrySaved({ user }) {
     return {
-        type: 'ENTRY_SAVED',
+        type: ENTRY_SAVED,
         user
     };
 }
 
 function addEntryAction(link, listId) {
     return {
-        type: 'ADD_ENTRY',
+        type: ADD_ENTRY,
         link,
         listId
     };
@@ -26,14 +27,14 @@ function addEntryAction(link, listId) {
 
 export function editEntry(id) {
     return {
-        type: 'EDIT_ENTRY',
+        type: EDIT_ENTRY,
         id
     };
 }
 
 export function newEntry() {
     return {
-        type: 'NEW_ENTRY'
+        type: NEW_ENTRY
     };
 }
 
