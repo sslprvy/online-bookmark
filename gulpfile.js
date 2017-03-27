@@ -173,7 +173,7 @@ gulp.task('scripts:app', () => {
         .pipe(gulp.dest(CONFIG.tempFolder));
 });
 
-gulp.task('deploy', sequence(
+gulp.task('build', sequence(
     ['clean:js', 'clean:css'],
     ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app'],
     'index'
