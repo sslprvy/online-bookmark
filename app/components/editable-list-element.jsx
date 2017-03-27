@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { dispatch } from '../store';
 
-import { saveEntry } from '../actions/entry';
+import { saveEntry, cancelEdit } from '../actions/entry';
 import { updateList } from '../actions/app-data';
 
 export default class EditableListElement extends Component {
@@ -37,6 +37,10 @@ export default class EditableListElement extends Component {
         dispatch(saveEntry({ id: updatedList._id, listElement: this.state.listElement }));
     }
 
+    cancelEdit() {
+        dispatch(cancelEdit());
+    }
+
     render() {
         return (
             <li className="display-list-element">
@@ -49,7 +53,8 @@ export default class EditableListElement extends Component {
                         aria-hidden="true"
                         onClick={this.saveEntry}></i>
                     <i className="fa fa-times display-list-element-cancel-button"
-                        aria-hidden="true"></i>
+                        aria-hidden="true"
+                        onClick={this.cancelEdit}></i>
                 </div>
             </li>
         );
