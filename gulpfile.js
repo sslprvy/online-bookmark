@@ -183,9 +183,8 @@ gulp.task('build', sequence(
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts:app' defined above will fire.
 gulp.task('default', sequence(
-    ['clean:js', 'clean:css'],
-    ['copy:index', 'copy:fonts', 'sass', 'scripts:vendor', 'scripts:app', 'backend'],
-    'index',
+    'backend',
+    'build',
     'connect',
     ['watch', 'watch:backend']
 ));
