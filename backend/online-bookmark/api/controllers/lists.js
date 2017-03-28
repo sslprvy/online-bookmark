@@ -81,7 +81,7 @@ function editList(req, res) {
             }),
             new Promise(resolve => {
                 db.collection('onlineBookmark').updateMany(
-                    { 'elements._id': ObjectID(listElementId) },
+                    { 'elements._id': listElementId },
                     { $set: {
                         'elements.$.title': listElement.title,
                         'elements.$.url': listElement.url,
