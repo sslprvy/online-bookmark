@@ -14,7 +14,8 @@ const Root = ({ store }) => (
             <div>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={CreateAccount} />
-                <Route path="/main" component={App} />
+                <Route path="/main" component={App}>
+                </Route>
                 <Redirect from="/" to="/login" />
             </div>
         </Router>
