@@ -1,4 +1,4 @@
-import { getLists } from '../http.client';
+import { getLists } from '../ajax/index';
 import { FETCHING_DATA, RECEIVED_DATA, UPDATE_LIST } from '../helpers/action-types';
 
 function fetchingData() {

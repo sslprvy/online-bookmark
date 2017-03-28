@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { validateEmail, validateUsername, createUser } from '../../http.client';
+import { validateEmail, validateUsername, createUser } from '../../ajax/index';
 import { store } from '../../store';
 import { Link } from 'react-router-dom';
 
