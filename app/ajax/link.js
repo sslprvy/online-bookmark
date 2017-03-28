@@ -23,3 +23,17 @@ export function deleteLink(linkToDelete, list) {
 
     return saveList(modifiedList);
 }
+
+export function getLinks() {
+    const headers = new Headers({
+        'Content-Type': 'application/json',
+        Authorization: store.getState().auth.token
+    });
+
+    const request = new Request(`${config.path}/links`, {
+        method: 'GET',
+        headers
+    });
+
+    return fetch(request).then(response => response.json());
+}
