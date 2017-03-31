@@ -23,8 +23,8 @@ const Header = ({ onNewEntryClick, userName, isLoggedIn }) => {
     const header = (
         <div className="page-header">
             <div className="page-header-username">{userName}</div>
-            <Link to="/main/links">Links</Link>
-            <Link to="/main/lists">Lists</Link>
+            <Link className="nav-link" to="/main/links">Links</Link>
+            <Link className="nav-link" to="/main/lists">Lists</Link>
             <div className="add-element" onClick={onNewEntryClick}>
                 <i className="fa fa-plus"></i>
             </div>

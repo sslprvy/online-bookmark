@@ -15,7 +15,6 @@ const App = ({ lists, links }) => {
     return links.length === 0 ? null : (
         <div id="wrapper">
             <Header />
-            <Links />
         </div>
     );
 };
