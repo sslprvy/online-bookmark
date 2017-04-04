@@ -12,19 +12,6 @@ import Links from './pages/links/links';
 
 import routes from './routes';
 
-function createRouteComponent(parent, route, component) {
-    const path = parent + route;
-    const props = {
-        key: path,
-        path,
-        component
-    };
-    return {
-        path: parent + route,
-        routeComponent: <Route {...props}/>
-    };
-}
-
 function creatRoutingComponents(parent, routes) {
     let routingComponents = Object.keys(routes).map(route => {
         const path = parent + route;
