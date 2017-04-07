@@ -1,7 +1,7 @@
 const DB = require('../helpers/db-connection');
 const ObjectID = require('mongodb').ObjectID;
 const { decodeToken } = require('../helpers/crypto');
-const { pick } = require('../helpers/common');
+const { pick, omit } = require('../helpers/common');
 
 const handleQuery = require('../common/handle-simple-query');
 
@@ -10,14 +10,30 @@ module.exports = {
     newList,
     newListElement,
     editList,
-    updateList
+    updateList,
+    getList
 };
 
 function lists(req, res) {
     const { username } = decodeToken(req.headers.authorization);
 
     DB.connect().then(db => {
-        db.collection('onlineBookmark').find({ user: username }).toArray(handleQuery.bind(null, db, res));
+        db.collection('lists').find({ user: username }).toArray(handleQuery.bind(null, db, res));
+    });
+}
+
+function getList(req, res) {
+    const { username } = decodeToken(req.headers.authorization);
+    const listId = req.swagger.params.listId.value;
+
+    DB.connect().then(db => {
+        return Promise.all([
+            db.collection('lists').findOne({ _id: ObjectID(listId) }),
+            db.collection('links').find({ lists: { $in: [listId] } }).toArray()
+        ])
+        .then(([list, links]) => {
+            res.json(Object.assign({}, list, { elements: links.map(link => omit(link, 'lists')) }));
+        });
     });
 }
 
