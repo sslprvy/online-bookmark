@@ -26,7 +26,7 @@ function newList(req, res) {
     const { username } = decodeToken(req.headers.authorization);
 
     DB.connect().then(db => {
-        db.collection('onlineBookmark').insert(
+        db.collection('lists').insert(
             Object.assign({}, listNameObject, {
                 user: username,
                 elements: []
@@ -51,7 +51,7 @@ function newListElement(req, res) {
         db.collection('links')
             .findOneAndUpdate(listElement, Object.assign({}, listElement, { user: username }), { upsert: true, returnOriginal: false })
             .then(({ value: link }) => {
-                db.collection('onlineBookmark').findOneAndUpdate(
+                db.collection('lists').findOneAndUpdate(
                     { _id: ObjectID(listId) },
                     { $push: { elements: link }},
                     { returnOriginal: false }
@@ -80,7 +80,7 @@ function editList(req, res) {
                 ).then(resolve);
             }),
             new Promise(resolve => {
-                db.collection('onlineBookmark').updateMany(
+                db.collection('lists').updateMany(
                     { 'elements._id': listElementId },
                     { $set: {
                         'elements.$.title': listElement.title,
@@ -90,7 +90,7 @@ function editList(req, res) {
                 ).then(resolve);
             })]
         ).then(() => {
-            return db.collection('onlineBookmark').findOne({ _id: ObjectID(listId) });
+            return db.collection('lists').findOne({ _id: ObjectID(listId) });
         }).then(modifiedList => {
             res.json(modifiedList);
             db.close();
@@ -103,7 +103,7 @@ function updateList(req, res) {
         const listId = req.swagger.params.listId.value;
         const list = pick(req.swagger.params.list.value, 'name', 'user', 'elements');
 
-        db.collection('onlineBookmark').findOneAndUpdate(
+        db.collection('lists').findOneAndUpdate(
             { _id: ObjectID(listId) },
             { $set: list },
             { returnOriginal: false }
