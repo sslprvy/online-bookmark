@@ -59,7 +59,7 @@ paths:
     get:
       operationId: getList
       description: |
-        Returns the given list with containing the links
+        Returns the given list containing the links
       parameters:
         - name: listId
           in: path
