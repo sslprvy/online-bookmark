@@ -39,7 +39,7 @@ export function updateList(id, listElement) {
         body: JSON.stringify(listElement)
     });
 
-    return fetch(request).then(response => response.json());
+    return fetch(request).then(handleResponse);
 }
 
 export function saveList(list) {
@@ -54,5 +54,5 @@ export function saveList(list) {
         body: JSON.stringify(list)
     });
 
-    return fetch(request).then(response => response.json());
+    return fetch(request).then(handleResponse);
 }
