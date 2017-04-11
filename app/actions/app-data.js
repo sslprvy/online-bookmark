@@ -40,7 +40,7 @@ export function fetchList({ id }) {
     return function (dispatch) {
         dispatch(fetchingData());
 
-        return getList().then(list => {
+        return getList(id).then(list => {
             dispatch(receivedList(list));
         });
     };
