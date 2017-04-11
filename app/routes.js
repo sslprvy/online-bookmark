@@ -3,6 +3,7 @@ import CreateAccount from './pages/login/create-account';
 import App from './pages/app';
 import Links from './pages/links/links';
 import List from './components/list';
+import Lists from './pages/lists/lists';
 
 export default {
     login: {
@@ -18,7 +19,7 @@ export default {
                 component: Links
             },
             lists: {
-                component: List
+                component: Lists
             }
         }
     }
