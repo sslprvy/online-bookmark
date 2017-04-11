@@ -3,28 +3,28 @@
  * http://jpsierens.com/tutorial-gulp-javascript-2015-react/
  */
 
-const _ = require('lodash');
+const _             = require('lodash');
 
-const argv = require('yargs').argv;
+const argv          = require('yargs').argv;
 
-const gulp = require('gulp');
-const eslint = require('gulp-eslint');
-const inject = require('gulp-inject');
-const plumber = require('gulp-plumber');
-const rev = require('gulp-rev');
-const sass = require('gulp-sass');
-const sequence = require('gulp-sequence');
-const gutil = require('gulp-util');
+const gulp          = require('gulp');
+const eslint        = require('gulp-eslint');
+const inject        = require('gulp-inject');
+const plumber       = require('gulp-plumber');
+const rev           = require('gulp-rev');
+const sass          = require('gulp-sass');
+const sequence      = require('gulp-sequence');
+const gutil         = require('gulp-util');
 
-const browserify = require('browserify');
-const browserSync = require('browser-sync').create();
-const source = require('vinyl-source-stream');
-const babelify = require('babelify');
-const del = require('del');
-const merge = require('merge-stream');
+const browserify    = require('browserify');
+const browserSync   = require('browser-sync').create();
+const source        = require('vinyl-source-stream');
+const babelify      = require('babelify');
+const del           = require('del');
+const merge         = require('merge-stream');
 
-const onError = require('./gulp_settings/error-handler').onError;
-const modRewrite = require('connect-modrewrite');
+const onError       = require('./gulp_settings/error-handler').onError;
+const modRewrite    = require('connect-modrewrite');
 
 require('./gulp_settings/backend');
 
