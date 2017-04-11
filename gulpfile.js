@@ -153,7 +153,7 @@ gulp.task('scripts:vendor', () => {
 gulp.task('scripts:app', () => {
     const appBundler = browserify({
         entries: CONFIG.appEntryPoint,
-        debug: CONFIG.debugisDev,
+        debug: CONFIG.debug,
         extensions: CONFIG.extensions
     });
 
