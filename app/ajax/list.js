@@ -15,6 +15,18 @@ export function getLists() {
     return fetch(request).then(handleResponse);
 }
 
+export function getList(id) {
+    const headers = new Headers({
+        Authorization: store.getState().auth.token
+    });
+    const request = new Request(`${config.path}/lists/${id}`, {
+        method: 'GET',
+        headers
+    });
+
+    return fetch(request).then(handleResponse);
+}
+
 export function updateList(id, listElement) {
     const headers = new Headers({
         'Content-Type': 'application/json',
