@@ -1,9 +1,10 @@
-import { FETCHING_DATA, RECEIVED_LISTS, RECEIVED_LINKS, ADD_ENTRY, UPDATE_LIST } from '../helpers/action-types';
+import { FETCHING_DATA, RECEIVED_LISTS, RECEIVED_LINKS, ADD_ENTRY, UPDATE_LIST, RECEIVED_LIST } from '../helpers/action-types';
 
 const defaultState = {
     isFetching: false,
     lists: [],
-    links: []
+    links: [],
+    list: {}
 };
 
 export default function appData(state = defaultState, action) {
@@ -22,6 +23,11 @@ export default function appData(state = defaultState, action) {
             return Object.assign({}, state, {
                 isFetching: false,
                 links: action.data
+            });
+        case RECEIVED_LIST:
+            return Object.assign({}, state, {
+                isFetching: false,
+                list: action.data
             });
         case ADD_ENTRY:
             return Object.assign({}, state, {
