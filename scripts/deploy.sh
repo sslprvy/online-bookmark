@@ -1,2 +1,3 @@
-#!/bind/bash
-echo $USER
+#!/bin/bash
+
+lftp -c "open -u $USER,$PASSWORD $HOST; mirror -R web ~"
