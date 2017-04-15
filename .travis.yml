@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - "6"
+addons:
+  apt:
+    packages:
+    - lftp
 env:
   global:
     - "USER=QpQHF96P0I6G0uhG5LQB7k2HJCsSXAW528I1KphTGoAfacsRxItEnX9QEKW95q5qOWrq8++RE5iRM/OfArh1DG/PSRGSdkjVuZWk8WAXDTXNUWGgTwafZBlrVwuOhdcTMSFZTq+ILBi92a+SP+81XLcslutjRu82IxYchg80nAUdPxQUmPsfvPne0Hu1mi5aYBnCagORugU1NXteS1JLWeFLsplXKfLZttp1bkOgy7eVOWudu5jejUSvKO1/p7umzLIyxh1Gzbv/O3y2gHAVY7KJnw/xKGFF1nD63usy4Ehjw57j6z6XHxXHKwHRjIbfoDf3T/M0Gp4K2aL3jGLzpPbf8epMi7IeS0f/Rk7C2sXrY9Wn+xCh8obPMlT2ZE5JlW70eg22pDsxfDCKd894/ueU7n5N+bkfw2E8+GCXB36or0dHASg7CqPLv6clnm6nFAJ6Okjqz0JwC9m+AjiZBk2OFrjfkHq569Mw7NDoCAttP5MJS1ItCI0DZT7qU16hzYdIuVVrpShknUxc4Jqn6IwJ6KCw78+Pjn2iOu7JzoL/NKAO7xqNRQo88hU5wPJlgkGXJjnKZQzy//apcSetiztcpTVqEZ5Ez7I5SzSECmykXbsnDELjXMH7vNBIfseyXU+0jgSwMDlb0kA0WsW5UOC3InwQk+RGl7sJ27ZndjE="
