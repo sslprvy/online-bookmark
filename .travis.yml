@@ -5,6 +5,9 @@ addons:
   apt:
     packages:
     - lftp
+branches:
+  only:
+    - master
 env:
   global:
     - secure: Kdmvq4BjTNVrkKjVTqYXzwBk54oAnqxf1fUALoSG064zZDs04hAoGZMtjjaMhzY/1gFkHhYuUZqapXHVAIIV04Cr7suuy4no98LkYJlZoYYehxJardu1uap1+M1K4Del+RmR0o6r+XQXQpizo5HaW35lom2CWv3YQpKKUHQSDnCyu5RtwqXm3cK45eSFav5P5hihdfRQE47kKLpZ/qwk/rTgLufOZb5Wwa9RNFojKwy+pIcuW/uqcBB1iN+uHL5D37u+pehaWRU/1sFymZlZh6N3kmJdMfHJoHsxjcBpIfjVbvWm2PWXQbMlzWLMojpsRGOoDlh4bh+WIhyr5dsKIv3l+7d43hsbkw7j/IqPxZ+2hJYCqz2gywnGtgp8P8sTS1Z/t/RwVR2+4R6ySGNN9b3mkvaJAW2AcX5vUE+USsI/TZ5Jcws9g9yxBJFwaHO5/oOcKxfX4FYufqWKte0Nx0ZvnQm0rQCeSZvYGLLBAR0+mRzD7cZQsm1Edzcy/dguADZoKY/WeQ3NXLLoVFx4saG/iNDpCvO+3cr4ggRuNCkaiYQQzEH/mnD8hOX/5FRiosAdT6pCLt5aj7zsDsmpYym4+a9q4wYo5uLoibHFUWpLffrCUM9qe8xpnPcVxo0R1hFZEr2acPFUSbr3JtbMRIhVUnni3VA8qM/hWFQTcWY=
