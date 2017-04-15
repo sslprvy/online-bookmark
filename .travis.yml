@@ -17,5 +17,6 @@ before_script:
 - npm run build
 after_success:
 - echo "deploying front end..."
+- lftp -c "open -u $USER,$PASSWORD $HOST; rm -rf ~/frontend/js; rm -rf ~/frontend/css"
 - lftp -c "open -u $USER,$PASSWORD $HOST; mirror -R $TRAVIS_BUILD_DIR/web ~/frontend"
 - echo "deploy done"
