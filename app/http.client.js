@@ -1,5 +1,5 @@
 'use strict';
-import config from '../config';
+import config from '../online-bookmark-config/config';
 import { store, dispatch } from './store';
 import handleResponse from './helpers/response-handler';
 import { loggedIn } from './actions/auth';
