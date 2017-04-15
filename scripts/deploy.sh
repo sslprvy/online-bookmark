@@ -1,1 +1,2 @@
-echo 'deployed'
+#!/bind/bash
+echo $USER
