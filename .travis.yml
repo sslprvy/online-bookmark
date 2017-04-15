@@ -11,5 +11,5 @@ env:
   - secure: A5RMaX7DolRlHc2V8QKUnTCyYACMVlw2dBLRIZ/e7cwlCLVBhSDHjDshQAy/AtCaSUFM+iNsjCM8gfGfVwRZgJg9P1zblfwlQ2RjF5sJ2XcUmkOAD0JFDO3BOXPqp3faRFrQeCnRMZVs7COlo4yK+7w5bHMx4xfHRYZP8X/FCgEnYGZ9Z6W22dIqeFbBenr2I4X9IvNFTJ4PaP/ZiIBdLgfjS8kTX2vmhViURTVPxvJvs1VAoR9BnD7YHFisuyF+KZsObEypInDKMcBf0lSNNc+Ba/QyLHG+mWefCh7mOMu8GxAhAtSKLQr+N5tiqOVJsXwyS21qPM77XBApXLPeII//6+h+ylTr276Iyn8rVI99AVsUGe51Jk1XUEHZd3M/weqp11owCca5/WR4vFYrurTphCMKvgbl6pLBqt8pi9lE8Tu1PmE4w08wIHAQUbR8iiwcHrMZ489aSl7w/RK8tYVvPVoOuedxT15LJz8UHWo+oYD/fJ7xKs6fYFEBrs1ElwJ/EJqtoiKN22zoaPV78tjL1ovEuohUgN3GNAkhLMIEHDXGJrM0pyM4nuPoL2/+yj2ScnzMQ1a+KyECgvryTeE4Hk6DsxZwtq79sF02t3SeRctqGelww+JghhwZkPdNHCiEGyNv94Z8awxhgUDELfJYGh6b7aaEk4vGMoOshd4=
 after_success:
 - echo "deploying..."
-- lftp -c "open -u $USER,$PASSWORD $HOST; mirror -R web ~"
+- lftp -c "open -u $USER,$PASSWORD $HOST; mirror -R $TRAVIS_BUILD_DIR/web ~"
 - echo "deploy done"
