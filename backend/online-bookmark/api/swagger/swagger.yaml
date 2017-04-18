@@ -56,6 +56,24 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /lists/{listId}:
     x-swagger-router-controller: lists
+    get:
+      operationId: getList
+      description: |
+        Returns the given list containing the links
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Returns the list
+          schema:
+            $ref: "#/definitions/List"
+        "401":
+          description: Unathorized access
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     post:
       operationId: newListElement
       description: |

@@ -2,18 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/header';
 import List from '../components/list';
+import Links from './links/links';
 
 const mapState = ({ appData }) => {
     return {
-        lists: appData.lists
+        lists: appData.lists,
+        links: appData.links
     };
 };
 
-const App = ({ lists }) => {
-    return Object.keys(lists).length === 0 ? null : (
+const App = ({ lists, links }) => {
+    return links.length === 0 ? null : (
         <div id="wrapper">
             <Header />
-            <List />
         </div>
     );
 };

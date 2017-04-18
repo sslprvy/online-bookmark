@@ -1,5 +1,6 @@
 module.exports = {
-    pick
+    pick,
+    omit
 };
 
 function pick(object, ...fields) {
@@ -9,5 +10,14 @@ function pick(object, ...fields) {
 
             return accumulator;
         }
+    }, {});
+}
+
+function omit(object, ...fields) {
+    return Object.keys(object).reduce((accumulator, property) => {
+        if (!fields.includes(property)) {
+            accumulator[property] = object[property];
+        }
+        return accumulator;
     }, {});
 }

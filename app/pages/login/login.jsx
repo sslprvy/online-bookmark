@@ -26,7 +26,7 @@ const Login = ({ isLoggedIn, login, history }) => {
         event.preventDefault();
         event.stopPropagation();
         login(loginFormState);
-        history.push('/main');
+        history.push('/main/links');
     }
 
     if (!isLoggedIn) {

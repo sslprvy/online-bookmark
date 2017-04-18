@@ -1,7 +1,7 @@
 const DB = require('../helpers/db-connection');
 const ObjectID = require('mongodb').ObjectID;
 const { decodeToken } = require('../helpers/crypto');
-const { pick } = require('../helpers/common');
+const { pick, omit } = require('../helpers/common');
 
 const handleQuery = require('../common/handle-simple-query');
 
@@ -10,14 +10,31 @@ module.exports = {
     newList,
     newListElement,
     editList,
-    updateList
+    updateList,
+    getList
 };
 
 function lists(req, res) {
     const { username } = decodeToken(req.headers.authorization);
 
     DB.connect().then(db => {
-        db.collection('onlineBookmark').find({ user: username }).toArray(handleQuery.bind(null, db, res));
+        db.collection('lists').find({ user: username }).toArray(handleQuery.bind(null, db, res));
+    });
+}
+
+function getList(req, res) {
+    const { username } = decodeToken(req.headers.authorization);
+    const listId = req.swagger.params.listId.value;
+
+    DB.connect().then(db => {
+        return Promise.all([
+            db.collection('lists').findOne({ _id: ObjectID(listId) }),
+            db.collection('links').find({ lists: { $in: [listId] } }).toArray()
+        ])
+        .then(([list, links]) => {
+            res.json(Object.assign({}, list, { elements: links.map(link => omit(link, 'lists')) }));
+            db.close();
+        });
     });
 }
 
@@ -26,7 +43,7 @@ function newList(req, res) {
     const { username } = decodeToken(req.headers.authorization);
 
     DB.connect().then(db => {
-        db.collection('onlineBookmark').insert(
+        db.collection('lists').insert(
             Object.assign({}, listNameObject, {
                 user: username,
                 elements: []
@@ -49,14 +66,14 @@ function newListElement(req, res) {
 
         // if we have the exact same link in the links collection use that one
         db.collection('links')
-            .findOneAndUpdate(listElement, Object.assign({}, listElement, { user: username }), { upsert: true, returnOriginal: false })
-            .then(({ value: link }) => {
-                db.collection('onlineBookmark').findOneAndUpdate(
-                    { _id: ObjectID(listId) },
-                    { $push: { elements: link }},
-                    { returnOriginal: false }
-                ).then(modifiedList => {
-                    res.json(modifiedList.value);
+            .findOneAndUpdate(listElement, Object.assign({}, listElement, { user: username, $addToSet: { lists: listId } }), { upsert: true })
+            .then(() => {
+                return Promise.all([
+                    db.collection('lists').findOne({ _id: ObjectID(listId) }),
+                    db.collection('links').find({ lists: { $in: [listId] } }).toArray()
+                ])
+                .then(([list, links]) => {
+                    res.json(Object.assign({}, list, { elements: links.map(link => omit(link, 'lists')) }));
                     db.close();
                 });
             }, (err) => {
@@ -72,28 +89,19 @@ function editList(req, res) {
         const listElement = pick(req.swagger.params['list-element'].value, 'title', 'url', 'tags');
         const listId = req.swagger.params.listId.value;
 
-        Promise.all([
-            new Promise(resolve => {
-                db.collection('links').update(
-                    { _id: ObjectID(listElementId) },
-                    { $set: listElement }
-                ).then(resolve);
-            }),
-            new Promise(resolve => {
-                db.collection('onlineBookmark').updateMany(
-                    { 'elements._id': listElementId },
-                    { $set: {
-                        'elements.$.title': listElement.title,
-                        'elements.$.url': listElement.url,
-                        'elements.$.tags': listElement.tags
-                    }}
-                ).then(resolve);
-            })]
-        ).then(() => {
-            return db.collection('onlineBookmark').findOne({ _id: ObjectID(listId) });
-        }).then(modifiedList => {
-            res.json(modifiedList);
-            db.close();
+        db.collection('links').update(
+            { _id: ObjectID(listElementId) },
+            { $set: listElement }
+        )
+        .then(() => {
+            return Promise.all([
+                db.collection('lists').findOne({ _id: ObjectID(listId) }),
+                db.collection('links').find({ lists: { $in: [listId] } }).toArray()
+            ])
+            .then(([list, links]) => {
+                res.json(Object.assign({}, list, { elements: links.map(link => omit(link, 'lists')) }));
+                db.close();
+            });
         });
     });
 }
@@ -101,9 +109,9 @@ function editList(req, res) {
 function updateList(req, res) {
     DB.connect().then(db => {
         const listId = req.swagger.params.listId.value;
-        const list = pick(req.swagger.params.list.value, 'name', 'user', 'elements');
+        const list = pick(req.swagger.params.list.value, 'name', 'user');
 
-        db.collection('onlineBookmark').findOneAndUpdate(
+        db.collection('lists').findOneAndUpdate(
             { _id: ObjectID(listId) },
             { $set: list },
             { returnOriginal: false }
