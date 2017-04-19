@@ -1,4 +1,4 @@
-import { authenticate } from '../http.client';
+import { authenticate } from '../ajax/index';
 import { fetchData } from './app-data';
 import { UPDATE_TOKEN, LOGGED_IN } from '../helpers/action-types';
 

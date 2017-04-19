@@ -22,3 +22,7 @@ after_success:
 - lftp -c "open -u $USER,$PASSWORD $HOST; rm -rf ~/frontend/js; rm -rf ~/frontend/css"
 - lftp -c "open -u $USER,$PASSWORD $HOST; mirror -R $TRAVIS_BUILD_DIR/web ~/frontend"
 - echo "deploy done"
+notifications:
+  slack:
+    rooms:
+      secure: klxtIyL8nxsYohqQQRRvrbdUSWpVYT7wJFukIzS7aKWbaG5iOVxX6NttV3yXkprLIynDFr6+cPaB+pLdU6B5z8/jjwZ+Dn8vVeD8uKAQTOmB6Ho5y3iYrYOcMZE9k1y/a8IAoA9cnFpVm4oCKwoorBWImXI51XPW3emD11a2+gc/AxuWispiHRSMknjDPY/4jc3yN7sCADEi7Jko6CabFb1EiMwktfryW/xMzEp7f0Y99thpa1IrQfe6qdB5DivTL17fkx2SRFYW6/rSTjtyphYqozwXAArDQWxtRPnwFbjWIsYrB33mEyP1JgErhZNfiLx4i5SFz70snK6kAFkiI33abW7QY/TP8Wjq2lHrofdMXdPTzvFK+ZWgw1reHij6TAarSipkGi4Qc981tSXjOZKGQO3Mr4zTex5KEckhpxT5u1bugUm8zzC9svo9WX5e/Cz7HPM5mPEW1DXa9BSJ9K6suny/uGmTXyYcLpWUlU8rX8FPkIl7iDh72OHIgIYZvmlnut+/KyF21n4/tEcELK5M6xXxpur6ZaH47IIhnpaIAgOJjcCWuYKxu4BCKlqeO9KyeqsnPRoWF1R4uLnfGLc2MbQwPpnAhT/fDzAT2qBmDHBtI7kxVORxGYLy4dxgTPf9R1UlW4gZoVIQFx8Q2vhmpmat9OL3DtXRikgVp+Y=

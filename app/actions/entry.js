@@ -1,4 +1,4 @@
-import { updateList as saveList, createLink, deleteLink } from '../http.client';
+import { updateList as saveList, createLink, deleteLink } from '../ajax/index';
 import { updateList } from './app-data';
 import { SAVE_ENTRY, ENTRY_SAVED, ADD_ENTRY, EDIT_ENTRY, NEW_ENTRY, CANCEL_EDIT } from '../helpers/action-types';
 

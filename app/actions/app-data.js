@@ -1,5 +1,5 @@
-import { getLists } from '../http.client';
-import { FETCHING_DATA, RECEIVED_DATA, UPDATE_LIST } from '../helpers/action-types';
+import { getLinks, getLists } from '../ajax/index';
+import { FETCHING_DATA, RECEIVED_LISTS, RECEIVED_LINKS, UPDATE_LIST } from '../helpers/action-types';
 
 function fetchingData() {
     return {
@@ -7,9 +7,16 @@ function fetchingData() {
     };
 }
 
-function receivedData(data) {
+function receivedLinks(data) {
     return {
-        type: RECEIVED_DATA,
+        type: RECEIVED_LINKS,
+        data
+    };
+}
+
+function receivedLists(data) {
+    return {
+        type: RECEIVED_LISTS,
         data
     };
 }
@@ -26,9 +33,12 @@ export function fetchData() {
     return function (dispatch) {
         dispatch(fetchingData());
 
-        return getLists()
-            .then(lists => {
-                dispatch(receivedData(lists));
-            });
+        return Promise.all([
+            getLinks(),
+            getLists()
+        ]).then(([links, lists]) => {
+            dispatch(receivedLinks(links));
+            dispatch(receivedLists(lists));
+        });
     };
 }
