@@ -9,51 +9,17 @@ import Login from './pages/login/login';
 import CreateAccount from './pages/login/create-account';
 import App from './pages/app';
 import Links from './pages/links/links';
-
-import routes from './routes';
-
-function creatRoutingComponents(parent, routes) {
-    let routingComponents = Object.keys(routes).map(route => {
-        const path = parent + route;
-        const props = {
-            key: path,
-            path,
-            component: routes[route].component
-        };
-
-        if (routes[route].children) {
-            return [<Route {...props} />, creatRoutingComponents(parent + route + '/', routes[route].children)];
-        }
-
-        return <Route {...props} />;
-    });
-
-    routingComponents = routingComponents.map((routingComponent, index) => {
-        if (Array.isArray(routingComponent)) {
-            const parent = routingComponent.shift();
-            return (
-                <div key={index}>
-                    {parent}
-                    <Switch>
-                        {routingComponent}
-                    </Switch>
-                </div>
-            );
-        } else {
-            return routingComponent;
-        }
-    });
-
-    return routingComponents;
-}
-
-let routingComponents = creatRoutingComponents('/', routes);
+import List from './components/list';
 
 const Root = ({ store }) => (
     <Provider store={store}>
         <Router>
             <div>
-                {routingComponents}
+                <Route path="/login" component={Login}></Route>
+                <Route path="/register" component={CreateAccount}></Route>
+                <Route path="/main" component={App}></Route>
+                <Route path="/main/links" component={Links}></Route>
+                <Route path="/main/lists" component={List}></Route>
                 <Redirect from="/" to="/login" />
             </div>
         </Router>
