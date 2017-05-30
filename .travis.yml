@@ -1,0 +1,28 @@
+language: node_js
+node_js:
+- '6'
+addons:
+  apt:
+    packages:
+    - lftp
+    - sed
+branches:
+  only:
+    - master
+env:
+  global:
+    - secure: Kdmvq4BjTNVrkKjVTqYXzwBk54oAnqxf1fUALoSG064zZDs04hAoGZMtjjaMhzY/1gFkHhYuUZqapXHVAIIV04Cr7suuy4no98LkYJlZoYYehxJardu1uap1+M1K4Del+RmR0o6r+XQXQpizo5HaW35lom2CWv3YQpKKUHQSDnCyu5RtwqXm3cK45eSFav5P5hihdfRQE47kKLpZ/qwk/rTgLufOZb5Wwa9RNFojKwy+pIcuW/uqcBB1iN+uHL5D37u+pehaWRU/1sFymZlZh6N3kmJdMfHJoHsxjcBpIfjVbvWm2PWXQbMlzWLMojpsRGOoDlh4bh+WIhyr5dsKIv3l+7d43hsbkw7j/IqPxZ+2hJYCqz2gywnGtgp8P8sTS1Z/t/RwVR2+4R6ySGNN9b3mkvaJAW2AcX5vUE+USsI/TZ5Jcws9g9yxBJFwaHO5/oOcKxfX4FYufqWKte0Nx0ZvnQm0rQCeSZvYGLLBAR0+mRzD7cZQsm1Edzcy/dguADZoKY/WeQ3NXLLoVFx4saG/iNDpCvO+3cr4ggRuNCkaiYQQzEH/mnD8hOX/5FRiosAdT6pCLt5aj7zsDsmpYym4+a9q4wYo5uLoibHFUWpLffrCUM9qe8xpnPcVxo0R1hFZEr2acPFUSbr3JtbMRIhVUnni3VA8qM/hWFQTcWY=
+    - secure: AmqNh/vZ1WJIYXlD0Ovpo9BmPz0q2b4MRPHPlNVilH0AxAXfikHDoFsmSA7NbDxnesQ6G331jme6P5Kk3AtcI1b2xvjBzyhULrRJwdGO6JOy0IvJxZxmtxmRIwKsXe0K5rMrJ8c8FXUH+nLbvuGnPbx3wh9Arj8KMidM+efG3m0YC3jv7ospCc095zgWg5kJSjbxgM+SG3NthcWGVb6jVwoNzaU4jUAo+vxP6x/kh+VtCj4NLAdhbwYaG08fhkP3VKq+BsOFGFE3Q10hVEBep/8xNMEUwgqXYGqkCtSKyhEKFjnDy5IwdQKVR8cRmcQZklacuh84uOFuIaPraoDupFeHE3IbDL1pKeZ9UQiPOHDldRuK3OCHNjOMfd8Wi+t2tb8qRchT/Qqe1hjOdsKzF+PcDzezMbsO25b66ulmPufjJpAE+F5cj0F1oYweySAz4rqiRRxD10tFfr2eqbNyL8uRpYRCOEp6DHJZCDGhvhXlRBPU8qMB/kRLQ9MWsb3RBct/jDVckKAQVmJP07/4nLIMO9HE2cFHJjuFzhba8CvWd9QMfRqJDxoBMvrs2IgAGAyBeZnS+/BJPvlNRD+eIIXoosDK+6zWfIZZRIVlaVjpAvq3nztmYSIeFk1LSaN9sG8uw8DgP5awbIFH8MCnQmHZDJwmkTPZvMkBUbfa4I8=
+    - secure: A5RMaX7DolRlHc2V8QKUnTCyYACMVlw2dBLRIZ/e7cwlCLVBhSDHjDshQAy/AtCaSUFM+iNsjCM8gfGfVwRZgJg9P1zblfwlQ2RjF5sJ2XcUmkOAD0JFDO3BOXPqp3faRFrQeCnRMZVs7COlo4yK+7w5bHMx4xfHRYZP8X/FCgEnYGZ9Z6W22dIqeFbBenr2I4X9IvNFTJ4PaP/ZiIBdLgfjS8kTX2vmhViURTVPxvJvs1VAoR9BnD7YHFisuyF+KZsObEypInDKMcBf0lSNNc+Ba/QyLHG+mWefCh7mOMu8GxAhAtSKLQr+N5tiqOVJsXwyS21qPM77XBApXLPeII//6+h+ylTr276Iyn8rVI99AVsUGe51Jk1XUEHZd3M/weqp11owCca5/WR4vFYrurTphCMKvgbl6pLBqt8pi9lE8Tu1PmE4w08wIHAQUbR8iiwcHrMZ489aSl7w/RK8tYVvPVoOuedxT15LJz8UHWo+oYD/fJ7xKs6fYFEBrs1ElwJ/EJqtoiKN22zoaPV78tjL1ovEuohUgN3GNAkhLMIEHDXGJrM0pyM4nuPoL2/+yj2ScnzMQ1a+KyECgvryTeE4Hk6DsxZwtq79sF02t3SeRctqGelww+JghhwZkPdNHCiEGyNv94Z8awxhgUDELfJYGh6b7aaEk4vGMoOshd4=
+before_script:
+- sed -i s/localhost/$HOST/g config.json
+- npm run build
+after_success:
+- echo "deploying front end..."
+- lftp -c "open -u $USER,$PASSWORD $HOST; rm -rf ~/frontend/js; rm -rf ~/frontend/css"
+- lftp -c "open -u $USER,$PASSWORD $HOST; mirror -R $TRAVIS_BUILD_DIR/web ~/frontend"
+- echo "deploy done"
+notifications:
+  slack:
+    rooms:
+      secure: klxtIyL8nxsYohqQQRRvrbdUSWpVYT7wJFukIzS7aKWbaG5iOVxX6NttV3yXkprLIynDFr6+cPaB+pLdU6B5z8/jjwZ+Dn8vVeD8uKAQTOmB6Ho5y3iYrYOcMZE9k1y/a8IAoA9cnFpVm4oCKwoorBWImXI51XPW3emD11a2+gc/AxuWispiHRSMknjDPY/4jc3yN7sCADEi7Jko6CabFb1EiMwktfryW/xMzEp7f0Y99thpa1IrQfe6qdB5DivTL17fkx2SRFYW6/rSTjtyphYqozwXAArDQWxtRPnwFbjWIsYrB33mEyP1JgErhZNfiLx4i5SFz70snK6kAFkiI33abW7QY/TP8Wjq2lHrofdMXdPTzvFK+ZWgw1reHij6TAarSipkGi4Qc981tSXjOZKGQO3Mr4zTex5KEckhpxT5u1bugUm8zzC9svo9WX5e/Cz7HPM5mPEW1DXa9BSJ9K6suny/uGmTXyYcLpWUlU8rX8FPkIl7iDh72OHIgIYZvmlnut+/KyF21n4/tEcELK5M6xXxpur6ZaH47IIhnpaIAgOJjcCWuYKxu4BCKlqeO9KyeqsnPRoWF1R4uLnfGLc2MbQwPpnAhT/fDzAT2qBmDHBtI7kxVORxGYLy4dxgTPf9R1UlW4gZoVIQFx8Q2vhmpmat9OL3DtXRikgVp+Y=

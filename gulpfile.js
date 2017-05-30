@@ -26,8 +26,6 @@ const merge         = require('merge-stream');
 const onError       = require('./gulp_settings/error-handler').onError;
 const modRewrite    = require('connect-modrewrite');
 
-require('./gulp_settings/backend');
-
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
 const dependencies = [
@@ -183,8 +181,7 @@ gulp.task('build', sequence(
 // It will start watching for changes in every .js file.
 // If there's a change, the task 'scripts:app' defined above will fire.
 gulp.task('default', sequence(
-    'backend',
     'build',
     'connect',
-    ['watch', 'watch:backend']
+    ['watch']
 ));
