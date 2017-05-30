@@ -12,7 +12,7 @@ const mapState = ({ appData }) => {
 };
 
 const App = ({ lists, links }) => {
-    return links.length === 0 ? null : (
+    return (
         <div id="wrapper">
             <Header />
         </div>
