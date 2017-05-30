@@ -162,6 +162,7 @@ gulp.task('scripts:app', () => {
     return appBundler
         // transform ES6 and JSX to ES5 with babelify
         .transform('babelify', { presets: ['es2015', 'react'] })
+        .transform('business-leagueify')
         .bundle()
         .on('error', function (err) {
             gutil.log(err.message);
